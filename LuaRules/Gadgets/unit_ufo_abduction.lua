@@ -55,6 +55,7 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
 	
 	local units = Spring.GetUnitsInCylinder(ax, az, radius)
 	
+    local enabled = false
 	for i = 1, #units do
 		local unitID = units[i]
 		if unitID ~= ufoID and Spring.GetUnitDefID(unitID) ~= helipadDefID then
@@ -71,11 +72,13 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
                 Spring.SetGameRulesParam("metal", metal + udef.customParams.metal)
 				Spring.DestroyUnit(unitID)
 			else
+                enabled = true
 				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.5, GRAVITY + 0.4)
 			end
 		end
 	end
-
+    local env = Spring.UnitScript.GetScriptEnv(ufoID)
+    Spring.UnitScript.CallAsUnit(ufoID, env.script.SetBeamEnabled, enabled)
 end
 
 -------------------------------------------------------------------

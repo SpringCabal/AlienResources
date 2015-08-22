@@ -51,9 +51,10 @@ unitDef = {
 	-- Attributes
 	mass                   = 200,
 	maxDamage              = 1000,
-	autoHeal               = 5,
-	idleAutoHeal           = 5,
-	idleTime               = 60,
+    -- disable auto heal, healing will happen via repairs; additionally we'll use shields?
+	autoHeal               = 0,
+	idleAutoHeal           = 0,
+	idleTime               = 1,
 	
 	-- Economy
 	buildCostEnergy        = 100,
