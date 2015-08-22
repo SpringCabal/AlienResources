@@ -25,8 +25,6 @@ function Spring.UnitRendering.GetLODCount(unitID)
   return unit_lods[unitID] or 0
 end
 
-
-
 local unitActiveMats = {}
 local curHighestLOD = 0
 

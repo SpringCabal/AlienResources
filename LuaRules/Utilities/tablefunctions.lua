@@ -1,5 +1,3 @@
-Spring.Utilities = Spring.Utilities or {}
-
 ------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- bool deep: clone subtables. defaults to false. not safe with circular tables!
