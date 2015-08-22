@@ -11,6 +11,15 @@ local moveDefs  =    {
         crushStrength   =   5,
         heatmapping     =   false,
     },
+	{
+        name            =   "Tank2x2",
+        footprintX      =   2,
+        footprintZ      =   2,
+        maxWaterDepth   =   20,
+        maxSlope        =   55,
+        crushStrength   =   5,
+        heatmapping     =   false,
+    },
 }
 
 return moveDefs
