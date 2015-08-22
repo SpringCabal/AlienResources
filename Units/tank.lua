@@ -54,6 +54,62 @@ unitDef = {
 	buildCostMetal         = 100,
 	buildTime              = 100,
 	maxWaterDepth          = 20,
+	
+	weapons                = {
+		{
+			def                = "missile",
+		},
+	},
+	
+	weaponDefs             = {
+
+		missile = {
+			name                    = "AA Missile",
+			areaOfEffect            = 24,
+			burst                   = 2,
+			burstrate               = 0.7,
+			canattackground         = false,
+			--cegTag                  = [[missiletrailbluebig]],
+			craterBoost             = 0,
+			craterMult              = 0,
+			cylinderTargeting       = 3,
+
+			damage                  = {
+				default = 100,
+			},
+
+			--explosionGenerator      = [[custom:FLASH2]],
+			fireStarter             = 70,
+			flightTime              = 3,
+			guidance                = true,
+			impactOnly              = true,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			leadLimit               = 0,
+			lineOfSight             = true,
+			model                   = [[missile.dae]],
+			noSelfDamage            = true,
+			range                   = 420,
+			reloadtime              = 15,
+			renderType              = 1,
+			selfprop                = true,
+			smokedelay              = [[0.1]],
+			smokeTrail              = true,
+			--soundHit                = [[explosion/ex_med11]],
+			--soundStart              = [[weapon/missile/missile_fire3]],
+			startsmoke              = [[1]],
+			startVelocity           = 700,
+			--texture2                = [[AAsmoketrail]],
+			tracks                  = true,
+			turnRate                = 70000,
+			turret                  = true,
+			weaponAcceleration      = 200,
+			weaponTimer             = 5,
+			weaponType              = "MissileLauncher",
+			weaponVelocity          = 1000,
+		},
+	},
 }
 
 return lowerkeys({[unitName] = unitDef})
