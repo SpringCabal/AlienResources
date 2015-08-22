@@ -35,13 +35,13 @@ function SetBindings()
 		"Any+right moveright",
 		"Any+down moveback",
 		
-		"Any+w moveforward ",
-		"Any+a moveleft ",
-		"Any+d moveright",
-		"Any+s moveback",
+		--"Any+w moveforward ",
+		--"Any+a moveleft ",
+		--"Any+d moveright",
+		--"Any+s moveback",
 		
-		"Any+pageup moveup",
-		"Any+pagedown movedown",
+		--"Any+pageup moveup",
+		--"Any+pagedown movedown",
     }
 
     for _,binding in pairs(binds) do
