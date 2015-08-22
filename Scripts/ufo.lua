@@ -1,10 +1,10 @@
 include "constants.lua"
 
 -- pieces
-local StrongpointNorthBottom = piece "StrongpointNorthBottom"
-local StrongpointEastBottom = piece "StrongpointEastBottom"
-local StrongpointSouthBottom = piece "StrongpointSouthBottom"
-local StrongpointWestBottom = piece "StrongpointWestBottom"
+local StrongpointNorthBottom = piece "LowgunMuzzle"
+local StrongpointEastBottom = piece "LowgunMuzzleSE"
+local StrongpointSouthBottom = piece "LowgunMuzzleNE"
+local StrongpointWestBottom = piece "LowgunMuzzleNW"
 
 local gun = {
 	StrongpointNorthBottom,
