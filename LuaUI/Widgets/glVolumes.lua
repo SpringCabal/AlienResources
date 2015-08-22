@@ -92,6 +92,25 @@ local function CreateSinCosTable(divs)
   return sinTable, cosTable
 end
 
+function gl.Utilities.DrawMyCone(x,y,z, height,radius, radius2, divs)
+  divs = divs or 25
+  local sinTable, cosTable = CreateSinCosTable(divs)
+  local bottomY = y
+  local topY    = y + height
+  
+  gl.BeginEnd(GL.TRIANGLE_STRIP, function()
+    --// sides
+    for i = 1, #sinTable do
+      local rx1 = x + radius2 * sinTable[i]
+      local rz1 = z + radius2 * cosTable[i]
+	  local rx2 = x + radius * sinTable[i]
+      local rz2 = z + radius * cosTable[i]
+      glVertex(rx1, topY   , rz1)
+      glVertex(rx2, bottomY, rz2)
+    end
+  end)
+end
+
 
 function gl.Utilities.DrawMyCylinder(x,y,z, height,radius,divs)
   divs = divs or 25
