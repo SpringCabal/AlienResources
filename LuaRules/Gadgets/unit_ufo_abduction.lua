@@ -25,6 +25,8 @@ local RAD_PER_ROT = (math.pi/(2^15))
 local ufoUnitDefID = UnitDefNames["ufo"].id
 local ufoID
 
+local helipadDefID = UnitDefNames["helipad"].id
+
 local Vector = Spring.Utilities.Vector
 
 -------------------------------------------------------------------
@@ -55,7 +57,7 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
 	
 	for i = 1, #units do
 		local unitID = units[i]
-		if unitID ~= ufoID then
+		if unitID ~= ufoID and Spring.GetUnitDefID(unitID) ~= helipadDefID then
 			local _,_,_,ux,uy,uz = Spring.GetUnitPosition(unitID, true)
 			local unitHeight = Spring.GetUnitHeight(unitID)
 			

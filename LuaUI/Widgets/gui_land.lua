@@ -12,7 +12,11 @@ end
 
 local ufoID
 local ufoDefID = UnitDefNames["ufo"].id
+local helipadDefID = UnitDefNames["helipad"].id
+local helipadID
 local canLand
+
+local LANDING_RADIUS = 200
 
 include('keysym.h.lua')
 local SPACE = KEYSYMS.SPACE
@@ -44,9 +48,17 @@ function widget:DrawScreen()
     gl.PopMatrix()
 end
 
-function widget:Update()
-    if ufoID then
-        canLand = not Spring.GetUnitStates(ufoID).autoland
+function widget:GameFrame()
+    canLand = false
+    if ufoID and not Spring.GetUnitStates(ufoID).autoland then
+        local x, _, z = Spring.GetUnitPosition(ufoID)
+        local units = Spring.GetUnitsInCylinder(x, z, LANDING_RADIUS)
+        for _, unitID in pairs(units) do
+            if Spring.GetUnitDefID(unitID) == helipadDefID then
+                canLand = true
+                helipadID = unitID
+            end
+        end
     end
 end
 
@@ -61,6 +73,7 @@ function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == SPACE then
         local state = Spring.GetUnitStates(ufoID).autoland and 1 or 0
         if state == 0 then
+            Spring.GiveOrderToUnit(ufoID, CMD.SETBASE, {}, helipadID)
             Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {1}, {})
             SpawnUpgradeUI()
         else
