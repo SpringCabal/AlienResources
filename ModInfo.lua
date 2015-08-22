@@ -1,10 +1,10 @@
 local modinfo = {
-	name = "Skeleton game",
-	shortname = "SKEL",
-	game = "Skeleton game",
-	shortgame = "SKEL",
+	name = "Alien resources",
+	shortname = "ALIR",
+	game = "Alien resources",
+	shortgame = "ALIR",
     version = "Git",
-	description = "Skeleton game",
+	description = "Alien resources",
 	
 	modtype = "1",
 	depend = {
