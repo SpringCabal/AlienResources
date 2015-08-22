@@ -8,12 +8,12 @@ unitDef = {
     script                 = unitName .. ".lua",
 	
 	-- Movement
-	acceleration           = 0.18,
+	acceleration           = 0.9,
 	--airHoverFactor         = 0.1, -- How much the unit moves while hovering on the spot
     airHoverFactor         = -1, --allows it to land
 	brakeRate              = 0.5,
-	maxVelocity            = 200,
-	cruiseAlt              = 250,
+	maxVelocity            = 500,
+	cruiseAlt              = 450,
 	turnRate               = 0, -- Implement turning in script
 	footprintX             = 2,
 	footprintZ             = 2,

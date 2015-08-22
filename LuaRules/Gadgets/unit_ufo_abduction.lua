@@ -86,7 +86,7 @@ function gadget:GameFrame(frame)
 			return
 		end
 		
-		SetAbductionArea(x, y, z, 20, 100, 1)
+		SetAbductionArea(x, y, z, 20, 100, 8)
 	end
 end
 
