@@ -20,17 +20,17 @@ local lblMetal
 
 local function UpdateBiomass()
     local biomass = Spring.GetGameRulesParam("biomass")
-    lblBiomass:SetCaption("\255\30\144\255Biomass: " .. biomass .. "\b")
+    lblBiomass:SetCaption("\255\80\215\80[Icon]Biomass: " .. biomass .. "\b")
 end
 
 local function UpdateResearch()
     local research = Spring.GetGameRulesParam("research")
-    lblResearch:SetCaption("\255\255\165\0Research: " .. research .. "\b")
+    lblResearch:SetCaption("\255\150\150\255[Icon]Research: " .. research .. "\b")
 end
 
 local function UpdateMetal()
     local metal = Spring.GetGameRulesParam("metal")
-    lblMetal:SetCaption("\255\255\255\0Metal: " .. metal .. "\b")
+    lblMetal:SetCaption("\255\150\150\150[Icon]Metal: " .. metal .. "\b")
 end
 
 function widget:GameFrame()
@@ -61,31 +61,31 @@ function widget:Initialize()
         height = 40,
         parent = screen0,
         font = {
-            size = 24,
+            size = 20,
         },
 		caption = "",
     }
     lblResearch = Chili.Label:New {
-        x = screenWidth/2 - 60,
+        right = 200,
         width = 100,
         y = 10,
         height = 50,
 		align = "left",
         parent = screen0,
         font = {
-            size = 32,
+            size = 20,
         },
 		caption = "",
     }
 	
     lblMetal = Chili.Label:New {
-        right = 10,
+        right = 400,
         width = 100,
-        bottom = 45,
+        y = 10,
         height = 50,
         parent = screen0,
         font = {
-            size = 24,
+            size = 20,
         },
 		caption = "",
     }

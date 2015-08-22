@@ -71,8 +71,7 @@ end
 local window
 function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == SPACE then
-        local state = Spring.GetUnitStates(ufoID).autoland and 1 or 0
-        if state == 0 then
+        if canLand then
             --Spring.GiveOrderToUnit(ufoID, CMD.SETBASE, {}, helipadID)
             Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {1}, {})
             SpawnUpgradeUI()
@@ -95,7 +94,7 @@ function SpawnUpgradeUI()
         height = 40,
         right = 10,
         bottom = 10,
-        caption = "Close",
+        caption = "Take off",
         OnClick = { function() 
             window:Dispose()
             window = nil
@@ -107,7 +106,7 @@ function SpawnUpgradeUI()
         height = 40,
         x = 10,
         bottom = 10,
-        caption = "Apply",
+        caption = "Upgrade",
         OnClick = { function() 
             Spring.SendLuaRulesMsg('upgrade|maxhealth|' .. maxHealth)
             maxHealthOrig = maxHealth
