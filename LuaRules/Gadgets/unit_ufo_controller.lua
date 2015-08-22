@@ -63,6 +63,7 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
 		ufoID = unitID
+        Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
 	end
 end
 

@@ -52,7 +52,25 @@ local function WeaponControl()
 	end
 end
 
+function widget:Initialize()
+    for _, unitID in pairs(Spring.GetAllUnits()) do
+        self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
+    end
+end
+
+local ufoID
+local ufoDefID = UnitDefNames["ufo"].id
+function widget:UnitCreated(unitID, unitDefID, unitTeam)
+	if unitDefID == ufoDefID then
+		ufoID = unitID
+	end
+end
+
 function widget:GameFrame(n)
+    -- disable all movement and weapon control when landed/landing
+    if not ufoID or Spring.GetUnitStates(ufoID).autoland then
+        return
+    end
 	MovementControl()
 	WeaponControl()
 end

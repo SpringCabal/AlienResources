@@ -317,7 +317,7 @@ function UpdateUnitAttributes(unitID, frame)
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
-	Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {1}, {})
+-- 	Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {1}, {})
 	updateMovementSpeed(unitID, UnitDefs[unitDefID], 1, 1, 1)	
 end
 

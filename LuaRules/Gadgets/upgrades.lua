@@ -46,7 +46,10 @@ function HandleLuaMessage(msg)
     end
     if msg_table[2] == "maxhealth" then
 		local value = tonumber(msg_table[3])
+        local hp, maxHP = Spring.GetUnitHealth(ufoID)
+        local ratio = hp / maxHP
         Spring.SetUnitMaxHealth(ufoID, value)
+        Spring.SetUnitHealth(ufoID, ratio * value) --scale current HP
 	end
 end
 

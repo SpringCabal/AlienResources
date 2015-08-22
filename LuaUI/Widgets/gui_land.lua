@@ -28,6 +28,9 @@ function widget:Initialize()
     Chili = WG.Chili
     screen0 = Chili.Screen0
     vsx, vsy = Spring.GetViewGeometry()
+    for _, unitID in pairs(Spring.GetAllUnits()) do
+        self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
+    end
 end
 
 function widget:DrawScreen()
@@ -50,7 +53,6 @@ end
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
- 		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
 	end
 end
 
