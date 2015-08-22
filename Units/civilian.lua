@@ -22,6 +22,11 @@ unitDef = {
 	
 	upright                = true,
 	
+	customParams           = {
+		modelradius        = [[12]],
+		midposoffset       = [[0 0 0]],
+	},
+	
 	-- Abiltiies
 	builder                = false,
 	canAttack              = true,

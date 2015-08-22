@@ -26,23 +26,6 @@ local Vector = Spring.Utilities.Vector
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
-local function explode(div,str)
-	if (div=='') then return 
-		false 
-	end
-	local pos,arr = 0,{}
-	-- for each divider found
-	for st,sp in function() return string.find(str,div,pos,true) end do
-		table.insert(arr,string.sub(str,pos,st-1)) -- Attach chars left of current divider
-		pos = sp + 1 -- Jump past current divider
-	end
-	table.insert(arr,string.sub(str,pos)) -- Attach chars right of last divider
-	return arr
-end
-
--------------------------------------------------------------------
--------------------------------------------------------------------
-
 local ufoUnitDefID = UnitDefNames["ufo"].id
 local ufoID
 
@@ -83,10 +66,6 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:GameFrame(frame)
-	if frame%1 ~= 0 then
-		return
-	end
-	
 	if ufoID then
 		if (movementMessage and movementMessage.frame + 2 > frame) then
 			MoveUfo(ufoID, movementMessage.x, movementMessage.z)
@@ -108,7 +87,7 @@ end
 -- Handling messages
 
 function HandleLuaMessage(msg)
-	local msg_table = explode('|', msg)
+	local msg_table = Spring.Utilities.ExplodeMessage('|', msg)
 	if msg_table[1] == 'movement' then
 		local x = tonumber(msg_table[2])
 		local z = tonumber(msg_table[3])

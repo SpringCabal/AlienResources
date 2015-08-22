@@ -32,12 +32,29 @@ local function Unit(v)
 	end
 end
 
-local function Norm(b, v)
-	local mag = AbsVal(v)
-	if mag > 0 then
-		return {b*v[1]/mag, b*v[2]/mag}
+local function Norm(b, x, y, z)
+	if not y then
+		local mag = AbsVal(x)
+		if mag > 0 then
+			if x[3] then
+				return {b*x[1]/mag, b*x[2]/mag, b*x[3]/mag}
+			else
+				return {b*x[1]/mag, b*x[2]/mag}
+			end
+		else
+			return x
+		end
 	else
-		return v
+		local mag = AbsVal(x, y, z)
+		if mag > 0 then
+			if z then
+				return b*x/mag, b*y/mag, b*z/mag
+			else
+				return b*x/mag, b*y/mag
+			end
+		else
+			return x, y, z
+		end
 	end
 end
 
