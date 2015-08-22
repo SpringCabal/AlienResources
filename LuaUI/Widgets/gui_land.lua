@@ -1,3 +1,4 @@
+-- DISABLED
 function widget:GetInfo()
 	return {
 		name    = 'Spaceship land and upgrade widget',
@@ -6,7 +7,7 @@ function widget:GetInfo()
 		date    = 'August, 2015',
 		license = 'GPL',
         layer = 0,
-		enabled = true,
+		enabled = false,
 	}
 end
 

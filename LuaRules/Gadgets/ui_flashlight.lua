@@ -36,7 +36,7 @@ local FLASHLIGHT_COLOR = {0.69, 0.61, 0.85, 0.3}
 -- yellowish
 -- 0.941, 0.901, 0.549, 0.3
 
-function gadget:DrawWorld()
+function gadget:DrawWorldPreUnit()
     gl.PushMatrix()
     for _, f in pairs(flashlights) do
         local x, z, size, c = f.x, f.z, f.size, f.color

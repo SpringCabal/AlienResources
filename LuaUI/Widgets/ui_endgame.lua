@@ -64,47 +64,48 @@ local function SetupControls()
 		resizable = false,
 	}
 	
-    local score = Spring.GetGameRulesParam("score") or 0 
-    local survialTime = Spring.GetGameRulesParam("survivalTime") or 0 
-    local rabbitKills = Spring.GetGameRulesParam("rabbits_killed") or 0 
-    
+    local gameWon = Spring.GetGameRulesParam("gameWon") == 1
+    local caption = "\255\255\0\0You lose!\b"
+    if gameWon then
+        caption = "\255\255\255\255You win!\b"
+    end
 	Chili.Label:New{
  		x = 60,
  		y = 30,
  		width = 100,
  		parent = window_endgame,
- 		caption = "Game Over",
+ 		caption = caption,
  		fontsize = 50,
  		textColor = {1,0,0,1},
  	}
 	
-    Chili.Label:New{
- 		x = 80,
- 		y = 100,
- 		width = 100,
- 		parent = window_endgame,
- 		caption = "Score: " .. score,
- 		fontsize = 40,
- 		textColor = {1,0,0,1},
- 	}
-	Chili.Label:New{
- 		x = 114,
- 		y = 155,
- 		width = 100,
- 		parent = window_endgame,
- 		caption = "Time: " .. survialTime .. "s",
- 		fontsize = 32,
- 		textColor = {1,0,0,1},
- 	}
-	Chili.Label:New{
- 		x = 128,
- 		y = 200,
- 		width = 100,
- 		parent = window_endgame,
- 		caption = rabbitKills .. " 🐰",
- 		fontsize = 32,
- 		textColor = {1,0,0,1},
- 	}
+--     Chili.Label:New{
+--  		x = 80,
+--  		y = 100,
+--  		width = 100,
+--  		parent = window_endgame,
+--  		caption = "Score: " .. score,
+--  		fontsize = 40,
+--  		textColor = {1,0,0,1},
+--  	}
+-- 	Chili.Label:New{
+--  		x = 114,
+--  		y = 155,
+--  		width = 100,
+--  		parent = window_endgame,
+--  		caption = "Time: " .. survialTime .. "s",
+--  		fontsize = 32,
+--  		textColor = {1,0,0,1},
+--  	}
+-- 	Chili.Label:New{
+--  		x = 128,
+--  		y = 200,
+--  		width = 100,
+--  		parent = window_endgame,
+--  		caption = rabbitKills .. " 🐰",
+--  		fontsize = 32,
+--  		textColor = {1,0,0,1},
+--  	}
 	
 	nameBox = Chili.EditBox:New{
 		parent = window_endgame,
@@ -168,7 +169,9 @@ local function SetupControls()
 				nameBox = nil
 				restartButton = nil
 				submitButton = nil
-				Spring.SendCommands("cheat", "luarules reload", "cheat")
+                -- FIXME: cheating is already on it seems
+                Spring.SendCommands("luarules reload")
+				--Spring.SendCommands("cheat", "luarules reload", "cheat")
                 window_endgame:Dispose()
                 window_endgame = nil
                 frame_delay = Spring.GetGameFrame()
@@ -234,17 +237,16 @@ function widget:Initialize()
 end
 
 function widget:GameFrame()
-    local carrotCount = Spring.GetGameRulesParam("carrot_count") or -1
-    local survivalTime = Spring.GetGameRulesParam("survivalTime") or 0
-    if survivalTime == 1 and not sentGameStart then
-        if WG.analytics and WG.analytics.SendEvent then
-			WG.analytics:SendEvent("game_start")
-		end
-        sentGameStart = true
-    elseif survivalTime > 10 then
-        sentGameStart = false
-    end
-    if carrotCount == 0 then
+    local gameOver = Spring.GetGameRulesParam("gameOver") == 1
+--     if survivalTime == 1 and not sentGameStart then
+--         if WG.analytics and WG.analytics.SendEvent then
+-- 			WG.analytics:SendEvent("game_start")
+-- 		end
+--         sentGameStart = true
+--     elseif survivalTime > 10 then
+--         sentGameStart = false
+--     end
+    if gameOver then
         widget:GameOver({})
     end
 end
@@ -255,17 +257,17 @@ function widget:GameOver(winningAllyTeams)
     end
     if WG.analytics and WG.analytics.SendEvent then
         gameOverTime = os.clock()
-		local score = Spring.GetGameRulesParam("score") or 0
-		local survivalTime = Spring.GetGameRulesParam("survivalTime") or 0
-		local rabbitKills = Spring.GetGameRulesParam("rabbits_killed") or 0 
-		local shotsFired = Spring.GetGameRulesParam("shots_fired") or 0
-		local minesPlaced = Spring.GetGameRulesParam("mines_placed") or 0
-		
-		WG.analytics:SendEvent("score", score)
-		WG.analytics:SendEvent("time", survivalTime)
-		WG.analytics:SendEvent("kills", rabbitKills)
-		WG.analytics:SendEvent("shots", shotsFired)
-		WG.analytics:SendEvent("mines", minesPlaced)
+-- 		local score = Spring.GetGameRulesParam("score") or 0
+-- 		local survivalTime = Spring.GetGameRulesParam("survivalTime") or 0
+-- 		local rabbitKills = Spring.GetGameRulesParam("rabbits_killed") or 0 
+-- 		local shotsFired = Spring.GetGameRulesParam("shots_fired") or 0
+-- 		local minesPlaced = Spring.GetGameRulesParam("mines_placed") or 0
+-- 		
+-- 		WG.analytics:SendEvent("score", score)
+-- 		WG.analytics:SendEvent("time", survivalTime)
+-- 		WG.analytics:SendEvent("kills", rabbitKills)
+-- 		WG.analytics:SendEvent("shots", shotsFired)
+-- 		WG.analytics:SendEvent("mines", minesPlaced)
 		WG.analytics:SendEvent("game_end")
 	end
 

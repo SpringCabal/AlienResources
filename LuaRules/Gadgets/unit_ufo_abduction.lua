@@ -25,6 +25,7 @@ local RAD_PER_ROT = (math.pi/(2^15))
 local ufoUnitDefID = UnitDefNames["ufo"].id
 local ufoID
 
+local endcubeDefID = UnitDefNames["endcube"].id
 local helipadDefID = UnitDefNames["helipad"].id
 
 local Vector = Spring.Utilities.Vector
@@ -58,12 +59,13 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
     local enabled = false
 	for i = 1, #units do
 		local unitID = units[i]
-		if unitID ~= ufoID and Spring.GetUnitDefID(unitID) ~= helipadDefID then
+        local unitDefID = Spring.GetUnitDefID(unitID)
+		if unitID ~= ufoID and unitDefID ~= helipadDefID then
 			local _,_,_,ux,uy,uz = Spring.GetUnitPosition(unitID, true)
 			local unitHeight = Spring.GetUnitHeight(unitID)
 			
 			if ay - uy < grabDistance + unitHeight then
-                local udef = UnitDefs[Spring.GetUnitDefID(unitID)]
+                local udef = UnitDefs[unitDefID]
                 local biomass = Spring.GetGameRulesParam("biomass")
                 local research = Spring.GetGameRulesParam("research")
                 local metal = Spring.GetGameRulesParam("metal")
@@ -71,6 +73,10 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
                 Spring.SetGameRulesParam("research", research + udef.customParams.research)
                 Spring.SetGameRulesParam("metal", metal + udef.customParams.metal)
 				Spring.DestroyUnit(unitID)
+                if unitDefID == endcubeDefID then
+                    Spring.SetGameRulesParam("gameOver", 1)
+                    Spring.SetGameRulesParam("gameWon", 1)
+                end
 			else
                 enabled = true
 				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.5, GRAVITY + 0.4)
@@ -103,6 +109,8 @@ end
 
 function gadget:Initialize()
     -- cleanup
+    Spring.SetGameRulesParam("gameOver", 0)
+    Spring.SetGameRulesParam("gameWon", 0)
 	for _, unitID in pairs(Spring.GetAllUnits()) do
         Spring.DestroyUnit(unitID)
     end
