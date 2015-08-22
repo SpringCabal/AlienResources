@@ -37,24 +37,27 @@ local ufoMoving
 -------------------------------------------------------------------
 -- Movement Functions
 
-function GiveClampedMoveGoal(unitID, x, z)
+function GiveClampedMoveGoal(unitID, x, z, radius)
+	radius = radius or 16
 	local cx, cz = Spring.Utilities.ClampPosition(x, z)
 	local cy = Spring.GetGroundHeight(cx, cz)
 	--Spring.MarkerAddPoint(cx, cy, cz)
-	Spring.SetUnitMoveGoal(unitID, cx, cy, cz, 16, nil) -- The last argument is whether the goal is raw
+	Spring.SetUnitMoveGoal(unitID, cx, cy, cz, radius, nil, false) -- The last argument is whether the goal is raw
 	return true
 end
 
-local function MoveUfo(unitID, x, z)
+local function MoveUfo(unitID, x, z, range, radius)
 	if not (unitID and Spring.ValidUnitID(unitID)) then
 		return
 	end
 	
+	range = range or 1000
+	
 	local ux, uy, uz = Spring.GetUnitPosition(unitID)
 	
-	local moveVec = Vector.Norm(200, {x, z})
+	local moveVec = Vector.Norm(range, {x, z})
 	
-	GiveClampedMoveGoal(unitID, moveVec[1] + ux, moveVec[2] + uz)
+	GiveClampedMoveGoal(unitID, moveVec[1] + ux, moveVec[2] + uz, radius)
 end
 
 -------------------------------------------------------------------
@@ -76,8 +79,17 @@ function gadget:GameFrame(frame)
 	
 		if (movementMessage and movementMessage.frame + 2 > frame) then
 			MoveUfo(ufoID, movementMessage.x, movementMessage.z)
+			ufoMoving = true
 		else
-			Spring.GiveOrderToUnit(ufoID, CMD.STOP, {}, {})
+
+			local vx, _, vz = Spring.GetUnitVelocity(ufoID)
+			local speed = Vector.AbsVal(vx, vz)
+			if ufoMoving or (speed > 6) then
+				MoveUfo(ufoID, vx, vz, 20)
+				ufoMoving = false
+			end
+			
+
 			if weaponMessage then
 				Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
 			end
@@ -104,10 +116,8 @@ function HandleLuaMessage(msg)
 		local z = tonumber(msg_table[3])
 		
 		if x == 0 and z == 0 then
-			ufoMoving = false
 			movementMessage = false
 		else
-			ufoMoving = true
 			movementMessage = {
 				frame = Spring.GetGameFrame(),
 				x = x,
