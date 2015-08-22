@@ -88,10 +88,10 @@ function widget:MousePress(mx, my, button)
 end
 
 -- follow camera
-function widget:DrawScreen()
+function widget:Update()
     if ufoID and not Spring.GetUnitIsDead(ufoID) then
         local x, y, z = Spring.GetUnitViewPosition(ufoID)
         -- has a slight delay which makes it smooth and gives a hint in which direction we're moving
-        Spring.SetCameraTarget(x, y, z, 0)
+        Spring.SetCameraTarget(x, y + 25, z, 0)
     end
 end
