@@ -9,7 +9,8 @@ unitDef = {
 	
 	-- Movement
 	acceleration           = 0.18,
-	airHoverFactor         = 0.1, -- How much the unit moves while hovering on the spot
+	--airHoverFactor         = 0.1, -- How much the unit moves while hovering on the spot
+    airHoverFactor         = -1, --allows it to land
 	brakeRate              = 0.5,
 	maxVelocity            = 200,
 	cruiseAlt              = 250,
