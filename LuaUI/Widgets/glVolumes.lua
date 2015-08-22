@@ -198,6 +198,8 @@ end
 local cylinder = gl.CreateList(gl.Utilities.DrawMyCylinder,0,0,0,1,1,35)
 function gl.Utilities.DrawGroundCircle(x,z,radius)
   gl.PushMatrix()
+  -- HACK to have it not draw over units above, uncomment and tweak for a specific map
+  --gl.Translate(x, -2300, z)
   gl.Translate(x, averageGroundHeight, z)
   gl.Scale(radius, shapeHeight, radius)
   gl.Utilities.DrawVolume(cylinder)
