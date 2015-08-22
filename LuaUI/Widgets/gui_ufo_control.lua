@@ -22,7 +22,7 @@ local D = KEYSYMS.D
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
-function widget:GameFrame(frame)
+local function MovementControl()
 	local x, z = 0, 0
 	
 	if Spring.GetKeyState(A) then
@@ -39,4 +39,32 @@ function widget:GameFrame(frame)
     end
 	
 	Spring.SendLuaRulesMsg('movement|' .. x .. '|' .. z)
+end
+
+local function WeaponControl()
+	local mx, my, lmb, mmb, rmb = Spring.GetMouseState()
+	if lmb then
+		local _, pos = Spring.TraceScreenRay(mx, my, true)
+		if pos then
+			local x, y, z = pos[1], pos[2], pos[3]
+			Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
+		end
+	end
+end
+
+function widget:GameFrame(n)
+	MovementControl()
+	WeaponControl()
+end
+
+function widget:MousePress(mx, my, button)
+	local alt, ctrl, meta, shift = Spring.GetModKeyState()
+	if button == 1 and not Spring.IsAboveMiniMap(mx, my) then
+		local _, pos = Spring.TraceScreenRay(mx, my, true)
+		if pos then
+			local x, y, z = pos[1], pos[2], pos[3]
+			Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
+			return true
+		end
+	end	
 end

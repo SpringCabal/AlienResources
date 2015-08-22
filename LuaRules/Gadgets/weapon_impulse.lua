@@ -58,16 +58,12 @@ local impulseMult = {
 local impulseWeaponID = {}
 for i, wd in pairs(WeaponDefs) do
 	if wd.customParams and wd.customParams.impulse then
+		Script.SetWatchWeapon(wd.id, true)
+		
 		impulseWeaponID[wd.id] = {
 			impulse = tonumber(wd.customParams.impulse), 
 			normalDamage = (wd.customParams.normaldamage and true or false),
-			checkLOS = true
 		}
-		
-		if wd.customParams.impulsemaxdepth and wd.customParams.impulsedepthmult then
-			impulseWeaponID[wd.id].impulseMaxDepth = -tonumber(wd.customParams.impulsemaxdepth)
-			impulseWeaponID[wd.id].impulseDepthMult = -tonumber(wd.customParams.impulsedepthmult)
-		end
 	end
 end
 
@@ -193,7 +189,6 @@ local function AddGadgetImpulse(unitID, x, y, z, magnitude, affectTransporter, p
 		x,y,z = x*mag, y*mag, z*mag
 		y = y + abs(magnitude)/(20*myMass)
 		pushOffGround = pushOffGround and IsUnitOnGround(unitID)
-		GG.AddSphereicalLOSCheck(unitID, unitDefID)
 	end
 	
 	AddGadgetImpulseRaw(unitID, x, y, z, pushOffGround, useDummy, unitDefID, moveType)
@@ -215,60 +210,6 @@ local function DoAirDrag(unitID, factor, unitDefID)
 	end
 end
 
-GG.DetatchFromGround = DetatchFromGround
-GG.AddGadgetImpulseRaw = AddGadgetImpulseRaw
-GG.AddGadgetImpulse = AddGadgetImpulse
-GG.DoAirDrag = DoAirDrag
-
--------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------
--- Space Gunship Handling
---[[
-local function CheckSpaceGunships(f)
-	local i = 1
-	while i <= risingByID.count do
-		local unitID = risingByID.data[i]
-		local data = rising[unitID]
-		local removeEntry = false
-		
-		if Spring.ValidUnitID(unitID) then
-		
-			local _,_,_, ux, uy, uz = spGetUnitPosition(unitID, true)
-			local groundHeight = spGetGroundHeight(ux,uz)
-			
-			if (uy-groundHeight) > BALLISTIC_GUNSHIP_HEIGHT then
-				if not data.inSpace then
-					--Spring.SetUnitRulesParam(unitID, "inSpace", 1)
-					GG.UpdateUnitAttributes(unitID)
-					data.inSpace = true
-				end
-				AddGadgetImpulse(unitID, 0, BALLISTIC_GUNSHIP_GRAVITY, 0, 0, 1)
-			else
-				if data.inSpace then
-					--Spring.SetUnitRulesParam(unitID, "inSpace", 0)
-					GG.UpdateUnitAttributes(unitID)
-					data.inSpace = false
-				end
-				local vx, vy, vz = Spring.GetUnitVelocity(unitID)
-				if vy < 0 then
-					removeEntry = true
-				end
-			end
-		else
-			removeEntry = false
-		end
-		
-		if removeEntry then
-			risingByID.data[i] = risingByID.data[risingByID.count]
-			risingByID.data[risingByID.count] = nil
-			risingByID.count = risingByID.count - 1
-			rising[unitID] = nil
-		else
-			i = i + 1
-		end
-	end
-end
---]]
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Transport Handling
@@ -309,6 +250,11 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 end
 
 function gadget:Initialize()
+	GG.DetatchFromGround = DetatchFromGround
+	GG.AddGadgetImpulseRaw = AddGadgetImpulseRaw
+	GG.AddGadgetImpulse = AddGadgetImpulse
+	GG.DoAirDrag = DoAirDrag
+	
 	-- load active units
 	for _, transportID in ipairs(Spring.GetAllUnits()) do
 		local transporting = Spring.GetUnitIsTransporting(transportID)
@@ -342,7 +288,7 @@ function gadget:UnitPreDamaged_GetWantedWeaponDef()
 	return wantedWeaponList
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	--spAddUnitImpulse(unitID,0,3,0)
 	if impulseWeaponID[weaponDefID] and Spring.ValidUnitID(attackerID) then
 		local defData = impulseWeaponID[weaponDefID]

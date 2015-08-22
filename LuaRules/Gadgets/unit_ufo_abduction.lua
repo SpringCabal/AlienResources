@@ -63,7 +63,7 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
 				Spring.Echo("Unit Captured")
 				Spring.DestroyUnit(unitID)
 			else
-				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.1, GRAVITY + 0.1)
+				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.5, GRAVITY + 0.4)
 			end
 		end
 	end

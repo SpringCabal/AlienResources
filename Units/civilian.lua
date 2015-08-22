@@ -43,6 +43,8 @@ unitDef = {
 	collisionVolumeType    = "cylY",
 	
 	-- Attributes
+	category               = "land",
+	
 	mass                   = 100,
 	maxDamage              = 1000,
 	autoHeal               = 5,

@@ -26,11 +26,12 @@ unitDef = {
 	turnInPlaceAngleLimit  = 180,
 	
 	customParams           = {
-		modelradius        = [[18]],
-		midposoffset       = [[0 0 0]],
+		modelradius        = "18",
+		midposoffset       = "0 0 0",
 	},
 
 	-- Abiltiies
+	firestate              = 0,
 	builder                = false,
 	canAttack              = true,
 	canGuard               = true,
@@ -38,6 +39,7 @@ unitDef = {
 	canPatrol              = true,
 	canStop                = true,
 	collide                = true,
+	upright                = true,
 	
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
@@ -55,6 +57,69 @@ unitDef = {
 	buildCostEnergy        = 100,
 	buildCostMetal         = 100,
 	buildTime              = 100,
+	
+	weapons                = {
+		{
+			def                = "gravityBeam",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "gravityBeam",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "gravityBeam",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "gravityBeam",
+			onlyTargetCategory = "land",
+		},
+	},
+	
+	weaponDefs             = {
+
+		gravityBeam = {
+			name                    = "Gravity Beam",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			beamTime                = 0.01,
+			beamTtl                 = 2,
+			coreThickness           = 0,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			customParams            = {
+				impulse             = "-60",
+				normaldamage        = "0",
+			},
+
+			damage                  = {
+				default = 2,
+			},
+
+			interceptedByShieldType = 1,
+			largeBeamLaser          = true,
+			laserFlareSize          = 0,
+			minIntensity            = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.02,
+			rgbColor                = "0.2 0.2 0.2",
+			scrollSpeed             = 10,
+			soundTrigger            = true,
+			sweepfire               = false,
+			thickness               = 7,
+			tileLength              = 100,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "BeamLaser",
+			weaponVelocity          = 500,
+		},
+	},
 }
 
 return lowerkeys({[unitName] = unitDef})

@@ -30,6 +30,7 @@ local ufoUnitDefID = UnitDefNames["ufo"].id
 local ufoID
 
 local movementMessage
+local weaponMessage
 local ufoMoving
 
 -------------------------------------------------------------------
@@ -67,10 +68,19 @@ end
 
 function gadget:GameFrame(frame)
 	if ufoID then
+		if weaponMessage and weaponMessage.frame + 2 <= frame then
+			Spring.SetUnitTarget(ufoID, nil)
+			weaponMessage = false
+		end
+	
 		if (movementMessage and movementMessage.frame + 2 > frame) then
 			MoveUfo(ufoID, movementMessage.x, movementMessage.z)
 		else
 			Spring.GiveOrderToUnit(ufoID, CMD.STOP, {}, {})
+			if weaponMessage then
+				Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
+			end
+			
 			movementMessage = false
 		end
 	else
@@ -100,6 +110,23 @@ function HandleLuaMessage(msg)
 			movementMessage = {
 				frame = Spring.GetGameFrame(),
 				x = x,
+				z = z
+			}
+		end
+	end
+	
+	if msg_table[1] == 'fireWeapon' then
+		local x = tonumber(msg_table[2])
+		local y = tonumber(msg_table[3])
+		local z = tonumber(msg_table[4])
+		
+		if ufoID then
+			Spring.SetUnitTarget(ufoID, x, y, z)
+			
+			weaponMessage = {
+				frame = Spring.GetGameFrame(),
+				x = x,
+				y = y,
 				z = z
 			}
 		end
