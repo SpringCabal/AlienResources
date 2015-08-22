@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.75.0 commit date:2015-07-07, commit time:14:56, hash:c27589e</authoring_tool>
     </contributor>
-    <created>2015-08-22T22:45:23</created>
-    <modified>2015-08-22T22:45:23</modified>
+    <created>2015-08-23T00:06:11</created>
+    <modified>2015-08-23T00:06:11</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -489,7 +489,7 @@
         <technique sid="common">
           <lambert>
             <emission>
-              <color sid="emission">0.15 0.15 0.15 1</color>
+              <color sid="emission">0 0 0 1</color>
             </emission>
             <ambient>
               <color sid="ambient">0 0 0 1</color>
@@ -2711,7 +2711,7 @@
           </bind_material>
         </instance_geometry>
         <node id="LandingBlock" name="LandingBlock" type="NODE">
-          <matrix sid="transform">1 0 0 -3.887474 1.86265e-9 0.9999999 0 -61.05359 0 0 1 0.228315 0 0 0 1</matrix>
+          <matrix sid="transform">1 0 0 -11.51353 1.86265e-9 0.9999999 0 -60.92048 0 0 1 0.228315 0 0 0 1</matrix>
           <instance_geometry url="#Cylinder_012-mesh" name="LandingBlock">
             <bind_material>
               <technique_common>
@@ -2720,7 +2720,7 @@
             </bind_material>
           </instance_geometry>
           <node id="Landing1" name="Landing1" type="NODE">
-            <matrix sid="transform">0.9995685 -0.02471453 0.01586805 4.600835 -0.02471326 -0.4158887 0.9090797 -1.120201 -0.01586813 -0.9090797 -0.4163201 0.1015807 0 0 0 1</matrix>
+            <matrix sid="transform">0.9999999 1.49012e-8 0 4.600836 2.21655e-7 1 0 -1.120205 -3.02332e-10 -2.27589e-10 1 0.1015807 0 0 0 1</matrix>
             <instance_geometry url="#Cylinder_013-mesh" name="Landing1">
               <bind_material>
                 <technique_common>
@@ -2729,7 +2729,7 @@
               </bind_material>
             </instance_geometry>
             <node id="Landing2" name="Landing2" type="NODE">
-              <matrix sid="transform">0.9993913 -0.03487635 -9.51628e-4 -9.53674e-7 -0.03487688 -0.9979038 -0.05451164 5.69663 9.54761e-4 0.05451149 -0.9985126 1.284515 0 0 0 1</matrix>
+              <matrix sid="transform">1 5.58794e-9 0 -9.53674e-7 1.04308e-7 1 0 5.696632 2.8569e-10 -9.07928e-11 1 1.284516 0 0 0 1</matrix>
               <instance_geometry url="#Cylinder_014-mesh" name="Landing2">
                 <bind_material>
                   <technique_common>
@@ -2738,7 +2738,7 @@
                 </bind_material>
               </instance_geometry>
               <node id="Landing3" name="Landing3" type="NODE">
-                <matrix sid="transform">0.9996117 -0.02223628 0.01678427 -0.02606535 -0.02224166 -0.2741535 0.9614286 -9.2355 -0.01677825 -0.9614289 -0.2745417 0.8070107 0 0 0 1</matrix>
+                <matrix sid="transform">0.9999999 8.79169e-7 -2.968e-9 -0.02606487 -1.78255e-6 1 2.41917e-10 -9.235493 -2.56261e-8 2.28392e-9 1 0.8070128 0 0 0 1</matrix>
                 <instance_geometry url="#Cylinder_015-mesh" name="Landing3">
                   <bind_material>
                     <technique_common>
@@ -2747,7 +2747,7 @@
                   </bind_material>
                 </instance_geometry>
                 <node id="Landing4" name="Landing4" type="NODE">
-                  <matrix sid="transform">0.9997042 -0.01695135 0.01744187 -0.02131128 -0.01701308 0.02517372 0.9995383 3.666718 -0.01738336 -0.9995394 0.02487788 -5.251213 0 0 0 1</matrix>
+                  <matrix sid="transform">0.9999999 1.15298e-6 -2.03456e-9 -0.02131176 -1.34669e-6 0.9999999 4.83821e-10 3.666718 3.77141e-8 -4.30021e-9 1 -5.251211 0 0 0 1</matrix>
                   <instance_geometry url="#Cylinder_016-mesh" name="Landing4">
                     <bind_material>
                       <technique_common>
@@ -2756,7 +2756,7 @@
                     </bind_material>
                   </instance_geometry>
                   <node id="Landing5" name="Landing5" type="NODE">
-                    <matrix sid="transform">0.9993987 -0.03457325 0.002631018 1.647773 -0.0345716 -0.9878827 0.1513022 5.151424 -0.00263266 -0.1513022 -0.988484 0.6276436 0 0 0 1</matrix>
+                    <matrix sid="transform">0.9999999 8.47504e-7 1.85957e-8 1.647774 -7.20844e-7 1 8.46665e-10 5.151432 -5.85061e-8 7.82017e-9 1 0.6276414 0 0 0 1</matrix>
                     <instance_geometry url="#Cylinder_017-mesh" name="Landing5">
                       <bind_material>
                         <technique_common>
@@ -2765,7 +2765,7 @@
                       </bind_material>
                     </instance_geometry>
                     <node id="LandingFoot" name="LandingFoot" type="NODE">
-                      <matrix sid="transform">0.999885 -0.006608298 0.01364523 3.57628e-6 -0.006608284 0.6200868 0.7845052 -3.939865 -0.0136445 -0.7845051 0.6199719 -1.259476 0 0 0 1</matrix>
+                      <matrix sid="transform">1 6.59376e-7 1.86463e-8 3.8147e-6 -1.75089e-7 0.9999999 -7.25749e-10 -3.939873 4.49069e-8 -5.21472e-9 1 -1.259467 0 0 0 1</matrix>
                       <instance_geometry url="#Cylinder_018-mesh" name="LandingFoot">
                         <bind_material>
                           <technique_common>
