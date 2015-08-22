@@ -62,7 +62,13 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
 			local unitHeight = Spring.GetUnitHeight(unitID)
 			
 			if ay - uy < grabDistance + unitHeight then
-				Spring.Echo("Unit Captured")
+                local udef = UnitDefs[Spring.GetUnitDefID(unitID)]
+                local biomass = Spring.GetGameRulesParam("biomass")
+                local research = Spring.GetGameRulesParam("research")
+                local metal = Spring.GetGameRulesParam("metal")
+                Spring.SetGameRulesParam("biomass", biomass + udef.customParams.biomass)
+                Spring.SetGameRulesParam("research", research + udef.customParams.research)
+                Spring.SetGameRulesParam("metal", metal + udef.customParams.metal)
 				Spring.DestroyUnit(unitID)
 			else
 				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.5, GRAVITY + 0.4)
@@ -93,5 +99,8 @@ function gadget:GameFrame(frame)
 end
 
 function gadget:Initialize()
-	
+    -- cleanup
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+        Spring.DestroyUnit(unitID)
+    end
 end

@@ -33,6 +33,12 @@ local function explode(div,str)
 	return arr
 end
 
+function gadget:Initialize()
+    Spring.SetGameRulesParam("biomass", 0)
+    Spring.SetGameRulesParam("research", 0)
+    Spring.SetGameRulesParam("metal", 0)
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
