@@ -50,14 +50,16 @@ function SetBindings()
 end
 
 function widget:Initialize()
-    local devMode = false
-    if not devMode then 
-        -- NOTICE: uncomment this for release
-        --Spring.SendCommands("unbindall") --muahahahaha
-        --Spring.SendCommands("unbindkeyset enter chat") --because because.
+    local devMode = true
+    if devMode then 
+        Spring.SendCommands("unbindkeyset w")
+        Spring.SendCommands("unbindkeyset s")
+	
+	else
+        Spring.SendCommands("unbindall") --muahahahaha
+        Spring.SendCommands("unbindkeyset enter chat") --because because.
     end
     SetBindings()
-    
     
     bindText = { -- keybinds told to player
         --purple .. "Q : " .. white .. "swap pull / push",

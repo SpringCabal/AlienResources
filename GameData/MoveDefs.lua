@@ -3,9 +3,9 @@
 
 local moveDefs  =    {
     {
-        name            =   "Bot2x2",
-        footprintX      =   2,
-        footprintZ      =   2,
+        name            =   "Bot1x1",
+        footprintX      =   1,
+        footprintZ      =   1,
         maxWaterDepth   =   20,
         maxSlope        =   55,
         crushStrength   =   5,
