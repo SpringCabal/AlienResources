@@ -21,7 +21,13 @@ local railing = {
 }
 
 local turbine = piece "Turbine"
-
+local innerHull = piece "InnerHull"
+local outerhulls = {
+	piece ("OuterHull"),
+	piece ("OuterHullNE"),
+	piece ("OuterHullNW"),
+	piece ("OuterHullSE"),
+}
 local lightBeamEnabled = false
 
 function script.SetBeamEnabled(newEnabled)
@@ -35,8 +41,14 @@ function script.Create()
     for i=1, #railing do
 		Spin(railing[i],z_axis, i%2*2-1 *5)
     end
+	
+	for i=1, #outerhulls do
+		Spin(outerhulls[i],z_axis, 1)
+    end
     
-    Spin(turbine, z_axis, 10);
+	Spin(innerHull,z_axis, -2)
+	
+    Spin(turbine, z_axis, 4);
     
 end
 
