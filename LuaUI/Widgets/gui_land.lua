@@ -73,7 +73,7 @@ function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == SPACE then
         local state = Spring.GetUnitStates(ufoID).autoland and 1 or 0
         if state == 0 then
-            Spring.GiveOrderToUnit(ufoID, CMD.SETBASE, {}, helipadID)
+            --Spring.GiveOrderToUnit(ufoID, CMD.SETBASE, {}, helipadID)
             Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {1}, {})
             SpawnUpgradeUI()
         else
