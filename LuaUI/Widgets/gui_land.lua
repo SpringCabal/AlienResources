@@ -56,18 +56,24 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 	end
 end
 
+local window
 function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == SPACE then
         local state = Spring.GetUnitStates(ufoID).autoland and 1 or 0
         if state == 0 then
             Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {1}, {})
             SpawnUpgradeUI()
+        else
+            Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {0}, {})
+            if window then
+                window:Dispose()
+                window = nil
+            end
         end
     end
 end
 
 function SpawnUpgradeUI()
-    local window
     local _, maxHealth = Spring.GetUnitHealth(ufoID)
     local maxHealthOrig = maxHealth
 
@@ -79,6 +85,7 @@ function SpawnUpgradeUI()
         caption = "Close",
         OnClick = { function() 
             window:Dispose()
+            window = nil
             Spring.GiveOrderToUnit(ufoID, CMD.IDLEMODE, {0}, {})
         end },
     }
