@@ -35,13 +35,12 @@ end
 function widget:Initialize()
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = Spring.GetUnitDefID(unitID)
-		Spring.Echo(unitDefID, ufoDefID)
 		widget:UnitCreated(unitID, unitDefID)
 	end
 	
-    for k, v in pairs(Spring.GetCameraState()) do
-       Spring.Echo(k .. " = " .. tostring(v) .. ",")
-    end
+    -- for k, v in pairs(Spring.GetCameraState()) do
+       -- Spring.Echo(k .. " = " .. tostring(v) .. ",")
+    -- end
     -- local devMode = true
     -- if devMode then
         -- widgetHandler:RemoveWidget(widget)
