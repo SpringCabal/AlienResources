@@ -13,6 +13,15 @@ local gun = {
 	StrongpointWestBottom,
 }
 
+local railing = {
+	piece ("RailingInnerTop"),
+	piece ("RailingOuterTop"),
+	piece ("RailingInnerLow"),
+	piece ("RailingOuterLow"),
+}
+
+local turbine = piece "Turbine"
+
 local lightDisabled = {
     radius = 200,
     radiusOscilation = 50,
@@ -59,6 +68,13 @@ end
 function script.Create()
     local x, _, z = Spring.GetUnitPosition(unitID)
     StartThread(LightUpdate)
+    
+    for i=1, #railing do
+		Spin(railing[i],z_axis, i%2*2-1 *5)
+    end
+    
+    Spin(turbine, z_axis, 10);
+    
 end
 
 function script.QueryWeapon(num) 
