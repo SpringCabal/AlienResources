@@ -112,7 +112,8 @@ end
 
 function  AddLine(text,x,y,h)   
     children[#children+1] = Chili.Label:New{
-        x = x,
+        right = x,
+		align = "right",
         bottom = y,
         parent = screen0,
         caption = text,
