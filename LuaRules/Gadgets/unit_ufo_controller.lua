@@ -154,6 +154,7 @@ function HandleLuaMessage(msg)
 			}
 		end
 	end
+	
 	if msg_table[1] == 'aimWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
@@ -161,6 +162,18 @@ function HandleLuaMessage(msg)
 		
 		if ufoID then
 			aimx, aimy, aimz = x, y, z
+		end
+	end
+	
+	if msg_table[1] == 'cloak' then
+		local wantCloak = (tonumber(msg_table[2]) == 1)
+		
+		if ufoID then
+			if wantCloak then
+				Spring.SetUnitCloak(ufoID, 4)
+			else
+				Spring.SetUnitCloak(ufoID, false)
+			end
 		end
 	end
 end

@@ -22,6 +22,8 @@ local D = KEYSYMS.D
 local ufoID
 local ufoDefID = UnitDefNames["ufo"].id
 
+local cloak = 0
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 -- Camera
@@ -144,17 +146,11 @@ local function AimingControl()
 	end
 end
 
-
-function widget:Initialize()
-	for _, unitID in pairs(Spring.GetAllUnits()) do
-		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
-	end
-end
-
-function widget:UnitCreated(unitID, unitDefID, unitTeam)
-	if unitDefID == ufoDefID then
-		ufoID = unitID
-	end
+function widget:KeyPress(key, mods, isRepeat)
+    if ufoID and key == KEYSYMS.C then
+		cloak = 1 - cloak
+		Spring.SendLuaRulesMsg('cloak|' .. cloak)
+    end
 end
 
 function widget:GameFrame(n)
@@ -183,4 +179,19 @@ function widget:MousePress(mx, my, button)
 			return true
 		end
 	end	
+end
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+function widget:Initialize()
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
+	end
+end
+
+function widget:UnitCreated(unitID, unitDefID, unitTeam)
+	if unitDefID == ufoDefID then
+		ufoID = unitID
+	end
 end
