@@ -65,6 +65,22 @@ unitDef = {
 
 	weapons                = {
 		{
+			def                = "incendiaryBeamLaser",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "incendiaryBeamLaser",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "incendiaryBeamLaser",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "incendiaryBeamLaser",
+			onlyTargetCategory = "land",
+		},
+		{
 			def                = "gravityBeam",
 			onlyTargetCategory = "land",
 		},
@@ -94,6 +110,14 @@ unitDef = {
 		},
 		{
 			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "blackHoleGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "empBomb",
 			onlyTargetCategory = "land",
 		},
 		{
@@ -103,7 +127,42 @@ unitDef = {
 	},
 
 	weaponDefs             = {
+		incendiaryBeamLaser = {
+			name                    = "Incendiary Beam Laser",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			beamTime                = 0.01,
+			beamTtl                 = 2,
+			coreThickness           = 0.2,
+			craterBoost             = 0,
+			craterMult              = 0,
 
+			damage                  = {
+				default = 2,
+			},
+
+			interceptedByShieldType = 1,
+			largeBeamLaser          = true,
+			laserFlareSize          = 0.1,
+			minIntensity            = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.01,
+			rgbColor                = "0.6 0.1 0.1",
+			scrollSpeed             = 10,
+			soundTrigger            = true,
+			sweepfire               = false,
+			thickness               = 20,
+			tileLength              = 10000,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "BeamLaser",
+			weaponVelocity          = 100,
+			pulseSpeed				= 0.1,
+		},
 		gravityBeam = {
 			name                    = "Gravity Beam",
 			areaOfEffect            = 128,
@@ -171,6 +230,62 @@ unitDef = {
 			weaponType              = "LaserCannon",
 			weaponVelocity          = 2500,
 			soundstart  			= "pulse.wav",
+		},
+		blackHoleGun = {
+			name                    = "Black Hole",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			damage                  = {
+				default = 20,
+			},
+
+			alphaDecay				= 0.2,
+			size 					= 50,
+			interceptedByShieldType = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.3,
+			rgbColor                = "0 0 0",
+			soundTrigger            = true,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "Cannon",
+			weaponVelocity          = 4500,
+			--soundstart  			= "pulse.wav",
+		},
+		empBomb = {
+			name                    = "EMP Bomb",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			damage                  = {
+				default = 20,
+			},
+
+			alphaDecay				= 0.2,
+			size 					= 15,
+			interceptedByShieldType = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.3,
+			rgbColor                = "0 0 0.7",
+			soundTrigger            = true,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "Cannon",
+			weaponVelocity          = 4500,
+			--soundstart  			= "pulse.wav",
 		},
 		independenceDayGun = {
 			name                    = "Independence Day Gun",

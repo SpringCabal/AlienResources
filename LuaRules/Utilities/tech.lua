@@ -30,6 +30,7 @@ local techTree = {
 		depends = { "pulseLaser" },
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		weapon = {},
 	},
 	incendiaryBeamLaser = {
 		desc = "Incendiary beam laser (+15% fire duration)",
@@ -39,6 +40,7 @@ local techTree = {
 		y = 120,
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		weapon = {},
 	},
 	gravityBeam = {
 		desc = "Gravity beam (+20% strength)",
@@ -49,8 +51,7 @@ local techTree = {
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 		depends = { "incendiaryBeamLaser" },
-		weapon = {
-		},
+		weapon = {},
 	},
 	empBomb = {
 		desc = "EMP Bomb (+10% area of effect)",
@@ -60,6 +61,7 @@ local techTree = {
 		y = 180,
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		weapon = {},
 	},
 	missiles = {
 		desc = "Missiles (+10% amount)",
