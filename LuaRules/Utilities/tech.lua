@@ -150,8 +150,8 @@ local techTree = {
 		x = 160,
 		y = 240,
 		depends = { "blackHoleGun", "incendiaryBeamLaser", "missiles", "antiMissilePointDefense", "carrierDrones", "cloak", "teleport" },
-		iconPath = "LuaUI/Images/heart.png",
-		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		iconPath = "LuaUI/Images/cleanse.png",
+		iconDisabledPath = "LuaUI/Images/cleanse_off.png",
 		weapon = {
 		}
 	},
