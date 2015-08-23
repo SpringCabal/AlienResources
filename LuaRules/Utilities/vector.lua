@@ -87,8 +87,12 @@ local function AngleSpringHeaving(x, z)
 	end
 end
 
-local function PolarToCart(mag, dir)
-	return {mag*cos(dir), mag*sin(dir)}
+local function PolarToCart(mag, dir, splitReturn)
+	if splitReturn then
+		return mag*cos(dir), mag*sin(dir)
+	else
+		return {mag*cos(dir), mag*sin(dir)}
+	end
 end
 
 local function Add(v1, v2)

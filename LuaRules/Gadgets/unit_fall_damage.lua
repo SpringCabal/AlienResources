@@ -230,10 +230,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		
 		local damgeSpeed = math.sqrt((nx + tx*TANGENT_DAMAGE)^2 + (ny + ty*TANGENT_DAMAGE)^2 + (nz + tz*TANGENT_DAMAGE)^2)
 		
-		if NeedWaitWait[unitDefID] then
-			Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
-			Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
-		end
+		Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
+		Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
 		
 		return LocalSpeedToDamage(unitID, unitDefID, damgeSpeed) + outsideMapDamage(unitID, unitDefID)
 	end
@@ -249,12 +247,17 @@ function gadget:GameFrame(frame)
 	gameframe = frame
 	if clearTable then
 		for colliderrID, colliderrData in pairs(unitCollide) do
+			Spring.GiveOrderToUnit(colliderrID,CMD.WAIT, {}, {})
+			Spring.GiveOrderToUnit(colliderrID,CMD.WAIT, {}, {})
+			
 			repeat --for "continue" if collisionCount==0
 			if colliderrData.collisionCount == 0 then --unit already finish processed
 				break;
 			end
 			local crx,cry,crz = colliderrData.x, colliderrData.y, colliderrData.z
 			for collideeeID, collideeeData in pairs(unitCollide) do
+				Spring.GiveOrderToUnit(collideeeID,CMD.WAIT, {}, {})
+				Spring.GiveOrderToUnit(collideeeID,CMD.WAIT, {}, {})
 				if collideeeID~= colliderrID and collideeeData.collisionCount > 0 then --if collideee not yet processed:
 					local vx,vy,vz = collideeeData.vx, collideeeData.vy, collideeeData.vz
 					local relativeSpeed = math.sqrt((vx - colliderrData.vx)^2 + (vy - colliderrData.vy)^2 + (vz - colliderrData.vz)^2)

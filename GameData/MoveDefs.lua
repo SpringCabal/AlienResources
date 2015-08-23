@@ -10,6 +10,7 @@ local moveDefs  =    {
         maxSlope        =   55,
         crushStrength   =   5,
         heatmapping     =   false,
+		speedModClass   =   0,
     },
 	{
         name            =   "Tank2x2",
@@ -19,6 +20,17 @@ local moveDefs  =    {
         maxSlope        =   55,
         crushStrength   =   5,
         heatmapping     =   false,
+		speedModClass   =   2,
+    },
+	{
+        name            =   "Car1x1",
+        footprintX      =   2,
+        footprintZ      =   2,
+        maxWaterDepth   =   20,
+        maxSlope        =   55,
+        crushStrength   =   5,
+        heatmapping     =   false,
+		speedModClass   =   1,
     },
 }
 

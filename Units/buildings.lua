@@ -19,6 +19,14 @@ local Building = Unit:New {
 	upright				    = true,
     sightDistance		    = 0,
     script                  = "building.lua",
+	
+	customParams           = {
+		car_period         = "450", -- Car emit rate in frames
+		civilians          = "10",  -- Number of supported civilians
+		scientists         = "5", -- Number of supported scientists
+		wander_radius      = "800", -- Areas wandered by wanderers elmos
+		restock_time       = "1800", -- Time taken to refill all wanderers in frames
+	},
 }
 
 local Building1 = Building:New {
