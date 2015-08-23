@@ -113,6 +113,35 @@ function gadget:GameFrame(frame)
 		Spring.SetGameRulesParam("ufo_x", x)
 		Spring.SetGameRulesParam("ufo_y", y)
 		Spring.SetGameRulesParam("ufo_z", z)
+		
+		-- decrease all cooldowns
+		local abilities = GG.Tech.GetAbilities()
+		for _, abilityName in pairs(abilities) do
+			local cd = Spring.GetGameRulesParam(abilityName .. "CD") or 0
+			cd = math.max(0, cd - 1)
+			Spring.SetGameRulesParam(abilityName .. "CD", cd)
+		end
+		-- decrease all active durations
+		for _, abilityName in pairs(abilities) do
+			local dur = Spring.GetGameRulesParam(abilityName .. "Duration") or 0
+			if dur == 1 then
+				DisableAbility(abilityName)
+			end
+			dur = math.max(0, dur - 1)
+			Spring.SetGameRulesParam(abilityName .. "Duration", dur)
+		end
+	end
+end
+
+-- disable abilities here
+function DisableAbility(abilityName)
+	if abilityName == "cloak" then
+		Spring.SetUnitCloak(ufoID, false)
+		Spring.SetGameRulesParam("ufo_scare_radius", 500)
+	elseif abilityName == "haste" then
+		-- TODO
+	elseif abilityName == "teleport" then
+		-- TODO
 	end
 end
 
@@ -168,17 +197,26 @@ function HandleLuaMessage(msg)
 		end
 	end
 	
-	if msg_table[1] == 'cloak' then
-		local wantCloak = (tonumber(msg_table[2]) == 1)
+	-- Handle all abilities here. Abilities can only be turned on and last a certain duration.
+	if msg_table[1] == 'ability' then
+		if not ufoID then
+			return
+		end
+		local abilityName = msg_table[2]
+		local tech = GG.Tech.GetTech(abilityName)
+		local duration = tech.ability.duration
+		local cooldown = tech.ability.cooldown
 		
-		if ufoID then
-			if wantCloak then
-				Spring.SetUnitCloak(ufoID, 4)
-				Spring.SetGameRulesParam("ufo_scare_radius", 0)
-			else
-				Spring.SetUnitCloak(ufoID, false)
-				Spring.SetGameRulesParam("ufo_scare_radius", 500)
-			end
+		Spring.SetGameRulesParam(abilityName .. "CD", cooldown)
+		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
+		
+		if abilityName == "cloak" then
+			Spring.SetUnitCloak(ufoID, 4)
+			Spring.SetGameRulesParam("ufo_scare_radius", 0)
+		elseif abilityName == "haste" then
+			-- TODO
+		elseif abilityName == "teleport" then
+			-- TODO
 		end
 	end
 	

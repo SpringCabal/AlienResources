@@ -30,7 +30,6 @@ local techTree = {
 		depends = { "pulseLaser" },
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
-
 	},
 	incendiaryBeamLaser = {
 		desc = "Incendiary beam laser (+15% fire duration)",
@@ -108,6 +107,11 @@ local techTree = {
 		y = 390,
 		iconPath = "LuaUI/Images/haste.png",
 		iconDisabledPath = "LuaUI/Images/haste_off.png",
+		ability = {
+			duration = 10,
+			cooldown = 20,
+		},
+		key = "q",
 	},
 	cloak = {
 		desc = "Cloak (+15% duration)",
@@ -118,6 +122,11 @@ local techTree = {
 		depends = { "haste" },
 		iconPath = "LuaUI/Images/cloak.png",
 		iconDisabledPath = "LuaUI/Images/cloak_off.png",
+		ability = {
+			duration = 10,
+			cooldown = 60,
+		},
+		key = "c",
 	},
 	teleport = {
 		desc = "Teleport (+10% distance)",
@@ -128,6 +137,11 @@ local techTree = {
 		depends = { "haste" },
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		ability = {
+			duration = 0,
+			cooldown = 6,
+		},
+		key = "r",
 	},
 	independenceDayGun = {
 		desc = "Independence day gun (+20% damage)",
@@ -145,6 +159,7 @@ local techTree = {
 
 Tech = {
 	weapons = {},
+	abilities = {}, -- non targetable/selectable weapons
 	initialized = false,
 }
 
@@ -164,6 +179,12 @@ function Initialize()
 		end
 		if tech.weapon then
 			table.insert(Tech.weapons, name)
+		end
+		if tech.ability then
+			-- convert to frames
+			tech.ability.duration = tech.ability.duration * 30
+			tech.ability.cooldown = tech.ability.cooldown * 30
+			table.insert(Tech.abilities, name)
 		end
 	end
 end
@@ -222,4 +243,8 @@ end
 
 function Tech.GetWeapons()
 	return Tech.weapons
+end
+
+function Tech.GetAbilities()
+	return Tech.abilities
 end

@@ -20,10 +20,10 @@ local enabledFontColor = { 0, 0.8, 1, 1}
 local disabledImage = "UI/tab-disabled.png"
 local enabledImage = "UI/tab+circle.png"
 
-local images = {}
+local images, progressBars = {}, {}
 
 local Chili, screen0
-local weapons
+local weapons, abilities
 
 function widget:Initialize()
     Chili = WG.Chili
@@ -33,6 +33,7 @@ function widget:Initialize()
         self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
     end
 	weapons = WG.Tech.GetWeapons()
+	abilities = WG.Tech.GetAbilities()
 	SpawnUI()
 end
 
@@ -100,8 +101,36 @@ function MakeImage(name, text, i, enabled)
 	images[name] = imgAbility
 end
 
+function MakeAbility(name, text, i, enabled)
+	local pbAbility = Chili.Progressbar:New {
+		x = 0,
+		bottom = 200 - i * 50,
+		value = 0,
+		width = 150,
+		height = 30,
+		parent = screen0,
+	}
+	local color = disabledFontColor
+	if enabled or true then
+		color = enabledFontColor
+	end
+	local lblAbility Chili.Label:New {
+		caption = text,
+		x = 10,
+		bottom = 200 - i * 50 + 33,
+		font = {
+			color = color,
+			shadow = true,
+			size = 16,
+		},
+		parent = screen0,
+	}
+	progressBars[name] = { pbAbility, lblAbility }
+end
+
 function widget:Update()
 	SpawnUI()
+	UpdateUI()
 end
 
 function SpawnUI()
@@ -109,6 +138,39 @@ function SpawnUI()
 		local tech = WG.Tech.GetTech(name)
 		if tech.level ~= 0 and images[name] == nil then
 			MakeImage(name, "[".. i .. "] " .. tech.title, i - 1)
+		end
+	end
+	for i, name in pairs(abilities) do
+		local tech = WG.Tech.GetTech(name)
+		if tech.level ~= 0 and progressBars[name] == nil then
+			MakeAbility(name, "[".. tech.key:upper() .. "] " .. tech.title, i - 1)
+		end
+	end
+end
+
+function UpdateUI()
+	for _, abilityName in pairs(abilities) do
+		local tech = WG.Tech.GetTech(abilityName)
+		local dur = Spring.GetGameRulesParam(abilityName .. "Duration") or 0
+		local cd = Spring.GetGameRulesParam(abilityName .. "CD") or 0
+		
+		local comps = progressBars[abilityName]
+		if comps ~= nil then
+			local pbAbility = comps[1]
+			if dur ~= 0 then -- ACTIVE
+				pbAbility:SetColor({1, 1, 1, .9})
+				pbAbility:SetValue(100 * dur / tech.ability.duration)
+				pbAbility:SetCaption("Active [" .. math.ceil(dur / 30) .. "s]")
+			elseif cd ~= 0 then -- COOLDOWN
+				pbAbility:SetColor({0, 0.6, 0.8, .9})
+				pbAbility:SetValue(100 * (tech.ability.cooldown - cd) / tech.ability.cooldown)
+				pbAbility:SetCaption("CD [" .. math.ceil(cd / 30) .. "s]")
+			else -- READY
+				local v = 0.8 + 0.2 * math.sin(os.clock() * 10) / 3.14
+				pbAbility:SetColor({v, v, v, .9})
+				pbAbility:SetValue(100)
+				pbAbility:SetCaption("=READY=")
+			end
 		end
 	end
 end

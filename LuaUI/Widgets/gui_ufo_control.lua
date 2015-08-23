@@ -26,7 +26,7 @@ local ufoDefID = UnitDefNames["ufo"].id
 
 local cloak = 0
 
-local weapons
+local weapons, abilities
 local currentWeapon
 
 -------------------------------------------------------------------
@@ -156,10 +156,14 @@ end
 -- handles weapon switching and abilities
 function widget:KeyPress(key, mods, isRepeat)
 	if ufoID then
-		if key == KEYSYMS.C then
-			cloak = 1 - cloak
-			Spring.SendLuaRulesMsg('cloak|' .. cloak)
-		elseif key >= N_0 and key <= N_9 then
+		for _, abilityName in pairs(abilities) do
+			local tech = WG.Tech.GetTech(abilityName)
+			if tech.level > 0 and Spring.GetKeyCode(tech.key) == key then
+				Spring.SendLuaRulesMsg('ability|' .. abilityName)
+				return
+			end
+		end
+		if key >= N_0 and key <= N_9 then
 			local num = key - N_0
 			local weaponName = weapons[num]
 			if weaponName == nil or weaponName == currentWeapon or WG.Tech.GetTech(weaponName).level == 0 then 
@@ -222,6 +226,7 @@ function widget:Initialize()
 		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
 	end
 	weapons = WG.Tech.GetWeapons()
+	abilities = WG.Tech.GetAbilities()
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
