@@ -201,8 +201,8 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="251.3101"
+     inkscape:zoom="1.9500212"
+     inkscape:cx="372.04724"
      inkscape:cy="937.63803"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -224,7 +224,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -238,21 +238,27 @@
        id="path3340"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc"
-       transform="matrix(20.273357,0,0,19.670755,-123.26501,-324.81176)" />
+       transform="matrix(20.273357,0,0,19.670755,-123.26501,-324.81176)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="opacity:1;fill:#00a0ff;fill-opacity:0.12209305;fill-rule:evenodd;stroke:#001f81;stroke-width:0.19934636;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:0.79738546, 0.39869273, 0.19934637, 0.39869273;stroke-dashoffset:0;stroke-opacity:0.67441861;filter:url(#filter7795)"
        d="m 4.9553572,7.3622014 15.0446428,0 2,1.0000033 0,3.0000003 -2,1 -15,0 -0.03283,-3.6769448 z"
        id="path3340-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc"
-       transform="matrix(23.984052,0,0,17.558016,-112.80455,-122.9314)" />
+       transform="matrix(23.984052,0,0,17.558016,-112.80455,-122.9314)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <ellipse
-       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#001c81;stroke-width:0.26657453;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.6745098;filter:url(#filter8289)"
+       style="opacity:1;fill:#2e2eff;fill-opacity:0.21250001;fill-rule:nonzero;stroke:#002081;stroke-width:0.26659487;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter8289)"
        id="path7889"
        cx="23.943703"
        cy="13.695691"
        rx="0.96665072"
        ry="0.91977572"
-       transform="matrix(22.22052,0,0,20.920677,-165.30488,-236.78117)" />
+       transform="matrix(22.22052,0,0,20.920677,-165.30488,-236.78117)"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>
