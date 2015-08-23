@@ -54,20 +54,22 @@ function widget:DrawWorld()
 	if not ufoID then
 		return
 	end
-	
+
 	local ux, uy, uz = Spring.GetUnitViewPosition(ufoID)
 	local ground = Spring.GetGroundHeight(ux, uz)
 	local height = uy - ground
 	local data = lightData[Spring.GetUnitRulesParam(ufoID, "beam_enabled") or 0]
 	local radius = data.radius * height / maxHeight
-	
+
 	local r, ro, p, color, ao = data.radius, data.radiusOscillation, data.period, {unpack(data.color)}, data.alphaOscillation
 	local radius = math.sin(Spring.GetGameFrame() / p) * ro + r
 	color[4] = math.sin(Spring.GetGameFrame() / p) * ao + color[4]
 	gl.Color(color)
 	gl.DepthTest(true)
-	gl.AlphaTest(GL.GREATER, 0) 
+	gl.Culling(true)
+	gl.AlphaTest(GL.GREATER, 0)
 	gl.Utilities.DrawMyCone(ux,ground,uz, height, radius, 10)
+	gl.Culling(false)
 	gl.AlphaTest(false)
 	gl.DepthTest(false)
 end
