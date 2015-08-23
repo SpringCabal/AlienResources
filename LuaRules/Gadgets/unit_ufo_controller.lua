@@ -33,11 +33,13 @@ local movementMessage
 local weaponMessage
 local ufoMoving
 
+local aimx, aimy, aimz
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 -- Movement Functions
 
-function GiveClampedMoveGoal(unitID, x, z, radius)
+local function GiveClampedMoveGoal(unitID, x, z, radius)
 	radius = radius or 16
 	local cx, cz = Spring.Utilities.ClampPosition(x, z)
 	local cy = Spring.GetGroundHeight(cx, cz)
@@ -46,7 +48,7 @@ function GiveClampedMoveGoal(unitID, x, z, radius)
 	return true
 end
 
-local function MoveUfo(unitID, x, z, range, radius)
+local function MoveUFO(unitID, x, z, range, radius)
 	if not (unitID and Spring.ValidUnitID(unitID)) then
 		return
 	end
@@ -66,26 +68,30 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
 		ufoID = unitID
-        Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
+		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
 	end
 end
 
 function gadget:GameFrame(frame)
 	if ufoID then
+		if aimx then
+			local env = Spring.UnitScript.GetScriptEnv(ufoID)
+			Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx, aimy, aimz)
+		end
 		if weaponMessage and weaponMessage.frame + 2 <= frame then
 			Spring.SetUnitTarget(ufoID, nil)
 			weaponMessage = false
 		end
 	
 		if (movementMessage and movementMessage.frame + 2 > frame) then
-			MoveUfo(ufoID, movementMessage.x, movementMessage.z)
+			MoveUFO(ufoID, movementMessage.x, movementMessage.z)
 			ufoMoving = true
 		else
 
 			local vx, _, vz = Spring.GetUnitVelocity(ufoID)
 			local speed = Vector.AbsVal(vx, vz)
 			if ufoMoving or (speed > 6) then
-				MoveUfo(ufoID, vx, vz, 20)
+				MoveUFO(ufoID, vx, vz, 20)
 				ufoMoving = false
 			end
 			
@@ -140,6 +146,15 @@ function HandleLuaMessage(msg)
 				y = y,
 				z = z
 			}
+		end
+	end
+	if msg_table[1] == 'aimWeapon' then
+		local x = tonumber(msg_table[2])
+		local y = tonumber(msg_table[3])
+		local z = tonumber(msg_table[4])
+		
+		if ufoID then
+			aimx, aimy, aimz = x, y, z
 		end
 	end
 end

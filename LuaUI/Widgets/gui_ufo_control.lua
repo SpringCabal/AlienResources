@@ -27,16 +27,16 @@ local function MovementControl()
 	
 	if Spring.GetKeyState(A) then
 		x = x - 1
-    end
+	end
 	if Spring.GetKeyState(D) then
 		x = x + 1
-    end
+	end
 	if Spring.GetKeyState(W) then
 		z = z - 1
-    end
+	end
 	if Spring.GetKeyState(S) then
 		z = z + 1
-    end
+	end
 	
 	Spring.SendLuaRulesMsg('movement|' .. x .. '|' .. z)
 end
@@ -52,10 +52,25 @@ local function WeaponControl()
 	end
 end
 
+local lastx, lasty, lastz
+
+local function AimingControl()
+	local mx, my = Spring.GetMouseState()
+	local _, pos = Spring.TraceScreenRay(mx, my, true)
+	if pos then
+		local x, y, z = pos[1], pos[2], pos[3]
+		if x ~= lastx or y ~= lasty or z ~= lastz then
+			lastx, lasty, lastz = x, y, z
+			Spring.SendLuaRulesMsg('aimWeapon|' .. x .. '|' .. y .. '|' .. z )
+		end
+	end
+end
+
+
 function widget:Initialize()
-    for _, unitID in pairs(Spring.GetAllUnits()) do
-        self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
-    end
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
+	end
 end
 
 local ufoID
@@ -67,12 +82,13 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 end
 
 function widget:GameFrame(n)
-    -- disable all movement and weapon control when landed/landing
-    if not ufoID or Spring.GetUnitStates(ufoID).autoland then
-        return
-    end
+	-- disable all movement and weapon control when landed/landing
+	if not ufoID or Spring.GetUnitStates(ufoID).autoland then
+		return
+	end
 	MovementControl()
 	WeaponControl()
+	AimingControl()
 end
 
 function widget:MousePress(mx, my, button)
@@ -89,9 +105,9 @@ end
 
 -- follow camera
 function widget:Update()
-    if ufoID and not Spring.GetUnitIsDead(ufoID) then
-        local x, y, z = Spring.GetUnitViewPosition(ufoID)
-        -- has a slight delay which makes it smooth and gives a hint in which direction we're moving
-        Spring.SetCameraTarget(x, y + 25, z, 0)
-    end
+	if ufoID and not Spring.GetUnitIsDead(ufoID) then
+		local x, y, z = Spring.GetUnitViewPosition(ufoID)
+		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
+		Spring.SetCameraTarget(x, y + 25, z, 0)
+	end
 end

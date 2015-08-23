@@ -1,59 +1,103 @@
 include "constants.lua"
 
 -- pieces
-local StrongpointNorthBottom = piece "LowgunMuzzle"
-local StrongpointEastBottom = piece "LowgunMuzzleSE"
-local StrongpointSouthBottom = piece "LowgunMuzzleNE"
-local StrongpointWestBottom = piece "LowgunMuzzleNW"
 
-local gun = {
-	StrongpointNorthBottom,
-	StrongpointEastBottom,
-	StrongpointSouthBottom,
-	StrongpointWestBottom,
+local muzzle = {
+	piece "LowgunMuzzle",
+	piece "LowgunMuzzleSE",
+	piece "LowgunMuzzleNE",
+	piece "LowgunMuzzleNW",
 }
 
+local gun = {
+	piece "Lowgun",
+	piece "LowgunSE",
+	piece "LowgunNE",
+	piece "LowgunNW",
+}
+
+local gunBase = {
+	piece "LowgunBase",
+	piece "LowgunSEBase",
+	piece "LowgunNEBase",
+	piece "LowgunNWBase",
+}
+
+local gunHeading = { } -- populated in create
+
 local railing = {
-	piece ("RailingInnerTop"),
-	piece ("RailingOuterTop"),
-	piece ("RailingInnerLow"),
-	piece ("RailingOuterLow"),
+	piece "RailingInnerTop",
+	piece "RailingOuterTop",
+	piece "RailingInnerLow",
+	piece "RailingOuterLow",
 }
 
 local turbine = piece "Turbine"
 local innerHull = piece "InnerHull"
-local outerhulls = {
-	piece ("OuterHull"),
-	piece ("OuterHullNE"),
-	piece ("OuterHullNW"),
-	piece ("OuterHullSE"),
+local outerhull = {
+	piece "OuterHull",
+	piece "OuterHullNE",
+	piece "OuterHullNW",
+	piece "OuterHullSE",
 }
+
 local lightBeamEnabled = false
 
 function script.SetBeamEnabled(newEnabled)
-    Spring.SetUnitRulesParam(unitID, "beam_enabled", newEnabled and 1 or 0)
+	Spring.SetUnitRulesParam(unitID, "beam_enabled", newEnabled and 1 or 0)
 	lightBeamEnabled = newEnabled
+end
+
+local function GetGunHeading(i)
+	local ox, oy, oz = Spring.GetUnitPiecePosition(unitID, outerhull[i])
+	local bx, by, bz = Spring.GetUnitPiecePosition(unitID, gunBase[i])
+	return math.atan2(bx - ox, bz - oz)
+end
+
+local function AimGun(i, tx, ty, tz)
+	local b = gunBase[i]
+	local g = gun[i]
+	local gh = GetGunHeading(i) - gunHeading[i]
+	
+	local px, py, pz = Spring.GetUnitPiecePosDir(unitID, b)
+	local dx, dy, dz = tx - px, ty - py, tz - pz
+	local dist = math.sqrt(dx * dx + dz * dz)
+	local pitch = math.atan2(dy, dist)
+	local heading = math.atan2(dx, dz) + gh
+	
+	
+	Turn(g, x_axis, -pitch, 0)
+	Turn(b, z_axis, heading, 0)
+	--Turn(p, y_axis, 0, 0)
+end
+
+function script.AimWeapons(tx, ty, tz)
+	for i = 1, #gun do
+		if not gunHeading[i] then
+			gunHeading[i] = GetGunHeading(i)
+		end
+		AimGun(i, tx, ty, tz)
+	end
 end
 
 
 function script.Create()
-    
-    for i=1, #railing do
+	for i=1, #railing do
 		Spin(railing[i],z_axis, i%2*2-1 *5)
-    end
+	end
 	
-	for i=1, #outerhulls do
-		Spin(outerhulls[i],z_axis, 1)
-    end
-    
+	for i=1, #outerhull do
+		Spin(outerhull[i],z_axis, 1)
+	end
+	
 	Spin(innerHull,z_axis, -2)
 	
-    Spin(turbine, z_axis, 4);
-    
+	Spin(turbine, z_axis, 4);
+	
 end
 
 function script.QueryWeapon(num) 
-	return gun[num] 
+	return muzzle[num] 
 end
 
 function script.AimFromWeapon(num) 
