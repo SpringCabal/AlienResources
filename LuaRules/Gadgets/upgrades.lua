@@ -50,12 +50,15 @@ function HandleLuaMessage(msg)
 	if msg_table[1] ~= 'upgrade' then
         return
     end
-    if msg_table[2] == "maxhealth" then
-		local value = tonumber(msg_table[3])
+	local tech = msg_table[2]
+	local level = msg_table[3]
+	local value = msg_table[4]
+    if tech == "armor" then
+		local newMaxHealth = UnitDefs[ufoDefID].health * (100 + value) / 100
         local hp, maxHP = Spring.GetUnitHealth(ufoID)
         local ratio = hp / maxHP
-        Spring.SetUnitMaxHealth(ufoID, value)
-        Spring.SetUnitHealth(ufoID, ratio * value) --scale current HP
+        Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
+        Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
 	end
 end
 

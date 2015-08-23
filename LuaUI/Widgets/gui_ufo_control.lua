@@ -26,6 +26,9 @@ local ufoDefID = UnitDefNames["ufo"].id
 
 local cloak = 0
 
+local weapons = { "pulse", "gravityBeam" }
+local currentWeapon = "pulse"
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 -- Camera
@@ -149,7 +152,6 @@ local function AimingControl()
 end
 
 -- handles weapon switching and abilities
-local weapons = { "pulse", "gravityBeam" }
 function widget:KeyPress(key, mods, isRepeat)
 	if ufoID then
 		if key == KEYSYMS.C then
@@ -157,7 +159,14 @@ function widget:KeyPress(key, mods, isRepeat)
 			Spring.SendLuaRulesMsg('cloak|' .. cloak)
 		elseif key >= N_0 and key <= N_9 then
 			local num = key - N_0
-			Spring.SendLuaRulesMsg('changeWeapon|' .. weapons[num])
+			local weaponName = weapons[num]
+			if weaponName == nil or weaponName == currentWeapon then 
+				return
+			end
+			WG.UI.SetAbilityEnabled(weaponName, true)
+			WG.UI.SetAbilityEnabled(currentWeapon, false)
+			currentWeapon = weaponName
+			Spring.SendLuaRulesMsg('changeWeapon|' .. weaponName)
 		end
 	end
 end
@@ -202,5 +211,6 @@ end
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
+		WG.UI.SetAbilityEnabled(currentWeapon, true)
 	end
 end

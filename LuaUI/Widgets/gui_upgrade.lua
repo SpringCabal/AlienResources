@@ -314,7 +314,7 @@ function GetBtnTooltip(tech, key)
     if tech.level > 0 then
         tooltip = tooltip:sub(1, x1-2) .. "\255\0\255\0+" .. (val*tech.level) ..  tooltip:sub(x2+1, x2+1) .. "\b" .. tooltip:sub(x2+2)
     end
-    return tooltip
+    return tooltip, val*tech.level
 end
 
 function UpgradeTech(tech, key)
@@ -322,10 +322,12 @@ function UpgradeTech(tech, key)
         return false
     end
     tech.level = math.min(5, tech.level + 1)
-    Spring.SendLuaRulesMsg('upgrade|' .. key .. '|' .. tech.level)
     techMapping[key].lblTech:SetCaption(tech.level .. "/5")
-    techMapping[key].btnTech.tooltip = GetBtnTooltip(tech, key)
-    -- enable those that depend on it
+	local tooltip, value = GetBtnTooltip(tech, key)
+    techMapping[key].btnTech.tooltip = tooltip
+
+	Spring.SendLuaRulesMsg('upgrade|' .. key .. '|' .. tech.level .. '|' .. value)
+    -- enable techs that depend on it
     for name, comps in pairs(techMapping) do
         if techTree[name].depends then
             local enabled = true

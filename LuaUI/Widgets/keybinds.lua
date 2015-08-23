@@ -72,7 +72,7 @@ function widget:Initialize()
         purple .. "Left click: " .. white .. "Shoot",
 		purple .. "1-9: " .. white .. "Switch weapon",
         purple .. "T: " .. white .. "Upgrade",
-        purple .. "Scroll Wheel : " .. white .. "Zoom",
+        --purple .. "Scroll Wheel : " .. white .. "Zoom",
         purple .. "Ctrl+Q : " .. white .. "Quit",
     }
 
