@@ -26,7 +26,9 @@ local ufoDefID = UnitDefNames["ufo"].id
 -------------------------------------------------------------------
 -- Camera
 
-local AVERAGE_SPEEDS = 10
+local LOOK_FORWARDS = 7
+
+local AVERAGE_SPEEDS = 12
 local curIndex = 1
 local lastXSpeed = {average = 0}
 local lastYSpeed = {average = 0}
@@ -47,6 +49,12 @@ end
 local function UpdateCamera()
 	if ufoID and not Spring.GetUnitIsDead(ufoID) and (Spring.GetGameRulesParam("devMode") ~= 1) then
 		local x, y, z = Spring.GetUnitViewPosition(ufoID)
+		local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
+		
+		--local ux, uy, uz = Spring.GetUnitPosition(ufoID)
+		--Spring.Echo(math.floor(x - ux), math.floor(z - uz))
+		
+		x, y, z = x + vx*LOOK_FORWARDS, y + vy*LOOK_FORWARDS, z + vz*LOOK_FORWARDS
 		
 		-- Apparent unit speed
 		local sx, sy, sz = x - lx, y - ly, z - lz
@@ -61,11 +69,11 @@ local function UpdateCamera()
 			curIndex = 1
 		end
 		
-		--Spring.Echo(math.floor(sx), math.floor(sz))
+		Spring.Echo(math.floor(sx), math.floor(sz))
 		
 		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
 		cx, cy, cz = cx + sx, cy + sy, cz + sz
-		Spring.SetCameraTarget(cx, cy + 25, cz, 0.1)
+		Spring.SetCameraTarget(cx, cy + 25, cz, 0.11)
 	end
 end
 
@@ -139,6 +147,10 @@ function widget:GameFrame(n)
 	AimingControl()
 	
 	UpdateCamera()
+end
+
+function widget:Update()
+	--UpdateCamera()
 end
 
 function widget:MousePress(mx, my, button)
