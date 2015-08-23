@@ -141,7 +141,7 @@ local techTree = {
 			duration = 0,
 			cooldown = 6,
 		},
-		key = "r",
+		key = "e",
 	},
 	independenceDayGun = {
 		desc = "Independence day gun (+20% damage)",
@@ -149,7 +149,7 @@ local techTree = {
 		tier = 3,
 		x = 160,
 		y = 240,
-		depends = { "blackHoleGun", "incendiaryBeamLaser", "missiles", "antiMissilePointDefense", "carrierDrones", "cloak", "teleport" },
+		depends = { "blackHoleGun", "gravityBeam", "missiles", "antiMissilePointDefense", "carrierDrones", "cloak", "teleport" },
 		iconPath = "LuaUI/Images/cleanse.png",
 		iconDisabledPath = "LuaUI/Images/cleanse_off.png",
 		key = "space",
@@ -174,6 +174,7 @@ function Initialize()
 	for name, tech in pairs(techTree) do
 		tech.name = name
 		tech.level = 0
+		tech.locked = true
 		if tech.tier == 1 then
 			tech.enabled = true
 		end

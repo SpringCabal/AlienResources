@@ -47,7 +47,15 @@ end
 
 function HandleLuaMessage(msg)
 	local msg_table = explode('|', msg)
-	if msg_table[1] ~= 'upgrade' then
+	if msg_table[1] == 'unlock' then
+		local tech = msg_table[2]
+		local value = msg_table[3]
+		
+		GG.Tech.GetTech(tech).locked = false
+		
+		local research = Spring.GetGameRulesParam("research")
+		Spring.SetGameRulesParam("research", research - 1000)
+	elseif msg_table[1] ~= 'upgrade' then
         return
     end
 	local tech = msg_table[2]

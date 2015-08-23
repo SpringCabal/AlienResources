@@ -21,7 +21,8 @@ local landTextColor = {1, 1, 1, 1}
 local landText = "LAND"
 local landTextSize = 30
 local updateUI
-local upgradeAvailable = false
+local upgratdeAvailable = false
+local lockedTechNum = 0
 
 local Chili, screen0
 
@@ -34,6 +35,12 @@ function widget:Initialize()
     end
 	VFS.Include("LuaRules/Utilities/tech.lua")
 	WG.Tech = Tech
+	lockedTechNum = 0
+	for name, tech in pairs(Tech.GetTechTree()) do
+		if tech.locked then
+			lockedTechNum = lockedTechNum + 1
+		end
+	end
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
@@ -115,7 +122,8 @@ function UpdateUpgradeUI()
 		lblUnlockAvailable:Hide()
 		updateUI.lblUnlockAvailable = lblUnlockAvailable
 	end
-	upgradeAvailable = true
+	local research = Spring.GetGameRulesParam("research") or 0
+	upgradeAvailable = lockedTechNum > 0 and research > 1000
 	if upgradeAvailable and not updateUI.lblUnlockAvailable.visible then
 		updateUI.lblUnlockAvailable:Show()
 	elseif not upgradeAvailable and updateUI.lblUnlockAvailable.visible then
@@ -155,7 +163,7 @@ function SpawnUpgradeUI()
     local children = { btnClose, lblTitle }
     x, y = 10, 70
     for name, tech in pairs(Tech.GetTechTree()) do
-        local btnTech, imgTech, lblTech
+        local btnTech, imgTech, lblTech, imgTechUnlocked
         local enabled = false
         local file
         if tech.enabled then
@@ -170,6 +178,15 @@ function SpawnUpgradeUI()
             width = 45,
             height = 45,
             file = file,
+        }
+		imgTechLocked = Chili.Image:New {
+            margin = {0, 0, 0, 0},
+            bottom = 5,
+			x = 2,
+            width = 12,
+            height = 12,
+            file = "UI/key.png",
+			keepAspect = false,
         }
 		local lvlCaption
 		if tech.level == 5 then
@@ -195,15 +212,23 @@ function SpawnUpgradeUI()
             padding = {0, 0, 0, 0},
             itemPadding = {0, 0, 0, 0},
             backgroundColor = {0.5, 0.5, 0.5, 1},
-            --focusColor      = {0.4, 0.4, 0.4, 1},
-            children = {lblTech, imgTech},
+			lockedColor = { 0, 0.8, 1, 1},
+            children = {lblTech, imgTechLocked, imgTech},
             OnClick = { function(ctrl, x, y, button)
                 if button == 1 then
-                    UpgradeTech(name)
+                    UpgradeUnlockTech(name)
                 end
             end},
         }
-        techMapping[name] = { btnTech = btnTech, imgTech = imgTech, lblTech = lblTech }
+		btnTech.origFocusColor = btnTech.focusColor
+		if not tech.enabled then
+			btnTech.focusColor = btnTech.backgroundColor
+		elseif tech.locked then
+			btnTech.focusColor = btnTech.lockedColor
+		else
+			imgTechLocked:Hide()
+		end
+        techMapping[name] = { btnTech = btnTech, imgTech = imgTech, lblTech = lblTech, imgTechLocked = imgTechLocked }
         table.insert(children, btnTech)
     end
     window = Chili.Window:New {
@@ -219,6 +244,31 @@ function SpawnUpgradeUI()
 			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
 		end},
     }
+end
+
+function UpgradeUnlockTech(name)
+	local tech = Tech.GetTech(name)
+	if tech.locked then
+		UnlockTech(name)
+	else
+		UpgradeTech(name)
+	end
+end
+
+function UnlockTech(name)
+	local tech = Tech.GetTech(name)
+	if not tech.enabled then
+		return false
+	end
+	Spring.SendLuaRulesMsg('unlock|' .. name .. '|' .. 1000)
+	
+	Spring.PlaySoundFile("sounds/select.wav", 1, "ui")
+	techMapping[name].imgTechLocked:Hide()
+	local btnTech = techMapping[name].btnTech
+	btnTech.focusColor = btnTech.origFocusColor
+	
+	tech.locked = false
+	lockedTechNum = lockedTechNum - 1
 end
 
 function UpgradeTech(name)
@@ -241,5 +291,6 @@ function UpgradeTech(name)
 	for _, enabledTechName in pairs(enabledTechs) do
 		local comps = techMapping[enabledTechName]
     	comps.imgTech.file = Tech.GetTech(enabledTechName).iconPath
+		comps.btnTech.focusColor = comps.btnTech.lockedColor
     end
 end
