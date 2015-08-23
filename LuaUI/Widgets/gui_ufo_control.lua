@@ -69,7 +69,7 @@ local function UpdateCamera()
 			curIndex = 1
 		end
 		
-		Spring.Echo(math.floor(sx), math.floor(sz))
+		--Spring.Echo(math.floor(sx), math.floor(sz))
 		
 		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
 		cx, cy, cz = cx + sx, cy + sy, cz + sz
