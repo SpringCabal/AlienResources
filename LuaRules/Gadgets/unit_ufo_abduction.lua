@@ -44,7 +44,9 @@ local function FloatUnitInDirection(unitID, x, y, z, uvx, uvz, speed, hAccel, vA
 	local dxCorrection = vx - dx + uvx
 	local dzCorrection = vz - dz + uvz
 	
-	dxCorrection, dzCorrection = Vector.Norm(hAccel, dxCorrection, dzCorrection)
+	if Vector.AbsVal(dxCorrection, dzCorrection) > hAccel then
+		dxCorrection, dzCorrection = Vector.Norm(hAccel, dxCorrection, dzCorrection)
+	end
 	
 	local headingInRadian = Spring.GetUnitHeading(unitID)*RAD_PER_ROT --get current heading
 	Spring.SetUnitRotation(unitID, 0, -headingInRadian, 0) --restore current heading. This force unit to stay upright/prevent tumbling.TODO: remove negative sign if Spring no longer mirror input anymore 
@@ -80,7 +82,7 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
                 end
 			else
                 enabled = true
-				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed, 0.5, GRAVITY + 0.4)
+				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed, 2, GRAVITY + 0.4)
 			end
 		end
 	end
