@@ -146,7 +146,7 @@ local techTree = {
 		key = "e",
 	},
 	independenceDayGun = {
-		desc = "Independence day gun (+20% damage)",
+		desc = "Independence day gun (+20% duration)",
 		title = "God gun",
 		tier = 3,
 		x = 160,
@@ -157,7 +157,7 @@ local techTree = {
 		key = "space",
 		ability = {
 			duration = 10,
-			cooldown = 30,
+			cooldown = 60,
 		}
 	},
 }
