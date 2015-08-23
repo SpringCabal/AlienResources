@@ -159,8 +159,15 @@ function SpawnUpgradeUI()
 			color = { 0, 0.8, 1, 0.7},
 		},
     }
+	local imgShip = Chili.Image:New {
+		file = "ModelSources/wireframe.png",
+		x = 200,
+		y = 0,
+		width = 200,
+		height = 100,
+	}
 
-    local children = { btnClose, lblTitle }
+    local children = { btnClose, lblTitle, imgShip }
     x, y = 10, 70
     for name, tech in pairs(Tech.GetTechTree()) do
         local btnTech, imgTech, lblTech, imgTechUnlocked
@@ -234,9 +241,9 @@ function SpawnUpgradeUI()
     window = Chili.Window:New {
         parent = screen0,
         x = 200,
-        width = 300,
+        width = 400,
         bottom = 100,
-        height = 700,
+        height = 600,
         draggable = false,
         resizable = false,
         children = children,
