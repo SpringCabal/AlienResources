@@ -130,13 +130,13 @@ end
 function SpawnUI()
 	for i, name in pairs(weapons) do
 		local tech = WG.Tech.GetTech(name)
-		if tech.level ~= 0 and images[name] == nil then
+		if not tech.locked and images[name] == nil then
 			MakeImage(name, "[".. i .. "] " .. tech.title, i - 1)
 		end
 	end
 	for i, name in pairs(abilities) do
 		local tech = WG.Tech.GetTech(name)
-		if tech.level ~= 0 and progressBars[name] == nil then
+		if not tech.locked and progressBars[name] == nil then
 			MakeAbility(name, "[".. tech.key:upper() .. "] " .. tech.title, i - 1)
 		end
 	end

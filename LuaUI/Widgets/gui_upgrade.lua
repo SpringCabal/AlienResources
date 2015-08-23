@@ -260,19 +260,29 @@ function UnlockTech(name)
 	if not tech.enabled then
 		return false
 	end
+	local unlocked, enabledTechs = Tech.UnlockTech(name)
+	if not unlocked then
+		return false
+	end
 	Spring.SendLuaRulesMsg('unlock|' .. name .. '|' .. 1000)
 	
 	Spring.PlaySoundFile("sounds/select.wav", 1, "ui")
 	techMapping[name].imgTechLocked:Hide()
 	local btnTech = techMapping[name].btnTech
 	btnTech.focusColor = btnTech.origFocusColor
-	
-	tech.locked = false
+
 	lockedTechNum = lockedTechNum - 1
+	
+	-- enable techs that depend on it
+	for _, enabledTechName in pairs(enabledTechs) do
+		local comps = techMapping[enabledTechName]
+    	comps.imgTech.file = Tech.GetTech(enabledTechName).iconPath
+		comps.btnTech.focusColor = comps.btnTech.lockedColor
+    end
 end
 
 function UpgradeTech(name)
-	local upgraded, enabledTechs = Tech.UpgradeTech(name)
+	local upgraded = Tech.UpgradeTech(name)
 	if not upgraded then
 		return false
 	end
@@ -287,10 +297,4 @@ function UpgradeTech(name)
 	techMapping[name].btnTech.tooltip = tooltip
 
 	Spring.SendLuaRulesMsg('upgrade|' .. name .. '|' .. tech.level .. '|' .. value)
-    -- enable techs that depend on it
-	for _, enabledTechName in pairs(enabledTechs) do
-		local comps = techMapping[enabledTechName]
-    	comps.imgTech.file = Tech.GetTech(enabledTechName).iconPath
-		comps.btnTech.focusColor = comps.btnTech.lockedColor
-    end
 end

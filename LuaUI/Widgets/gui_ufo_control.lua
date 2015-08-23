@@ -167,7 +167,7 @@ function widget:KeyPress(key, mods, isRepeat)
 		if key >= N_0 and key <= N_9 then
 			local num = key - N_0
 			local weaponName = weapons[num]
-			if weaponName == nil or weaponName == currentWeapon or WG.Tech.GetTech(weaponName).level == 0 then 
+			if weaponName == nil or weaponName == currentWeapon or WG.Tech.GetTech(weaponName).locked then 
 				return
 			end
 			WG.UI.SetAbilityEnabled(weaponName, true)

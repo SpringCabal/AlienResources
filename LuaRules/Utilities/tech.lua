@@ -221,13 +221,20 @@ function Tech.UpgradeTech(name)
 		return false
 	end
 	tech.level = tech.level + 1
+	return true
+end
+
+function Tech.UnlockTech(name)
+	local tech = techTree[name]
+	tech.locked = false
+	
 	local enabledTechs = {}
 	-- check new techs to enable
 	for name, tech in pairs(techTree) do
 		if not tech.enabled then
 			local enabled = true
 			for _, depend in pairs(tech.depends) do
-				if techTree[depend].level == 0 then
+				if not techTree[depend].enabled or techTree[depend].locked then
 					enabled = false
 					break
 				end
