@@ -87,6 +87,22 @@ unitDef = {
 			def                = "pulseLaser",
 			onlyTargetCategory = "land",
 		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
 	},
 	
 	weaponDefs             = {
@@ -158,6 +174,47 @@ unitDef = {
 			weaponType              = "LaserCannon",
 			weaponVelocity          = 2500,
 			soundstart  			= "pulse.wav",
+		},
+		independenceDayGun = {
+			name                    = "Independence Day Gun",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			beamTime                = 0.01,
+			beamTtl                 = 2,
+			coreThickness           = 2,
+			craterBoost             = 10,
+			craterMult              = 10,
+
+			customParams            = {
+				impulse             = "60",
+				normaldamage        = "0",
+			},
+
+			damage                  = {
+				default = 2,
+			},
+
+			interceptedByShieldType = 1,
+			largeBeamLaser          = true,
+			laserFlareSize          = 0.1,
+			minIntensity            = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.01,
+			rgbColor                = "0.2 0.2 0.2",
+			scrollSpeed             = 10,
+			soundTrigger            = true,
+			sweepfire               = false,
+			thickness               = 20,
+			tileLength              = 10000,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "BeamLaser",
+			weaponVelocity          = 100,
+			pulseSpeed				= 0.1,
 		},
 	},
 }

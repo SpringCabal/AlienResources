@@ -51,6 +51,10 @@ local weapons = {
 	pulse = {
 		gunStart = 5,
 		gunEnd = 6,
+	},
+	independenceDayGun = {
+		gunStart = 7,
+		gunEnd = 10,
 	}
 }
 local currentWeapon = "pulse"

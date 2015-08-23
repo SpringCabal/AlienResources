@@ -26,7 +26,7 @@ local ufoDefID = UnitDefNames["ufo"].id
 
 local cloak = 0
 
-local weapons = { "pulse", "gravityBeam" }
+local weapons = { "pulse", "gravityBeam", "independenceDayGun", }
 local currentWeapon = "pulse"
 
 -------------------------------------------------------------------

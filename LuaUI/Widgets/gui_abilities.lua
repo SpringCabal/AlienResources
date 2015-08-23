@@ -101,6 +101,7 @@ end
 function SpawnUI()
 	MakeImage("pulse", "[1] Pulse laser", 0)
 	MakeImage("gravityBeam", "[2] Gravity beam", 1)
+	MakeImage("independenceDayGun", "[3] Cleanse", 2)
 end
 
 WG.UI = {}
