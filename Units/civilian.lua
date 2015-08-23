@@ -5,7 +5,7 @@ unitDef = {
 	objectName             = "citizen.dae",
     name                   = "Civilian",
     unitName               = unitName,
-    script                 = unitName .. ".lua",
+    script                 = "human.lua",
 	
 	-- Movement
 	acceleration           = 0.5,
