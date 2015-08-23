@@ -26,8 +26,8 @@ local ufoDefID = UnitDefNames["ufo"].id
 
 local cloak = 0
 
-local weapons = { "pulse", "gravityBeam", "independenceDayGun", }
-local currentWeapon = "pulse"
+local weapons
+local currentWeapon
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
@@ -162,11 +162,13 @@ function widget:KeyPress(key, mods, isRepeat)
 		elseif key >= N_0 and key <= N_9 then
 			local num = key - N_0
 			local weaponName = weapons[num]
-			if weaponName == nil or weaponName == currentWeapon then 
+			if weaponName == nil or weaponName == currentWeapon or WG.Tech.GetTech(weaponName).level == 0 then 
 				return
 			end
 			WG.UI.SetAbilityEnabled(weaponName, true)
-			WG.UI.SetAbilityEnabled(currentWeapon, false)
+			if currentWeapon ~= nil then
+				WG.UI.SetAbilityEnabled(currentWeapon, false)
+			end
 			currentWeapon = weaponName
 			Spring.PlaySoundFile("sounds/select.wav")
 			Spring.SendLuaRulesMsg('changeWeapon|' .. weaponName)
@@ -186,6 +188,7 @@ function widget:GameFrame(n)
 	AimingControl()
 	
 	UpdateCamera()
+
 end
 
 function widget:Update()
@@ -218,11 +221,14 @@ function widget:Initialize()
 	for _, unitID in pairs(Spring.GetAllUnits()) do
 		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
 	end
+	weapons = WG.Tech.GetWeapons()
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
-		WG.UI.SetAbilityEnabled(currentWeapon, true)
+		if currentWeapon ~= nil then
+			WG.UI.SetAbilityEnabled(currentWeapon, true)
+		end
 	end
 end

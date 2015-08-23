@@ -43,21 +43,8 @@ local outerhull = {
 
 local lightBeamEnabled = false
 
-local weapons = {
-	gravityBeam = {
-		gunStart = 1,
-		gunEnd = 4,
-	},
-	pulse = {
-		gunStart = 5,
-		gunEnd = 6,
-	},
-	independenceDayGun = {
-		gunStart = 7,
-		gunEnd = 10,
-	}
-}
-local currentWeapon = "pulse"
+local currentWeapon
+local weapons = {}
 
 function script.SetCurrentWeapon(weaponName)
 	currentWeapon = weaponName
@@ -102,6 +89,10 @@ end
 
 
 function script.Create()
+	local weaponNames = GG.Tech.GetWeapons()
+	for _, name in pairs(weaponNames) do
+		weapons[name] = GG.Tech.GetTech(name).weapon
+	end
 	for i=1, #railing do
 		Spin(railing[i],z_axis, i%2*2-1 *5)
 	end

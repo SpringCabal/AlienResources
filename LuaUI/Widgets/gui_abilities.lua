@@ -6,7 +6,7 @@ function widget:GetInfo()
 		author  = 'gajop',
 		date    = 'August, 2015',
 		license = 'GPL',
-        layer = 0,
+        layer = 60,
 		enabled = true,
 	}
 end
@@ -23,6 +23,7 @@ local enabledImage = "UI/tab+circle.png"
 local images = {}
 
 local Chili, screen0
+local weapons
 
 function widget:Initialize()
     Chili = WG.Chili
@@ -31,6 +32,7 @@ function widget:Initialize()
     for _, unitID in pairs(Spring.GetAllUnits()) do
         self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
     end
+	weapons = WG.Tech.GetWeapons()
 	SpawnUI()
 end
 
@@ -98,10 +100,17 @@ function MakeImage(name, text, i, enabled)
 	images[name] = imgAbility
 end
 
+function widget:Update()
+	SpawnUI()
+end
+
 function SpawnUI()
-	MakeImage("pulse", "[1] Pulse laser", 0)
-	MakeImage("gravityBeam", "[2] Gravity beam", 1)
-	MakeImage("independenceDayGun", "[3] Cleanse", 2)
+	for i, name in pairs(weapons) do
+		local tech = WG.Tech.GetTech(name)
+		if tech.level ~= 0 and images[name] == nil then
+			MakeImage(name, "[".. i .. "] " .. tech.title, i - 1)
+		end
+	end
 end
 
 WG.UI = {}

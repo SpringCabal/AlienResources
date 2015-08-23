@@ -37,6 +37,8 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("biomass", 0)
     Spring.SetGameRulesParam("research", 0)
     Spring.SetGameRulesParam("metal", 0)
+	VFS.Include("LuaRules/Utilities/tech.lua")
+	GG.Tech = Tech
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
@@ -59,6 +61,9 @@ function HandleLuaMessage(msg)
         local ratio = hp / maxHP
         Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
         Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
+	end
+	if not Tech.UpgradeTech(tech) then
+		Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. tech)
 	end
 end
 
