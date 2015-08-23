@@ -46,6 +46,31 @@ local lightBeamEnabled = false
 local currentWeapon
 local weapons = {}
 
+local independencePiece = piece "independence"
+local independenceWeapon
+
+local SIG_INDEPENDENCE = 1
+local function Independence()
+	SetSignalMask(SIG_INDEPENDENCE)
+	while true do
+		EmitSfx(independencePiece, SFX.FIRE_WEAPON + independenceWeapon - 1)
+		Sleep(33)
+	end
+end
+
+function script.StartIndependence()
+	Signal(SIG_INDEPENDENCE)
+	Spring.SetUnitRulesParam(unitID, "beam_enabled", -1)
+	lightBeamEnabled = -1
+	StartThread(Independence)
+end
+
+function script.StopIndependence()
+	Spring.SetUnitRulesParam(unitID, "beam_enabled", 0)
+	lightBeamEnabled = 0
+	Signal(SIG_INDEPENDENCE)
+end
+
 function script.SetCurrentWeapon(weaponName)
 	currentWeapon = weaponName
 end
@@ -105,6 +130,14 @@ function script.Create()
 
 	Spin(turbine, z_axis, 4);
 
+	Turn(independencePiece, x_axis, math.pi, 0)
+
+	for i = 1,#UnitDef.weapons do
+		if WeaponDefs[UnitDef.weapons[i].weaponDef].name:find("independence") then
+			independenceWeapon = i
+			break
+		end
+	end
 end
 
 

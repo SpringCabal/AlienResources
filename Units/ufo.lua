@@ -296,17 +296,12 @@ unitDef = {
 			avoidGround             = false,
 			beamTime                = 0.01,
 			beamTtl                 = 2,
-			coreThickness           = 2,
-			craterBoost             = 10,
-			craterMult              = 10,
-
-			customParams            = {
-				impulse             = "60",
-				normaldamage        = "0",
-			},
+			coreThickness           = 0.3,
+			craterBoost             = 1,
+			craterMult              = 1,
 
 			damage                  = {
-				default = 2,
+				default = 10000,
 			},
 
 			interceptedByShieldType = 1,
@@ -316,11 +311,11 @@ unitDef = {
 			noSelfDamage            = true,
 			range                   = 10000,
 			reloadtime              = 0.01,
-			rgbColor                = "0.2 0.2 0.2",
+			rgbColor                = "0.2 0.3 0.9",
 			scrollSpeed             = 10,
 			soundTrigger            = true,
 			sweepfire               = false,
-			thickness               = 20,
+			thickness               = 30,
 			tileLength              = 10000,
 			tolerance               = 5000,
 			turret                  = true,

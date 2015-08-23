@@ -52,13 +52,13 @@ local function MoveUFO(unitID, x, z, range, radius)
 	if not (unitID and Spring.ValidUnitID(unitID)) then
 		return
 	end
-	
+
 	range = range or 1000
-	
+
 	local ux, uy, uz = Spring.GetUnitPosition(unitID)
-	
+
 	local moveVec = Vector.Norm(range, {x, z})
-	
+
 	GiveClampedMoveGoal(unitID, moveVec[1] + ux, moveVec[2] + uz, radius)
 end
 
@@ -69,14 +69,20 @@ function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
 		ufoID = unitID
 		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
-		
+
 		Spring.SetGameRulesParam("ufo_scare_radius", 500)
+	end
+end
+
+function gadget:UnitDestroyed(unitID, unitDefID)
+	if ufoID == unitID then
+		ufoID = nil
 	end
 end
 
 function gadget:GameFrame(frame)
 	if ufoID then
-		
+
 		if aimx then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then
@@ -87,7 +93,7 @@ function gadget:GameFrame(frame)
 			Spring.SetUnitTarget(ufoID, nil)
 			weaponMessage = false
 		end
-	
+
 		if (movementMessage and movementMessage.frame + 2 > frame) then
 			MoveUFO(ufoID, movementMessage.x, movementMessage.z)
 			ufoMoving = true
@@ -105,15 +111,15 @@ function gadget:GameFrame(frame)
 					Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
 				end
 			end
-			
+
 			movementMessage = false
 		end
-		
+
 		local x, y, z = Spring.GetUnitPosition(ufoID)
 		Spring.SetGameRulesParam("ufo_x", x)
 		Spring.SetGameRulesParam("ufo_y", y)
 		Spring.SetGameRulesParam("ufo_z", z)
-		
+
 		-- decrease all cooldowns
 		local abilities = GG.Tech.GetAbilities()
 		for _, abilityName in pairs(abilities) do
@@ -143,12 +149,18 @@ function DisableAbility(abilityName)
 	elseif abilityName == "teleport" then
 		-- TODO
 	elseif abilityName == "independenceDayGun" then
-		-- TODO
+		local env = Spring.UnitScript.GetScriptEnv(ufoID)
+		if env then
+			Spring.UnitScript.CallAsUnit(ufoID, env.script.StopIndependence, aimx, aimy, aimz)
+		end
 	end
 end
 
 function gadget:Initialize()
-	
+	for _, unitID in ipairs(Spring.GetAllUnits()) do
+		local unitDefID = Spring.GetUnitDefID(unitID)
+		gadget:UnitCreated(unitID, unitDefID)
+	end
 end
 
 -------------------------------------------------------------------
@@ -160,7 +172,7 @@ function HandleLuaMessage(msg)
 	if msg_table[1] == 'movement' then
 		local x = tonumber(msg_table[2])
 		local z = tonumber(msg_table[3])
-		
+
 		if x == 0 and z == 0 then
 			movementMessage = false
 		else
@@ -171,15 +183,15 @@ function HandleLuaMessage(msg)
 			}
 		end
 	end
-	
+
 	if msg_table[1] == 'fireWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
 		local z = tonumber(msg_table[4])
-		
+
 		if ufoID then
 			Spring.SetUnitTarget(ufoID, x, y, z)
-			
+
 			weaponMessage = {
 				frame = Spring.GetGameFrame(),
 				x = x,
@@ -188,17 +200,17 @@ function HandleLuaMessage(msg)
 			}
 		end
 	end
-	
+
 	if msg_table[1] == 'aimWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
 		local z = tonumber(msg_table[4])
-		
+
 		if ufoID then
 			aimx, aimy, aimz = x, y, z
 		end
 	end
-	
+
 	-- Handle all abilities here. Abilities can only be turned on and last a certain duration.
 	if msg_table[1] == 'ability' then
 		if not ufoID then
@@ -208,10 +220,10 @@ function HandleLuaMessage(msg)
 		local tech = GG.Tech.GetTech(abilityName)
 		local duration = tech.ability.duration
 		local cooldown = tech.ability.cooldown
-		
+
 		Spring.SetGameRulesParam(abilityName .. "CD", cooldown)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
-		
+
 		if abilityName == "cloak" then
 			Spring.SetUnitCloak(ufoID, 4)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
@@ -220,10 +232,13 @@ function HandleLuaMessage(msg)
 		elseif abilityName == "teleport" then
 			-- TODO
 		elseif abilityName == "independenceDayGun" then
-			-- TODO
+			local env = Spring.UnitScript.GetScriptEnv(ufoID)
+			if env then
+				Spring.UnitScript.CallAsUnit(ufoID, env.script.StartIndependence, aimx, aimy, aimz)
+			end
 		end
 	end
-	
+
 	if msg_table[1] == 'changeWeapon' and ufoID then
 		local env = Spring.UnitScript.GetScriptEnv(ufoID)
 		Spring.UnitScript.CallAsUnit(ufoID, env.script.SetCurrentWeapon, msg_table[2])
