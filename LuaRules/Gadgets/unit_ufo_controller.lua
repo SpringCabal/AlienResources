@@ -79,7 +79,9 @@ function gadget:GameFrame(frame)
 		
 		if aimx then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
-			Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx, aimy, aimz)
+			if env then
+				Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx, aimy, aimz)
+			end
 		end
 		if weaponMessage and weaponMessage.frame + 2 <= frame then
 			Spring.SetUnitTarget(ufoID, nil)
@@ -92,16 +94,17 @@ function gadget:GameFrame(frame)
 		else
 
 			local vx, _, vz = Spring.GetUnitVelocity(ufoID)
-			local speed = Vector.AbsVal(vx, vz)
-			if ufoMoving or (speed > 6) then
-				MoveUFO(ufoID, vx, vz, 20)
-				ufoMoving = false
-			end
+			if vx then
+				local speed = Vector.AbsVal(vx, vz)
+				if ufoMoving or (speed > 6) then
+					MoveUFO(ufoID, vx, vz, 20)
+					ufoMoving = false
+				end
 
-			if weaponMessage then
-				Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
+				if weaponMessage then
+					Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
+				end
 			end
-			
 			
 			movementMessage = false
 		end

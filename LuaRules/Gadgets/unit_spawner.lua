@@ -21,6 +21,7 @@ end
 
 local ufoUnitDefID = UnitDefNames["ufo"].id
 local buildingDefID = UnitDefNames["building1"].id
+local baseDefID = UnitDefNames["building4"].id
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
@@ -52,4 +53,6 @@ function gadget:Initialize()
 	Spring.CreateUnit(buildingDefID, 13200, 300, 18000, 0, 0)
 	Spring.CreateUnit(buildingDefID, 13400, 300, 18000, 0, 0)
 	Spring.CreateUnit(buildingDefID, 13600, 300, 18000, 0, 0)
+	
+	Spring.CreateUnit(baseDefID, 10500, 300, 18000, 0, 0)
 end

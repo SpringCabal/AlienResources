@@ -40,6 +40,8 @@ unitDef = {
 	collide                = true,
 	leaveTracks            = false, -- Todo, add tracks
 	
+	movestate              = 2,
+	
 	-- Attributes
 	category               = "land",
 	
@@ -58,6 +60,7 @@ unitDef = {
 	weapons                = {
 		{
 			def                = "missile",
+			onlyTargetCategory = "ufo",
 		},
 	},
 	
@@ -90,7 +93,7 @@ unitDef = {
 			lineOfSight             = true,
 			model                   = [[missile.dae]],
 			noSelfDamage            = true,
-			range                   = 420,
+			range                   = 720,
 			reloadtime              = 15,
 			renderType              = 1,
 			selfprop                = true,

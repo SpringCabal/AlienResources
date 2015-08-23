@@ -21,7 +21,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local carDefID       = UnitDefNames["civilian"].id
+local tankDefID      = UnitDefNames["tank"].id
 local civilianDefID  = UnitDefNames["civilian"].id
 local scientistDefID = UnitDefNames["scientist"].id
 
@@ -29,25 +29,63 @@ local function LoadCustomParam(ud, key)
 	return (ud and ud.customParams and ud.customParams[key] and tonumber(ud.customParams[key])) or nil
 end
 
-local spawnerDefs = {}
-
-for i = 1, #UnitDefs do
-	local ud = UnitDefs[i]
-	if ud.customParams and (ud.customParams.wander_radius or ud.customParams.car_period) then
-		spawnerDefs[i] = {
-			carPeriod    = LoadCustomParam(ud, "car_period"),
-			civilians    = LoadCustomParam(ud, "civilians"),
-			scientists   = LoadCustomParam(ud, "scientists"),
-			wanderRadius = LoadCustomParam(ud, "wander_radius"),
+local spawnerDefs = {
+	[UnitDefNames["building1"].id] = {
+		wanderRadius = 800,
+		spawns = {
+			[civilianDefID] = {
+				unitDefID = civilianDefID,
+				wanted = 10,
+				stockRate = 0.3/30,
+			},
+			[scientistDefID] = {
+				unitDefID = scientistDefID,
+				wanted = 4,
+				stockRate = 0.3/30,
+			},
 		}
-		
-		local restockTime = LoadCustomParam(ud, "restock_time")
-		if restockTime then
-			spawnerDefs[i].civRate = spawnerDefs[i].civilians/restockTime
-			spawnerDefs[i].sciRate = spawnerDefs[i].scientists/restockTime
-		end
-	end
-end
+	},
+	[UnitDefNames["building2"].id] = {
+		wanderRadius = 800,
+		spawns = {
+			[civilianDefID] = {
+				unitDefID = civilianDefID,
+				wanted = 10,
+				stockRate = 0.3/30,
+			},
+			[scientistDefID] = {
+				unitDefID = scientistDefID,
+				wanted = 4,
+				stockRate = 0.3/30,
+			},
+		}
+	},
+	[UnitDefNames["building3"].id] = {
+		wanderRadius = 800,
+		spawns = {
+			[civilianDefID] = {
+				unitDefID = civilianDefID,
+				wanted = 10,
+				stockRate = 0.3/30,
+			},
+			[scientistDefID] = {
+				unitDefID = scientistDefID,
+				wanted = 4,
+				stockRate = 0.3/30,
+			},
+		}
+	},
+	[UnitDefNames["building4"].id] = {
+		wanderRadius = 800,
+		spawns = {
+			[tankDefID] = {
+				unitDefID = tankDefID,
+				wanted = 10,
+				stockRate = 0.3/30,
+			},
+		}
+	},
+}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -134,7 +172,7 @@ local function WandererWander(unitID)
 	
 	local rx, rz = Vector.PolarToCart(data.wanderRadius*math.random(), 2*math.pi*math.random(), true)
 	
-	Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.MOVE, {data.x + rx, 0, data.z + rz}, {})
+	Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.FIGHT, {data.x + rx, 0, data.z + rz}, {})
 end
 
 local function WandererCheckFlee(unitID)
@@ -153,7 +191,7 @@ local function WandererCheckFlee(unitID)
 	
 	if GetDistSqToUFO(x, z) < ufoScareRadiusSq then
 		local fx, fz = Vector.Norm(150, x - ufoX, z - ufoZ)
-		Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.MOVE, {x + fx, 0, z + fz}, {})
+		Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.FIGHT, {x + fx, 0, z + fz}, {})
 		data.wandering = false
 		
 		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 2.5)
@@ -177,10 +215,8 @@ local function RemoveWanderer(unitID, unitDefID)
 	
 	if spawnerData then
 		spawnerData.wanderers[unitID] = nil
-		if unitDefID == civilianDefID then
-			spawnerData.civilians = spawnerData.civilians - 1
-		elseif unitDefID == scientistDefID then
-			spawnerData.scientists = spawnerData.scientists - 1
+		if spawnerData.spawns[unitDefID] then
+			spawnerData.spawns[unitDefID].count = spawnerData.spawns[unitDefID].count - 1
 		end
 	end
 	
@@ -241,6 +277,26 @@ local function SpawnWanderer(unitDefID, spawnerData)
 	return false
 end
 
+local function UpdateSpawnType(typeData, spawnerData, deltaTime)
+	if typeData.count < typeData.wanted then
+		typeData.stock = (typeData.stock or 0) + typeData.stockRate*deltaTime
+		if typeData.stock > 1 then
+			if SpawnWanderer(typeData.unitDefID, spawnerData) then
+				typeData.count = typeData.count + 1
+			end
+			typeData.stock = typeData.stock - 1
+		end
+	end
+end
+
+local function SpawnMaxWantedType(typeData, spawnerData, deltaTime)
+	for i = typeData.count + 1, typeData.wanted do
+		if SpawnWanderer(typeData.unitDefID, spawnerData) then
+			typeData.count = typeData.count + 1
+		end
+	end
+end
+
 local function SpawnerUpdate(unitID, deltaTime)
 	if not (unitID and Spring.ValidUnitID(unitID) and spawners[unitID]) then
 		RemoveThing(unitID, spawners)
@@ -270,42 +326,17 @@ local function SpawnerUpdate(unitID, deltaTime)
 	
 	--// Make the first lot of spawned units.
 	if data.doInitialSpawn then
-		for i = 1, data.spawnDef.civilians do
-			if SpawnWanderer(civilianDefID, data) then
-				data.civilians = data.civilians + 1
-			end
+		for _, spawnTypeData in pairs(data.spawns) do
+			SpawnMaxWantedType(spawnTypeData, data, deltaTime)
 		end
-	
-		for i = 1, data.spawnDef.scientists do
-			if SpawnWanderer(scientistDefID, data) then
-				data.scientists = data.scientists + 1
-			end
-		end
-	
 		data.doInitialSpawn = nil
 		return
 	end
 	
 	--// Replace dead units
 	if ufoDistSq > UFO_DIST_SPAWN then
-		if data.civilians < data.spawnDef.civilians then
-			data.civStock = (data.civStock or 0) + data.spawnDef.civRate*deltaTime
-			if data.civStock > 1 then
-				if SpawnWanderer(civilianDefID, data) then
-					data.civilians = data.civilians + 1
-				end
-				data.civStock = data.civStock - 1
-			end
-		end
-		
-		if data.scientists < data.spawnDef.scientists then
-			data.sciStock = (data.sciStock or 0) + data.spawnDef.sciRate*deltaTime
-			if data.sciStock > 1 then
-				if SpawnWanderer(scientistDefID, data) then
-					data.scientists = data.scientists + 1
-				end
-				data.sciStock = data.sciStock - 1
-			end
+		for _, spawnTypeData in pairs(data.spawns) do
+			UpdateSpawnType(spawnTypeData, data, deltaTime)
 		end
 	end
 end
@@ -322,12 +353,20 @@ local function AddSpawner(unitID, unitDefID)
 		x = x,
 		y = y,
 		z = z,
-		civilians = 0,
-		scientists = 0,
+		spawns = {},
 		wanderers = {},
 		spawnDef = spawnDef,
 		doInitialSpawn = true,
 	}
+	
+	for unitType, typeData in pairs(spawnDef.spawns) do
+		data.spawns[unitType] = {
+			count = 0,
+			wanted = typeData.wanted,
+			unitDefID = typeData.unitDefID,
+			stockRate = typeData.stockRate,
+		}
+	end
 	
 	AddThing(unitID, spawners, data)
 end
