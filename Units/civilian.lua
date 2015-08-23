@@ -2,7 +2,7 @@ local unitName  =  "civilian"
 
 unitDef = {
 	--Internal settings
-	objectName             = "cube.dae",
+	objectName             = "citizen.dae",
     name                   = "Civilian",
     unitName               = unitName,
     script                 = unitName .. ".lua",
