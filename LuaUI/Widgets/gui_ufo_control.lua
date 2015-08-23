@@ -148,18 +148,14 @@ local function AimingControl()
 	end
 end
 
-function widget:KeyPress(key, mods, isRepeat)
-    if ufoID and key == KEYSYMS.C then
-		cloak = 1 - cloak
-		Spring.SendLuaRulesMsg('cloak|' .. cloak)
-    end
-end
-
--- handles weapon switching
+-- handles weapon switching and abilities
 local weapons = { "pulse", "gravityBeam" }
 function widget:KeyPress(key, mods, isRepeat)
 	if ufoID then
-		if key >= N_0 and key <= N_9 then
+		if key == KEYSYMS.C then
+			cloak = 1 - cloak
+			Spring.SendLuaRulesMsg('cloak|' .. cloak)
+		elseif key >= N_0 and key <= N_9 then
 			local num = key - N_0
 			Spring.SendLuaRulesMsg('changeWeapon|' .. weapons[num])
 		end
