@@ -26,7 +26,7 @@ local ufoDefID = UnitDefNames["ufo"].id
 -------------------------------------------------------------------
 -- Camera
 
-local LOOK_FORWARDS = 7
+local LOOK_FORWARDS = 12
 
 local AVERAGE_SPEEDS = 12
 local curIndex = 1
@@ -48,9 +48,14 @@ end
 -- follow camera
 local function UpdateCamera()
 	if ufoID and not Spring.GetUnitIsDead(ufoID) and (Spring.GetGameRulesParam("devMode") ~= 1) then
-		local x, y, z = Spring.GetUnitViewPosition(ufoID)
-		local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
+		--local x = Spring.GetGameRulesParam("ufo_x") or 0
+		--local y = Spring.GetGameRulesParam("ufo_y") or 0
+		--local z = Spring.GetGameRulesParam("ufo_z") or 0
 		
+		local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
+		local x, y, z = Spring.GetUnitPosition(ufoID)
+		
+		--Spring.Echo(math.floor(x - wx), math.floor(z - wz))
 		--local ux, uy, uz = Spring.GetUnitPosition(ufoID)
 		--Spring.Echo(math.floor(x - ux), math.floor(z - uz))
 		
@@ -73,7 +78,22 @@ local function UpdateCamera()
 		
 		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
 		cx, cy, cz = cx + sx, cy + sy, cz + sz
-		Spring.SetCameraTarget(cx, cy + 25, cz, 0.11)
+		--Spring.SetCameraTarget(cx, cy + 25, cz, 0.4)
+		
+		local s = {
+			px = cx,
+			py = cy + 25,
+			pz = cz,
+			mode = 1,
+			flipped = -1,
+			dy = -0.90149933099747,
+			dz = -0.43356931209564,
+			fov = 45,
+			height = 2500,
+			angle = 0.46399998664856,
+			dx = 0,
+		}
+		Spring.SetCameraState(s, 0.4)
 	end
 end
 

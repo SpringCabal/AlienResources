@@ -11,8 +11,8 @@ unitDef = {
 	acceleration           = 0.9,
 	--airHoverFactor         = 0.1, -- How much the unit moves while hovering on the spot
     airHoverFactor         = -1, --allows it to land
-	brakeRate              = 0.5,
-	maxVelocity            = 500,
+	brakeRate              = 0.6,
+	maxVelocity            = 400,
 	cruiseAlt              = 350,
     verticalSpeed          = 20,
 	turnRate               = 0, -- Implement turning in script
@@ -45,7 +45,7 @@ unitDef = {
 	
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
-	collisionVolumeScales  = "128 32 128",
+	collisionVolumeScales  = "160 20 160",
 	collisionVolumeType    = "cylY",
 	
 	-- Attributes

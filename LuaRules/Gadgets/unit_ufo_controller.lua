@@ -102,6 +102,11 @@ function gadget:GameFrame(frame)
 			
 			movementMessage = false
 		end
+		
+		--local x, y, z = Spring.GetUnitPosition(ufoID)
+		--Spring.SetGameRulesParam("ufo_x", x)
+		--Spring.SetGameRulesParam("ufo_y", y)
+		--Spring.SetGameRulesParam("ufo_z", z)
 	else
 		Spring.CreateUnit(ufoUnitDefID, 3000, 300, 3000, 0, 0)
 	end
