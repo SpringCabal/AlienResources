@@ -51,7 +51,7 @@ function widget:Initialize()
 end
 
 function widget:DrawWorld()
-	if not ufoID then
+	if not ufoID or not Spring.ValidUnitID(ufoID) then
 		return
 	end
 

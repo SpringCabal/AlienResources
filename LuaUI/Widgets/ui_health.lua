@@ -116,16 +116,11 @@ end
 -------------------------------------------
 
 function updateHealthBar()
-    if not ufoID or not Spring.ValidUnitID(ufoID) then 
-        for _, unitID in ipairs(Spring.GetAllUnits()) do
-            if Spring.GetUnitDefID(unitID) == ufoDefID then
-                ufoID = unitID
-            end
-        end
-        if not Spring.ValidUnitID(ufoID) then return end
-    end
-    
-    local h, mh = Spring.GetUnitHealth(ufoID)
+	local h, mh = 0, 1000
+	if ufoID then
+		h, mh = Spring.GetUnitHealth(ufoID)
+	end
+	
     h = math.max(0, h)
     SetBarValue('Health', h, mh)
     SetBarColor('Health', h/mh)
@@ -152,6 +147,17 @@ function widget:Initialize()
     resizeUI(vsx,vsy)
 end
 
+function widget:UnitCreated(unitID, unitDefID)
+	if ufoDefID == unitDefID then
+		ufoID = unitID
+	end
+end
+
+function widget:UnitDestroyed(unitID, unitDefID)
+	if unitID == ufoID then
+		ufoID = nil
+	end
+end
 
 function widget:Shutdown()
 	Spring.SendCommands('resbar 1')

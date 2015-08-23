@@ -166,6 +166,7 @@ Tech = {
 	weapons = {},
 	abilities = {}, -- non targetable/selectable weapons
 	initialized = false,
+	_converted = false,
 }
 
 function Initialize()
@@ -179,6 +180,8 @@ function Initialize()
 		tech.locked = true
 		if tech.tier == 1 then
 			tech.enabled = true
+		else
+			tech.enabled = false
 		end
 		if not tech.depends then
 			tech.depends = {}
@@ -186,13 +189,14 @@ function Initialize()
 		if tech.weapon then
 			table.insert(Tech.weapons, name)
 		end
-		if tech.ability then
+		if tech.ability and Tech._converted == false then
 			-- convert to frames
 			tech.ability.duration = tech.ability.duration * 30
 			tech.ability.cooldown = tech.ability.cooldown * 30
 			table.insert(Tech.abilities, name)
 		end
 	end
+	Tech._converted = true
 end
 
 if not Tech.initialized then
@@ -260,4 +264,11 @@ end
 
 function Tech.GetAbilities()
 	return Tech.abilities
+end
+
+function Tech.ResetTechTree()
+	Tech.initialized = true
+	Tech.weapons = {}
+	Tech.abilities = {}
+	Initialize()
 end

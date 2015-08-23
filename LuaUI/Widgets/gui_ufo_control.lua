@@ -182,8 +182,10 @@ function widget:KeyPress(key, mods, isRepeat)
 end
 
 function widget:GameFrame(n)
-	-- disable all movement and weapon control when landed/landing
-	if not ufoID or Spring.GetUnitStates(ufoID).autoland then
+	-- disable all movement and weapon control when landed/landing (OLD STUFF)
+	-- if not ufoID or Spring.GetUnitStates(ufoID).autoland then 
+	
+	if not ufoID then
 		return
 	end
 	MovementControl()
@@ -236,5 +238,12 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 		if currentWeapon ~= nil then
 			WG.UI.SetAbilityEnabled(currentWeapon, true)
 		end
+	end
+end
+
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+	if ufoID == unitID then
+		ufoID = nil
+		currentWeapon = nil
 	end
 end
