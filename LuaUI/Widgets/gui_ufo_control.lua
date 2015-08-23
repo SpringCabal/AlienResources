@@ -159,7 +159,7 @@ function widget:KeyPress(key, mods, isRepeat)
 		for _, abilityName in pairs(abilities) do
 			local cd = Spring.GetGameRulesParam(abilityName .. "CD") or 0
 			local tech = WG.Tech.GetTech(abilityName)
-			if tech.level > 0 and Spring.GetKeyCode(tech.key) == key and cd == 0 then
+			if not tech.locked and Spring.GetKeyCode(tech.key) == key and cd == 0 then
 				Spring.SendLuaRulesMsg('ability|' .. abilityName)
 				return
 			end
