@@ -72,6 +72,7 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
                 Spring.SetGameRulesParam("biomass", biomass + (udef.customParams.biomass or 0))
                 Spring.SetGameRulesParam("research", research + (udef.customParams.research or 0))
                 Spring.SetGameRulesParam("metal", metal + (udef.customParams.metal or 0))
+				Spring.PlaySoundFile("sounds/swoop.wav", 50, ux, uy, uz, 'sfx')
 				Spring.DestroyUnit(unitID)
                 if unitDefID == endcubeDefID then
                     Spring.SetGameRulesParam("gameOver", 1)
