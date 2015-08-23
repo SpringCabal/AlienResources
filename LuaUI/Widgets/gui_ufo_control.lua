@@ -157,8 +157,9 @@ end
 function widget:KeyPress(key, mods, isRepeat)
 	if ufoID then
 		for _, abilityName in pairs(abilities) do
+			local cd = Spring.GetGameRulesParam(abilityName .. "CD") or 0
 			local tech = WG.Tech.GetTech(abilityName)
-			if tech.level > 0 and Spring.GetKeyCode(tech.key) == key then
+			if tech.level > 0 and Spring.GetKeyCode(tech.key) == key and cd == 0 then
 				Spring.SendLuaRulesMsg('ability|' .. abilityName)
 				return
 			end
