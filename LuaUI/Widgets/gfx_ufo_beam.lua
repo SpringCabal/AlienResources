@@ -58,7 +58,7 @@ function widget:DrawWorld()
 	local ux, uy, uz = Spring.GetUnitViewPosition(ufoID)
 	local ground = Spring.GetGroundHeight(ux, uz)
 	local height = uy - ground
-	local data = lightData[Spring.GetUnitRulesParam(ufoID, "beam_enabled")]
+	local data = lightData[Spring.GetUnitRulesParam(ufoID, "beam_enabled") or 0]
 	local radius = data.radius * height / maxHeight
 	
 	local r, ro, p, color, ao = data.radius, data.radiusOscillation, data.period, {unpack(data.color)}, data.alphaOscillation

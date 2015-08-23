@@ -66,12 +66,12 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
 			
 			if ay - uy < grabDistance + unitHeight then
                 local udef = UnitDefs[unitDefID]
-                local biomass = Spring.GetGameRulesParam("biomass")
-                local research = Spring.GetGameRulesParam("research")
-                local metal = Spring.GetGameRulesParam("metal")
-                Spring.SetGameRulesParam("biomass", biomass + udef.customParams.biomass)
-                Spring.SetGameRulesParam("research", research + udef.customParams.research)
-                Spring.SetGameRulesParam("metal", metal + udef.customParams.metal)
+                local biomass = Spring.GetGameRulesParam("biomass") or 0
+                local research = Spring.GetGameRulesParam("research") or 0
+                local metal = Spring.GetGameRulesParam("metal") or 0
+                Spring.SetGameRulesParam("biomass", biomass + (udef.customParams.biomass or 0))
+                Spring.SetGameRulesParam("research", research + (udef.customParams.research or 0))
+                Spring.SetGameRulesParam("metal", metal + (udef.customParams.metal or 0))
 				Spring.DestroyUnit(unitID)
                 if unitDefID == endcubeDefID then
                     Spring.SetGameRulesParam("gameOver", 1)
@@ -112,6 +112,6 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("gameOver", 0)
     Spring.SetGameRulesParam("gameWon", 0)
 	for _, unitID in pairs(Spring.GetAllUnits()) do
-        Spring.DestroyUnit(unitID)
+        --Spring.DestroyUnit(unitID)
     end
 end
