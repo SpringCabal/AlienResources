@@ -20,6 +20,8 @@ local vsx, vsy
 local landTextColor = {1, 1, 1, 1}
 local landText = "LAND"
 local landTextSize = 30
+local updateUI
+local upgradeAvailable = false
 
 local Chili, screen0
 
@@ -44,6 +46,7 @@ local window
 function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == UPGRADE_KEY then
         if not window then
+			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
             SpawnUpgradeUI()
         else
             if window then
@@ -52,6 +55,72 @@ function widget:KeyPress(key, mods, isRepeat)
             end
         end
     end
+end
+
+function widget:Update()
+	UpdateUpgradeUI()
+end
+
+
+function UpdateUpgradeUI()
+	if updateUI == nil then
+		local w = 350
+		updateUI = Chili.Button:New {
+			x = (vsx - w) / 2,
+			y = 0,
+			width = w,
+			height = 100,
+			parent = screen0,
+			backgroundColor = { 1,1,1,0 },
+			focusColor = { 0,0,0,0 },
+			caption = "",
+			children = {
+				Chili.Image:New {
+					file = "UI/upgrade.png",
+					x = 0, width = "100%",
+					y = 0, height = "100%",
+					keepAspect = false,
+				}
+			}
+		}
+		local lblTitle = Chili.Label:New {
+			x = 82,
+			y = 20,
+			fontsize = 25,
+			caption = "[T] Technology",
+			parent = updateUI,
+			font = {
+				color = { 0, 0.8, 1, 0.7},
+			},
+		}
+		local lblUnlockAvailable = Chili.Label:New {
+			x = 100,
+			--y = 50,
+			y = 30,
+			fontsize = 15,
+			caption = "* unlock available *",
+			parent = updateUI,
+			font = {
+				color = { 1, 1, 1, 1},
+				outline = true,
+				shadow = false,
+			},
+		}
+		lblUnlockAvailable:Hide()
+		updateUI.lblUnlockAvailable = lblUnlockAvailable
+	end
+	upgradeAvailable = true
+	if upgradeAvailable and not updateUI.lblUnlockAvailable.visible then
+		updateUI.lblUnlockAvailable:Show()
+	elseif not upgradeAvailable and updateUI.lblUnlockAvailable.visible then
+		updateUI.lblUnlockAvailable:Hide()
+	end
+	if upgradeAvailable then
+		local v = 0.7 + math.sin(os.clock() * 10) / 3.14 * 0.4
+		local v256 = string.char(math.floor(v * 255))
+		updateUI.lblUnlockAvailable:SetCaption("\255" .. v256 .. v256 .. v256 .. "* unlock available *\b")
+		--updateUI.lblUnlockAvailable.font.color = { v, v, v, 1 }
+	end
 end
 
 local techMapping = {}
@@ -63,7 +132,6 @@ function SpawnUpgradeUI()
         bottom = 10,
         caption = "Close",
         OnClick = { function() 
-			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
             window:Dispose()
             window = nil
         end },
@@ -72,7 +140,10 @@ function SpawnUpgradeUI()
         x = 10,
         y = 10,
         fontsize = 30,
-        caption = "Upgrade ship",
+        caption = "TECH TREE",
+		font = {
+			color = { 0, 0.8, 1, 0.7},
+		},
     }
 
     local children = { btnClose, lblTitle }
@@ -138,6 +209,9 @@ function SpawnUpgradeUI()
         draggable = false,
         resizable = false,
         children = children,
+		OnDispose = { function() 
+			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
+		end},
     }
 end
 
