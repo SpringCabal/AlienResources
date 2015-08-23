@@ -11,7 +11,8 @@ colorOff="#313a5c"
 mkdir -p output
 for i in *.png; do 
     #convert \( $i -alpha extract \) -background $color -alpha shape PNG32:output/"output_$i"; 
-    convert \( $i -alpha extract \) -background $colorOff -alpha shape PNG32:output/"output_$i"".off"; 
+    #convert \( $i -alpha extract \) -background $colorOff -alpha shape PNG32:output/"output_$i"".off"; 
+    convert $i  -modulate 50 -modulate 100,0  -type Grayscale PNG32:output/"output_$i"".off"; 
 done
 cd output
 rename "output_" "" output_*

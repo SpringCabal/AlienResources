@@ -94,10 +94,18 @@ function SpawnUpgradeUI()
             height = 45,
             file = file,
         }
+		local lvlCaption
+		if tech.level == 5 then
+			lvlCaption = "\255\0\255\0" .. tech.level .. "/5\b"
+		elseif tech.level > 0 then
+			lvlCaption = "\255\0\255\0" .. tech.level .. "\b/5"
+		else
+			lvlCaption = tech.level .. "/5"
+		end
         lblTech = Chili.Label:New {
             right = 3,
             bottom = 3,
-            caption = tech.level .. "/5",
+            caption = lvlCaption,
             align = "right",
         }
         btnTech = Chili.Button:New {
@@ -111,7 +119,7 @@ function SpawnUpgradeUI()
             itemPadding = {0, 0, 0, 0},
             backgroundColor = {0.5, 0.5, 0.5, 1},
             --focusColor      = {0.4, 0.4, 0.4, 1},
-            children = {imgTech, lblTech},
+            children = {lblTech, imgTech},
             OnClick = { function(ctrl, x, y, button)
                 if button == 1 then
                     UpgradeTech(name)
@@ -140,7 +148,11 @@ function UpgradeTech(name)
 	end
 	local tech = Tech.GetTech(name)
 	Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
-	techMapping[name].lblTech:SetCaption(tech.level .. "/5")
+	if tech.level < 5 then
+		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "\b/5")
+	else
+		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "/5\b")
+	end
 	local tooltip, value = Tech.GetTechTooltip(name)
 	techMapping[name].btnTech.tooltip = tooltip
 
