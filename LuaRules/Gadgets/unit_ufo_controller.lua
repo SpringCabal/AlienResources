@@ -74,6 +74,7 @@ end
 
 function gadget:GameFrame(frame)
 	if ufoID then
+		
 		if aimx then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx, aimy, aimz)
@@ -94,11 +95,11 @@ function gadget:GameFrame(frame)
 				MoveUFO(ufoID, vx, vz, 20)
 				ufoMoving = false
 			end
-			
 
 			if weaponMessage then
 				Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
 			end
+			
 			
 			movementMessage = false
 		end

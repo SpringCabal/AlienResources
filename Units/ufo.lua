@@ -45,7 +45,7 @@ unitDef = {
 	
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
-	collisionVolumeScales  = "160 20 160",
+	collisionVolumeScales  = "180 20 180",
 	collisionVolumeType    = "cylY",
 	
 	-- Attributes

@@ -53,17 +53,20 @@ local function UpdateCamera()
 		--local z = Spring.GetGameRulesParam("ufo_z") or 0
 		
 		local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
-		local x, y, z = Spring.GetUnitPosition(ufoID)
-		
-		--Spring.Echo(math.floor(x - wx), math.floor(z - wz))
-		--local ux, uy, uz = Spring.GetUnitPosition(ufoID)
-		--Spring.Echo(math.floor(x - ux), math.floor(z - uz))
-		
+		local x, y, z = Spring.GetUnitViewPosition(ufoID)
+
 		x, y, z = x + vx*LOOK_FORWARDS, y + vy*LOOK_FORWARDS, z + vz*LOOK_FORWARDS
 		
 		-- Apparent unit speed
 		local sx, sy, sz = x - lx, y - ly, z - lz
 		lx, ly, lz = x, y, z
+		
+		--Spring.Echo(math.floor(sx), math.floor(sz))
+		
+		--Spring.Echo(math.floor(x - wx), math.floor(z - wz))
+		--local ux, uy, uz = Spring.GetUnitPosition(ufoID)
+		--Spring.Echo(math.floor(x - ux), math.floor(z - uz))
+		
 		
 		sx = UpdateSpeed(sx, lastXSpeed)
 		sy = UpdateSpeed(sy, lastYSpeed)
@@ -80,20 +83,17 @@ local function UpdateCamera()
 		cx, cy, cz = cx + sx, cy + sy, cz + sz
 		--Spring.SetCameraTarget(cx, cy + 25, cz, 0.4)
 		
-		local s = {
+		local newState = {
 			px = cx,
 			py = cy + 25,
 			pz = cz,
 			mode = 1,
 			flipped = -1,
-			dy = -0.90149933099747,
-			dz = -0.43356931209564,
 			fov = 45,
-			height = 2500,
-			angle = 0.46399998664856,
-			dx = 0,
+			height = 2000,
+			angle = 0.4,
 		}
-		Spring.SetCameraState(s, 0.4)
+		Spring.SetCameraState(newState, 0.4)
 	end
 end
 
