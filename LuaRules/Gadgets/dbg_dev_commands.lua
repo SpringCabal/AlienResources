@@ -199,6 +199,12 @@ local function bisect(cmd,line,words,player)
 	end
 end
 
+local function dev()
+	local devMode = Spring.GetGameRulesParam("devMode") or 0
+	Spring.SetGameRulesParam("devMode", 1 - devMode)
+	Spring.Echo("devMode", 1 - devMode)
+end
+
 function gadget:Initialize()
 	gadgetHandler.actionHandler.AddChatAction(self,"bisect",bisect,"Bisect gadget disables.")
 	gadgetHandler.actionHandler.AddChatAction(self,"circle",circleGive,"Gives a bunch of units in a circle.")
@@ -206,6 +212,7 @@ function gadget:Initialize()
 	gadgetHandler.actionHandler.AddChatAction(self,"gk",gentleKill,"Gently kills everything.")
 	gadgetHandler.actionHandler.AddChatAction(self,"clear",clear,"Clears all units and wreckage.")
 	gadgetHandler.actionHandler.AddChatAction(self,"restart",restart,"Gives some commanders and clears everything else.")
+	gadgetHandler.actionHandler.AddChatAction(self,"dev",dev,"Toggles dev mode.")
 end
 
 -------------------------------------------------------------------------------------

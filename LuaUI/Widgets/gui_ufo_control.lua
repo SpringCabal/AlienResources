@@ -19,6 +19,56 @@ local S = KEYSYMS.S
 local A = KEYSYMS.A
 local D = KEYSYMS.D
 
+local ufoID
+local ufoDefID = UnitDefNames["ufo"].id
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-- Camera
+
+local AVERAGE_SPEEDS = 10
+local curIndex = 1
+local lastXSpeed = {average = 0}
+local lastYSpeed = {average = 0}
+local lastZSpeed = {average = 0}
+
+local lx, ly, lz = 0, 0, 0
+
+local cx, cy, cz = 0, 0, 0
+
+local function UpdateSpeed(newVal, values)
+	newVal = newVal/AVERAGE_SPEEDS
+	values.average = values.average - (values[curIndex] or 0) + newVal
+	values[curIndex] = newVal
+	return values.average
+end
+
+-- follow camera
+local function UpdateCamera()
+	if ufoID and not Spring.GetUnitIsDead(ufoID) and (Spring.GetGameRulesParam("devMode") ~= 1) then
+		local x, y, z = Spring.GetUnitViewPosition(ufoID)
+		
+		-- Apparent unit speed
+		local sx, sy, sz = x - lx, y - ly, z - lz
+		lx, ly, lz = x, y, z
+		
+		sx = UpdateSpeed(sx, lastXSpeed)
+		sy = UpdateSpeed(sy, lastYSpeed)
+		sz = UpdateSpeed(sz, lastZSpeed)
+		
+		curIndex = curIndex + 1
+		if curIndex > AVERAGE_SPEEDS then
+			curIndex = 1
+		end
+		
+		--Spring.Echo(math.floor(sx), math.floor(sz))
+		
+		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
+		cx, cy, cz = cx + sx, cy + sy, cz + sz
+		Spring.SetCameraTarget(cx, cy + 25, cz, 0.1)
+	end
+end
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
@@ -73,8 +123,6 @@ function widget:Initialize()
 	end
 end
 
-local ufoID
-local ufoDefID = UnitDefNames["ufo"].id
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
@@ -89,11 +137,13 @@ function widget:GameFrame(n)
 	MovementControl()
 	WeaponControl()
 	AimingControl()
+	
+	UpdateCamera()
 end
 
 function widget:MousePress(mx, my, button)
 	local alt, ctrl, meta, shift = Spring.GetModKeyState()
-	if button == 1 and not Spring.IsAboveMiniMap(mx, my) then
+	if button == 1 and not Spring.IsAboveMiniMap(mx, my) and (Spring.GetGameRulesParam("devMode") ~= 1) then
 		local _, pos = Spring.TraceScreenRay(mx, my, true)
 		if pos then
 			local x, y, z = pos[1], pos[2], pos[3]
@@ -101,13 +151,4 @@ function widget:MousePress(mx, my, button)
 			return true
 		end
 	end	
-end
-
--- follow camera
-function widget:Update()
-	if ufoID and not Spring.GetUnitIsDead(ufoID) then
-		local x, y, z = Spring.GetUnitViewPosition(ufoID)
-		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
-		Spring.SetCameraTarget(x, y + 25, z, 0)
-	end
 end
