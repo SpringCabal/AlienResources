@@ -41,6 +41,8 @@ local lastXSpeed = {average = 0}
 local lastYSpeed = {average = 0}
 local lastZSpeed = {average = 0}
 
+local mouseControl = false
+
 local lx, ly, lz = 0, 0, 0
 
 local cx, cy, cz = 0, 0, 0
@@ -166,6 +168,7 @@ function widget:KeyPress(key, mods, isRepeat)
 			WG.UI.SetAbilityEnabled(weaponName, true)
 			WG.UI.SetAbilityEnabled(currentWeapon, false)
 			currentWeapon = weaponName
+			Spring.PlaySoundFile("sounds/select.wav")
 			Spring.SendLuaRulesMsg('changeWeapon|' .. weaponName)
 		end
 	end
@@ -177,7 +180,9 @@ function widget:GameFrame(n)
 		return
 	end
 	MovementControl()
-	WeaponControl()
+	if mouseControl then
+		WeaponControl()
+	end
 	AimingControl()
 	
 	UpdateCamera()
@@ -194,9 +199,16 @@ function widget:MousePress(mx, my, button)
 		if pos then
 			local x, y, z = pos[1], pos[2], pos[3]
 			Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
+			mouseControl = true
 			return true
 		end
 	end	
+end
+
+function widget:MouseRelease(mx, my, button)
+	if button == 1 then
+		mouseControl = false
+	end
 end
 
 -------------------------------------------------------------------

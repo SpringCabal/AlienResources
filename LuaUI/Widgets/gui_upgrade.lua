@@ -187,6 +187,7 @@ function SpawnUpgradeUI()
         bottom = 10,
         caption = "Close",
         OnClick = { function() 
+			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
             window:Dispose()
             window = nil
         end },
@@ -291,13 +292,12 @@ function SpawnUpgradeUI()
                 end
             end},
         }
-        Spring.Echo(name, tech.tier)
         techMapping[name] = { btnTech = btnTech, imgTech = imgTech, lblTech = lblTech }
         table.insert(children, btnTech)
     end
     window = Chili.Window:New {
         parent = screen0,
-        x = 100,
+        x = 200,
         width = 300,
         bottom = 100,
         height = 700,
@@ -321,6 +321,7 @@ function UpgradeTech(tech, key)
     if not tech.enabled then
         return false
     end
+	Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
     tech.level = math.min(5, tech.level + 1)
     techMapping[key].lblTech:SetCaption(tech.level .. "/5")
 	local tooltip, value = GetBtnTooltip(tech, key)
