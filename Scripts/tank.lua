@@ -1,8 +1,8 @@
 include "constants.lua"
 
 -- pieces
-local barrels = {piece "leftflare",
-				piece "rightflare"}
+local barrels = {piece "muzzleLeft",
+				piece "muzzleRight"}
 
 				
 local currentBarrel = #barrels
