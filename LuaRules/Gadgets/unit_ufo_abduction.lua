@@ -33,6 +33,13 @@ local Vector = Spring.Utilities.Vector
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
+local function callScript(unitID, funcName, args)
+	local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
+	if func then
+		Spring.UnitScript.CallAsUnit(unitID,func, args)
+	end
+end
+
 local function FloatUnitInDirection(unitID, x, y, z, uvx, uvz, speed, hAccel, vAccel)
 
 	local dx, dy, dz = Spring.GetUnitVelocity(unitID)
@@ -85,6 +92,7 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
 			else
                 enabled = true
 				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed, 2, GRAVITY + 0.4)
+				callScript(unitID, "Abduction_float")
 			end
 		end
 	end

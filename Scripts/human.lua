@@ -33,8 +33,12 @@ local scriptEnv = {
 
 Animations['stop'] = VFS.Include("Scripts/animations/human_stop.lua", scriptEnv);
 Animations['walk'] = VFS.Include("Scripts/animations/human_walk.lua", scriptEnv);
+Animations['float'] = VFS.Include("Scripts/animations/human_float.lua", scriptEnv);
 
-local SIG_WALK = tonumber("00001",2);
+local SIG_WALK =  tonumber("00001",2);
+local SIG_IDLE =  tonumber("00010",2);
+
+local floating = false;
 
 function constructSkeleton(unit, piece, offset)
     if (offset == nil) then
@@ -113,6 +117,22 @@ local function Stop()
 	Signal(SIG_WALK)
 	SetSignalMask(SIG_WALK)
 	PlayAnimation("stop",true)
+end
+
+local function Float()
+	Signal(SIG_WALK)
+	SetSignalMask(SIG_WALK)
+	PlayAnimation("float", true);
+	while floating do
+		PlayAnimation("float", false);
+	end
+end
+
+function Abduction_float()
+	if (not floating) then
+		StartThread(Float)
+	end
+	floating = true;
 end
 
 function script.StartMoving()
