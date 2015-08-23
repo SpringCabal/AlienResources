@@ -45,15 +45,7 @@ end
 local window
 function widget:KeyPress(key, mods, isRepeat)
     if ufoID and key == UPGRADE_KEY then
-        if not window then
-			Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
-            SpawnUpgradeUI()
-        else
-            if window then
-                window:Dispose()
-                window = nil
-            end
-        end
+        ToggleUpgradeUI()
     end
 end
 
@@ -61,6 +53,17 @@ function widget:Update()
 	UpdateUpgradeUI()
 end
 
+function ToggleUpgradeUI()
+	if not window then
+		Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
+		SpawnUpgradeUI()
+	else
+		if window then
+			window:Dispose()
+			window = nil
+		end
+	end
+end
 
 function UpdateUpgradeUI()
 	if updateUI == nil then
@@ -81,7 +84,10 @@ function UpdateUpgradeUI()
 					y = 0, height = "100%",
 					keepAspect = false,
 				}
-			}
+			},
+			OnClick = { function()
+				ToggleUpgradeUI()
+			end},
 		}
 		local lblTitle = Chili.Label:New {
 			x = 82,
