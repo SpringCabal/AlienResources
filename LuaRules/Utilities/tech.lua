@@ -152,7 +152,10 @@ local techTree = {
 		depends = { "blackHoleGun", "incendiaryBeamLaser", "missiles", "antiMissilePointDefense", "carrierDrones", "cloak", "teleport" },
 		iconPath = "LuaUI/Images/cleanse.png",
 		iconDisabledPath = "LuaUI/Images/cleanse_off.png",
-		weapon = {
+		key = "space",
+		ability = {
+			duration = 10,
+			cooldown = 30,
 		}
 	},
 }

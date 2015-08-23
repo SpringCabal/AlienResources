@@ -142,6 +142,8 @@ function DisableAbility(abilityName)
 		-- TODO
 	elseif abilityName == "teleport" then
 		-- TODO
+	elseif abilityName == "independenceDayGun" then
+		-- TODO
 	end
 end
 
@@ -216,6 +218,8 @@ function HandleLuaMessage(msg)
 		elseif abilityName == "haste" then
 			-- TODO
 		elseif abilityName == "teleport" then
+			-- TODO
+		elseif abilityName == "independenceDayGun" then
 			-- TODO
 		end
 	end
