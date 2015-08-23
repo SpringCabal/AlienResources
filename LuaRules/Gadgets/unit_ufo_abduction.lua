@@ -33,7 +33,7 @@ local Vector = Spring.Utilities.Vector
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
-local function FloatUnitInDirection(unitID, x, y, z, speed, hAccel, vAccel)
+local function FloatUnitInDirection(unitID, x, y, z, uvx, uvz, speed, hAccel, vAccel)
 	
 	local dx, dy, dz = Spring.GetUnitVelocity(unitID)
 	
@@ -41,8 +41,8 @@ local function FloatUnitInDirection(unitID, x, y, z, speed, hAccel, vAccel)
 	
 	local dyCorrection = math.min(vAccel, vy + GRAVITY - dy)
 	
-	local dxCorrection = vx - dx
-	local dzCorrection = vz - dz
+	local dxCorrection = vx - dx + uvx
+	local dzCorrection = vz - dz + uvz
 	
 	dxCorrection, dzCorrection = Vector.Norm(hAccel, dxCorrection, dzCorrection)
 	
@@ -52,7 +52,7 @@ local function FloatUnitInDirection(unitID, x, y, z, speed, hAccel, vAccel)
 	Spring.AddUnitImpulse(unitID, dxCorrection, 4 + dyCorrection, dzCorrection)
 end
 
-local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
+local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
 	
 	local units = Spring.GetUnitsInCylinder(ax, az, radius)
 	
@@ -80,7 +80,7 @@ local function SetAbductionArea(ax, ay, az, grabDistance, radius, speed)
                 end
 			else
                 enabled = true
-				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, speed, 0.5, GRAVITY + 0.4)
+				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed, 0.5, GRAVITY + 0.4)
 			end
 		end
 	end
@@ -100,19 +100,11 @@ end
 function gadget:GameFrame(frame)
 	if ufoID then
 		local x,y,z = Spring.GetUnitPosition(ufoID)
+		local vx, _, vz = Spring.GetUnitVelocity(ufoID)
 		if not x then
 			return
 		end
 		
-		SetAbductionArea(x, y, z, 20, 100, 8)
+		SetAbductionArea(x, y, z, vx, vz, 20, 100, 8)
 	end
-end
-
-function gadget:Initialize()
-    -- cleanup
-    Spring.SetGameRulesParam("gameOver", 0)
-    Spring.SetGameRulesParam("gameWon", 0)
-	for _, unitID in pairs(Spring.GetAllUnits()) do
-        --Spring.DestroyUnit(unitID)
-    end
 end

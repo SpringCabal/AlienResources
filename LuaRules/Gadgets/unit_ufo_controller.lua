@@ -69,6 +69,8 @@ function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
 		ufoID = unitID
 		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
+		
+		Spring.SetGameRulesParam("ufo_scare_radius", 500)
 	end
 end
 
@@ -108,8 +110,6 @@ function gadget:GameFrame(frame)
 		Spring.SetGameRulesParam("ufo_x", x)
 		Spring.SetGameRulesParam("ufo_y", y)
 		Spring.SetGameRulesParam("ufo_z", z)
-	else
-		Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
 	end
 end
 
@@ -171,13 +171,15 @@ function HandleLuaMessage(msg)
 		if ufoID then
 			if wantCloak then
 				Spring.SetUnitCloak(ufoID, 4)
+				Spring.SetGameRulesParam("ufo_scare_radius", 0)
 			else
 				Spring.SetUnitCloak(ufoID, false)
+				Spring.SetGameRulesParam("ufo_scare_radius", 500)
 			end
 		end
 	end
 	
-	if msg_table[1] == 'changeWeapon' then
+	if msg_table[1] == 'changeWeapon' and ufoID then
 		local env = Spring.UnitScript.GetScriptEnv(ufoID)
 		Spring.UnitScript.CallAsUnit(ufoID, env.script.SetCurrentWeapon, msg_table[2])
 	end

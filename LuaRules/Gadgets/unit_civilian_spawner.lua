@@ -39,8 +39,13 @@ for i = 1, #UnitDefs do
 			civilians    = LoadCustomParam(ud, "civilians"),
 			scientists   = LoadCustomParam(ud, "scientists"),
 			wanderRadius = LoadCustomParam(ud, "wander_radius"),
-			restockTime  = LoadCustomParam(ud, "restock_time"),
 		}
+		
+		local restockTime = LoadCustomParam(ud, "restock_time")
+		if restockTime then
+			spawnerDefs[i].civRate = spawnerDefs[i].civilians/restockTime
+			spawnerDefs[i].sciRate = spawnerDefs[i].scientists/restockTime
+		end
 	end
 end
 
@@ -60,6 +65,8 @@ local spawners = {}  -- Units which spawn and recieve units
 
 local idleWanderer = {}
 
+local ufoX, ufoZ, ufoScareRadiusSq = 0, 0, 0
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Utility Functions
@@ -75,11 +82,9 @@ local function RemoveThing(key, thingTable)
 	thingTable[key] = nil
 end
 
+
 local function GetDistSqToUFO(x, z)
-	local ux = Spring.GetGameRulesParam("ufo_x") or 0
-	local uz = Spring.GetGameRulesParam("ufo_z") or 0
-	
-	return Vector.DistSq(x, z, ux, uz)
+	return Vector.DistSq(x, z, ufoX, ufoZ)
 end
 
 --------------------------------------------------------------------------------
@@ -103,6 +108,13 @@ local function WandererIdle(unitID)
 	
 	local data = wanderers[unitID]
 	
+	if not data.wandering then
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+		GG.UpdateUnitAttributes(unitID)
+	end
+	
+	data.wandering = true
+	
 	if spawners[data.spawnID] and not spawners[data.spawnID].active then
 		return
 	end
@@ -112,23 +124,77 @@ local function WandererIdle(unitID)
 	idleWanderer[unitID] = true
 end
 
-local function WandererMove(unitID)
+local function WandererWander(unitID)
 	if not (unitID and Spring.ValidUnitID(unitID) and wanderers[unitID]) then
 		RemoveThing(unitID, wanderers)
 		return
 	end
 	
 	local data = wanderers[unitID]
-
-	local rx, rz = Vector.PolarToCart(data.wanderRadius*(1 - math.random()^2), 2*math.pi*math.random(), true)
+	
+	local rx, rz = Vector.PolarToCart(data.wanderRadius*math.random(), 2*math.pi*math.random(), true)
 	
 	Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.MOVE, {data.x + rx, 0, data.z + rz}, {})
 end
 
-local function UpdateAllWanderers()
+local function WandererCheckFlee(unitID)
+	if not (unitID and wanderers[unitID]) then
+		RemoveThing(unitID, wanderers)
+		return
+	end
+	
+	local data = wanderers[unitID]
+	
+	if not data.wandering then
+		return
+	end
+	
+	local x,_,z = Spring.GetUnitPosition(unitID)
+	
+	if GetDistSqToUFO(x, z) < ufoScareRadiusSq then
+		local fx, fz = Vector.Norm(150, x - ufoX, z - ufoZ)
+		Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.MOVE, {x + fx, 0, z + fz}, {})
+		data.wandering = false
+		
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 2.5)
+		GG.UpdateUnitAttributes(unitID)
+		
+		if idleWanderer and idleWanderer[unitID] then
+			idleWanderer[unitID] = nil
+		end
+	end
+end
+
+local function RemoveWanderer(unitID, unitDefID)
+	if not (unitID and wanderers[unitID]) then
+		RemoveThing(unitID, wanderers)
+		return
+	end
+	
+	local data = wanderers[unitID]
+	
+	local spawnerData = data.spawnID and spawners[data.spawnID]
+	
+	if spawnerData then
+		spawnerData.wanderers[unitID] = nil
+		if unitDefID == civilianDefID then
+			spawnerData.civilians = spawnerData.civilians - 1
+		elseif unitDefID == scientistDefID then
+			spawnerData.scientists = spawnerData.scientists - 1
+		end
+	end
+	
+	RemoveThing(unitID, wanderers)
+end
+
+local function UpdateAllWanderers(frame)
+	for unitID,_ in pairs(wanderers) do
+		WandererCheckFlee(unitID)
+	end
+	
 	if idleWanderer then
 		for unitID,_ in pairs(idleWanderer) do
-			WandererMove(unitID)
+			WandererWander(unitID)
 		end
 		idleWanderer = false
 	end
@@ -143,7 +209,7 @@ local function SpawnWanderer(unitDefID, spawnerData)
 	local spawnDef = spawnerData.spawnDef
 	
 	for i = 1, 8 do
-		local sx, sz = Vector.PolarToCart(spawnDef.wanderRadius*(1 - math.random()^2), 2*math.pi*math.random(), true)
+		local sx, sz = Vector.PolarToCart(spawnDef.wanderRadius*math.random(), 2*math.pi*math.random(), true)
 		sx = spawnerData.x + sx
 		sz = spawnerData.z + sz
 		local sy = Spring.GetGroundHeight(sx, sz)
@@ -185,6 +251,7 @@ local function SpawnerUpdate(unitID, deltaTime)
 	
 	local ufoDistSq = GetDistSqToUFO(data.x, data.z)
 	
+	--// Update whether the spawned units should move.
 	if ufoDistSq > UFO_DIST_ACTIVE then
 		if data.active then
 			data.active = false
@@ -201,10 +268,10 @@ local function SpawnerUpdate(unitID, deltaTime)
 		end
 	end
 	
+	--// Make the first lot of spawned units.
 	if data.doInitialSpawn then
-		
 		for i = 1, data.spawnDef.civilians do
-			if SpawnWanderer(scientistDefID, data) then
+			if SpawnWanderer(civilianDefID, data) then
 				data.civilians = data.civilians + 1
 			end
 		end
@@ -219,6 +286,28 @@ local function SpawnerUpdate(unitID, deltaTime)
 		return
 	end
 	
+	--// Replace dead units
+	if ufoDistSq > UFO_DIST_SPAWN then
+		if data.civilians < data.spawnDef.civilians then
+			data.civStock = (data.civStock or 0) + data.spawnDef.civRate*deltaTime
+			if data.civStock > 1 then
+				if SpawnWanderer(civilianDefID, data) then
+					data.civilians = data.civilians + 1
+				end
+				data.civStock = data.civStock - 1
+			end
+		end
+		
+		if data.scientists < data.spawnDef.scientists then
+			data.sciStock = (data.sciStock or 0) + data.spawnDef.sciRate*deltaTime
+			if data.sciStock > 1 then
+				if SpawnWanderer(scientistDefID, data) then
+					data.scientists = data.scientists + 1
+				end
+				data.sciStock = data.sciStock - 1
+			end
+		end
+	end
 end
 
 local function AddSpawner(unitID, unitDefID)
@@ -247,9 +336,11 @@ local function RemoveSpawner(unitID)
 	RemoveThing(unitID, spawners)
 end
 
-local function UpdateAllSpawners()
-	for unitID, data in pairs(spawners) do
-		SpawnerUpdate(unitID, deltaTime)
+local function UpdateAllSpawners(frame)
+	if frame%5 == 0 then
+		for unitID, data in pairs(spawners) do
+			SpawnerUpdate(unitID, 5)
+		end
 	end
 end
 
@@ -268,8 +359,12 @@ function gadget:UnitIdle(unitID, unitDefID, unitTeam)
 end
 
 function gadget:GameFrame(n)
-	UpdateAllSpawners()
-	UpdateAllWanderers()
+	ufoX = Spring.GetGameRulesParam("ufo_x") or 0
+	ufoZ = Spring.GetGameRulesParam("ufo_z") or 0
+	ufoScareRadiusSq = (Spring.GetGameRulesParam("ufo_scare_radius") or 0)^2
+	
+	UpdateAllSpawners(n)
+	UpdateAllWanderers(n)
 end
 
 function gadget:UnitCreated(unitID, unitDefID, teamID)
@@ -280,9 +375,17 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
 end
 
+function gadget:UnitDestroyed(unitID, unitDefID, teamID)
+	if spawners[unitID] then
+		RemoveSpawner(unitID, unitDefID)
+	elseif wanderers[unitID] then
+		RemoveWanderer(unitID, unitDefID)
+	end
+end
+
 function gadget:Initialize()
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = Spring.GetUnitDefID(unitID)
-		gadget:UnitCreated(unitID, unitDefID)
+		--gadget:UnitCreated(unitID, unitDefID)
 	end
 end
