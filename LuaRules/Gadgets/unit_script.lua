@@ -7,4 +7,6 @@
 -- Uncomment to override the directory which is scanned for *.lua unit scripts.
 UNITSCRIPT_DIR = "scripts/"
 
+VFS.Include("LuaRules/Utilities/tech.lua")
+GG.Tech = Tech
 return include("luagadgets/gadgets/unit_script.lua")
