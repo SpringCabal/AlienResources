@@ -58,12 +58,9 @@ function SetAbilityEnabled(name, enabled)
  	imgAbility:AddChild(Chili.Label:New {
 			caption = text,
 			x = 16,
-			y = 0,
+			y = 22,
 			font = {
 				color = color,
-				outline = true,
-				autoOutlineColor = true,
-				shadow = false,
 				size = 16,
 			}
 		}
@@ -87,12 +84,9 @@ function MakeImage(name, text, i, enabled)
 			Chili.Label:New {
 				caption = text,
 				x = 16,
-				y = 0,
+				y = 22,
 				font = {
 					color = color,
-					outline = true,
-					autoOutlineColor = true,
-					shadow = false,
 					size = 16,
 				}
 			},
