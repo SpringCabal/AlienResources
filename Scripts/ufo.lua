@@ -65,14 +65,14 @@ local function AimGun(i, tx, ty, tz)
 	local b = gunBase[i]
 	local g = gun[i]
 	local gh = GetGunHeading(i) - gunHeading[i]
-	
+
 	local px, py, pz = Spring.GetUnitPiecePosDir(unitID, b)
 	local dx, dy, dz = tx - px, ty - py, tz - pz
 	local dist = math.sqrt(dx * dx + dz * dz)
 	local pitch = math.atan2(dy, dist)
 	local heading = math.atan2(dx, dz) + gh
-	
-	
+
+
 	Turn(g, x_axis, -pitch, 0)
 	Turn(b, z_axis, heading, 0)
 	--Turn(p, y_axis, 0, 0)
@@ -96,30 +96,45 @@ function script.Create()
 	for i=1, #railing do
 		Spin(railing[i],z_axis, i%2*2-1 *5)
 	end
-	
+
 	for i=1, #outerhull do
 		Spin(outerhull[i],z_axis, 1)
 	end
-	
+
 	Spin(innerHull,z_axis, -2)
-	
+
 	Spin(turbine, z_axis, 4);
-	
+
 end
+
+
+local lastGun = 4
 
 function script.QueryWeapon(num)
-	return muzzle[num % 4 + 1] 
+	if currentWeapon == "pulseLaser" then
+		return lastGun
+	end
+	return muzzle[num % 4 + 1]
 end
 
-function script.AimFromWeapon(num) 
-	return gun[num % 4 + 1] 
+function script.AimFromWeapon(num)
+	if currentWeapon == "pulseLaser" then
+		return lastGun
+	end
+	return gun[num % 4 + 1]
 end
 
 function script.AimWeapon(num, heading, pitch)
 	if not currentWeapon then
 		return false
 	end
-	return weapons[currentWeapon].gunStart <= num and num <= weapons[currentWeapon].gunEnd
+	return WeaponDefs[UnitDef.weapons[num].weaponDef].name:find(currentWeapon:lower())
+end
+
+function script.Shot(num)
+	if currentWeapon == "pulseLaser" then
+		lastGun = lastGun % 4 + 1
+	end
 end
 
 function script.Killed(recentDamage, maxHealth)

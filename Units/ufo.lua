@@ -6,7 +6,7 @@ unitDef = {
     name                   = "UFO",
     unitName               = unitName,
     script                 = unitName .. ".lua",
-	
+
 	-- Movement
 	acceleration           = 0.9,
 	--airHoverFactor         = 0.1, -- How much the unit moves while hovering on the spot
@@ -18,7 +18,7 @@ unitDef = {
 	turnRate               = 0, -- Implement turning in script
 	footprintX             = 2,
 	footprintZ             = 2,
-	
+
 	useSmoothmesh          = false, -- Broken, do not use it.
 	bankingAllowed         = false,
 	canFly                 = true,
@@ -26,7 +26,7 @@ unitDef = {
 	hoverAttack            = true,
 	canSubmerge            = false,
 	turnInPlaceAngleLimit  = 180,
-	
+
 	customParams           = {
 		modelradius        = "18",
 		midposoffset       = "0 0 0",
@@ -42,14 +42,14 @@ unitDef = {
 	canStop                = true,
 	collide                = true,
 	upright                = true,
-	
+
 	category               = "ufo",
-	
+
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
 	collisionVolumeScales  = "180 20 180",
 	collisionVolumeType    = "cylY",
-	
+
 	-- Attributes
 	mass                   = 200,
 	maxDamage              = 1000,
@@ -57,12 +57,12 @@ unitDef = {
 	autoHeal               = 0,
 	idleAutoHeal           = 0,
 	idleTime               = 1,
-	
+
 	-- Economy
 	buildCostEnergy        = 100,
 	buildCostMetal         = 100,
 	buildTime              = 100,
-	
+
 	weapons                = {
 		{
 			def                = "gravityBeam",
@@ -80,33 +80,28 @@ unitDef = {
 			def                = "gravityBeam",
 			onlyTargetCategory = "land",
 		},
-		
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "independenceDayGun",
+			onlyTargetCategory = "land",
+		},
 		{
 			def                = "pulseLaser",
-			onlyTargetCategory = "land",
-		},
-		{
-			def                = "pulseLaser",
-			onlyTargetCategory = "land",
-		},
-		{
-			def                = "independenceDayGun",
-			onlyTargetCategory = "land",
-		},
-		{
-			def                = "independenceDayGun",
-			onlyTargetCategory = "land",
-		},
-		{
-			def                = "independenceDayGun",
-			onlyTargetCategory = "land",
-		},
-		{
-			def                = "independenceDayGun",
 			onlyTargetCategory = "land",
 		},
 	},
-	
+
 	weaponDefs             = {
 
 		gravityBeam = {
