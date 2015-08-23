@@ -9,6 +9,7 @@ color="#7a91e6"
 colorOff="#313a5c"
 
 mkdir -p output
+rm *_off.png
 for i in *.png; do 
     #convert \( $i -alpha extract \) -background $color -alpha shape PNG32:output/"output_$i"; 
     #convert \( $i -alpha extract \) -background $colorOff -alpha shape PNG32:output/"output_$i"".off"; 
@@ -18,5 +19,5 @@ cd output
 rename "output_" "" output_*
 rename ".png.off" "_off.png" *.png.off
 cd ../
-mv output/* ../
+mv output/* ./
 rmdir output
