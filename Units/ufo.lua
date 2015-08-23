@@ -78,6 +78,15 @@ unitDef = {
 			def                = "gravityBeam",
 			onlyTargetCategory = "land",
 		},
+		
+		{
+			def                = "pulseLaser",
+			onlyTargetCategory = "land",
+		},
+		{
+			def                = "pulseLaser",
+			onlyTargetCategory = "land",
+		},
 	},
 	
 	weaponDefs             = {
@@ -121,6 +130,34 @@ unitDef = {
 			turret                  = true,
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 500,
+		},
+		pulseLaser = {
+			name                    = "Pulse laser",
+			areaOfEffect            = 128,
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			coreThickness           = 0,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			damage                  = {
+				default = 20,
+			},
+
+			interceptedByShieldType = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 0.01,
+			rgbColor                = "0.2 0.5 0.2",
+			soundTrigger            = true,
+			thickness               = 3,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "LaserCannon",
+			weaponVelocity          = 2500,
+			soundstart  			= "pulse.wav",
 		},
 	},
 }

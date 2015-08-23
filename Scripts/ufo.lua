@@ -43,6 +43,22 @@ local outerhull = {
 
 local lightBeamEnabled = false
 
+local weapons = {
+	gravityBeam = {
+		gunStart = 1,
+		gunEnd = 4,
+	},
+	pulse = {
+		gunStart = 5,
+		gunEnd = 6,
+	}
+}
+local currentWeapon = "pulse"
+
+function script.SetCurrentWeapon(weaponName)
+	currentWeapon = weaponName
+end
+
 function script.SetBeamEnabled(newEnabled)
 	Spring.SetUnitRulesParam(unitID, "beam_enabled", newEnabled and 1 or 0)
 	lightBeamEnabled = newEnabled
@@ -96,16 +112,19 @@ function script.Create()
 	
 end
 
-function script.QueryWeapon(num) 
-	return muzzle[num] 
+function script.QueryWeapon(num)
+	return muzzle[num % 4 + 1] 
 end
 
 function script.AimFromWeapon(num) 
-	return gun[num] 
+	return gun[num % 4 + 1] 
 end
 
 function script.AimWeapon(num, heading, pitch)
-	return true
+	if not currentWeapon then
+		return false
+	end
+	return weapons[currentWeapon].gunStart <= num and num <= weapons[currentWeapon].gunEnd
 end
 
 function script.Killed(recentDamage, maxHealth)

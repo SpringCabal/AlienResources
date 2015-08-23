@@ -18,6 +18,8 @@ local W = KEYSYMS.W
 local S = KEYSYMS.S
 local A = KEYSYMS.A
 local D = KEYSYMS.D
+local N_0 = KEYSYMS.N_0
+local N_9 = KEYSYMS.N_9
 
 local ufoID
 local ufoDefID = UnitDefNames["ufo"].id
@@ -151,6 +153,17 @@ function widget:KeyPress(key, mods, isRepeat)
 		cloak = 1 - cloak
 		Spring.SendLuaRulesMsg('cloak|' .. cloak)
     end
+end
+
+-- handles weapon switching
+local weapons = { "pulse", "gravityBeam" }
+function widget:KeyPress(key, mods, isRepeat)
+	if ufoID then
+		if key >= N_0 and key <= N_9 then
+			local num = key - N_0
+			Spring.SendLuaRulesMsg('changeWeapon|' .. weapons[num])
+		end
+	end
 end
 
 function widget:GameFrame(n)

@@ -176,6 +176,11 @@ function HandleLuaMessage(msg)
 			end
 		end
 	end
+	
+	if msg_table[1] == 'changeWeapon' then
+		local env = Spring.UnitScript.GetScriptEnv(ufoID)
+		Spring.UnitScript.CallAsUnit(ufoID, env.script.SetCurrentWeapon, msg_table[2])
+	end
 end
 
 function gadget:RecvLuaMsg(msg)
