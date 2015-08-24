@@ -155,8 +155,6 @@ function DisableAbility(abilityName)
 		Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", 1)
 		Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", 1)
 		GG.UpdateUnitAttributes(ufoID)
-	elseif abilityName == "teleport" then
-		-- TODO
 	elseif abilityName == "independenceDayGun" then
 		local env = Spring.UnitScript.GetScriptEnv(ufoID)
 		if env then
@@ -199,6 +197,8 @@ local function Teleport(distance)
 		return
 	end
 
+	Spring.SpawnCEG("teleportOut", x, y, z, 0, 1, 0, 12, 12)
+	
 	local height = Spring.GetGroundHeight(x, z)
 	y = y - height
 
@@ -209,6 +209,8 @@ local function Teleport(distance)
 	y = y + height
 
 	Spring.SetUnitPosition(ufoID, x, y, z)
+	
+	Spring.SpawnCEG("teleportIn", x, y, z, 0, 1, 0, 12, 12)
 end
 
 -------------------------------------------------------------------
