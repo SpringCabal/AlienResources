@@ -118,6 +118,8 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		px = math.floor((px + 4)/8)*8
 		pz = math.floor((pz + 4)/8)*8
 
+		local timeout = Spring.GetGameFrame() + 150*blockingTimeMult
+		
 		local data = terrainWeaponDefs[weaponID]
 		for x = -24, 24, 8 do 
 			for z = -24, 24, 8 do 

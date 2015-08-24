@@ -38,6 +38,8 @@ local MAP_X = Game.mapX*512
 local MAP_Z = Game.mapY*512
 local GRAVITY = Game.gravity
 
+local FALL_DAMAGE = 1
+
 local UNIT_UNIT_SPEED = 5.5
 local UNIT_UNIT_DAMAGE_FACTOR = 0.8
 local TANGENT_DAMAGE = 0.5
@@ -228,7 +230,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		Spring.SetUnitVelocity(unitID,0,0,0)
 		Spring.AddUnitImpulse(unitID,vx,vy,vz) --must do impulse because SetUnitVelocity() is not fully functional in Spring 91 (only work with vertical velocity OR when assigned 0)
 		
-		local damgeSpeed = math.sqrt((nx + tx*TANGENT_DAMAGE)^2 + (ny + ty*TANGENT_DAMAGE)^2 + (nz + tz*TANGENT_DAMAGE)^2)
+		local damgeSpeed = FALL_DAMAGE*math.sqrt((nx + tx*TANGENT_DAMAGE)^2 + (ny + ty*TANGENT_DAMAGE)^2 + (nz + tz*TANGENT_DAMAGE)^2)
 		
 		Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
 		Spring.GiveOrderToUnit(unitID,CMD.WAIT, {}, {})
