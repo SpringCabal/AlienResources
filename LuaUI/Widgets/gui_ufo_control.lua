@@ -237,8 +237,11 @@ end
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
-
 function widget:Initialize()
+	if Game.gameName == "Scenario Editor Alien resources" then
+		widgetHandler:RemoveWidget()
+		return
+	end
 	for _, unitID in pairs(Spring.GetAllUnits()) do
 		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
 	end

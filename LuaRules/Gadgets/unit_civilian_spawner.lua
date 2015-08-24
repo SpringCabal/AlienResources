@@ -426,6 +426,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 end
 
 function gadget:Initialize()
+	if Game.gameName == "Scenario Editor Alien resources" then
+		gadgetHandler:RemoveGadget()
+		return
+	end
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = Spring.GetUnitDefID(unitID)
 		--gadget:UnitCreated(unitID, unitDefID)

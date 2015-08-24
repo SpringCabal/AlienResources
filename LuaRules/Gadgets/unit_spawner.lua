@@ -33,6 +33,12 @@ function gadget:Initialize()
 	-- cleanup
     Spring.SetGameRulesParam("gameOver", 0)
     Spring.SetGameRulesParam("gameWon", 0)
+	
+	if Game.gameName == "Scenario Editor Alien resources" then
+		gadgetHandler:RemoveGadget()
+		return
+	end
+	
 	for _, unitID in pairs(Spring.GetAllUnits()) do
         Spring.DestroyUnit(unitID)
     end
