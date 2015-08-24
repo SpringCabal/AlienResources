@@ -54,8 +54,6 @@ local function MoveUFO(unitID, x, z, range, radius)
 	if not (unitID and Spring.ValidUnitID(unitID)) then
 		return
 	end
-
-
 	local speed = Spring.GetUnitRulesParam(ufoID, "selfMoveSpeedChange") or 1
 	range = (range or 1000)*speed
 
@@ -81,12 +79,17 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if ufoID == unitID then
 		local x, y, z = Spring.GetUnitPosition(unitID)
-		Spring.CreateUnit(alienUnitDefID, x, y, z, 0, 1)
+		delayedCall = {Spring.GetGameFrame() + 2, {x,y,z}} -- we should really use GG.delayCall API
 		ufoID = nil
 	end
 end
 
 function gadget:GameFrame(frame)
+	if delayedCall and delayedCall[1] ==frame then
+		delayedCall = delayedCall[2]
+		Spring.CreateUnit(alienUnitDefID, delayedCall[1], delayedCall[2] + 100, delayedCall[3], 0, 1)
+		delayedCall = nil
+	end
 	if ufoID then
 		local x, y, z = Spring.GetUnitPosition(ufoID)
 

@@ -23,6 +23,7 @@ local GRAVITY = Game.gravity/30/30
 local RAD_PER_ROT = (math.pi/(2^15))
 
 local ufoUnitDefID = UnitDefNames["ufo"].id
+local alienUnitDefID = UnitDefNames["alien"].id
 local ufoID
 
 local endcubeDefID = UnitDefNames["endcube"].id
@@ -35,7 +36,10 @@ local noAbduct = {
 	[UnitDefNames["building2"].id] = true,
 	[UnitDefNames["building3"].id] = true,
 	[UnitDefNames["building4"].id] = true,
-	[UnitDefNames["alien"].id] = true,
+	[UnitDefNames["building4bigtank"].id] = true,
+	[UnitDefNames["static_aa"].id] = true,
+	[UnitDefNames["strong_aa"].id] = true,
+	--[UnitDefNames["alien"].id] = true,
 	[UnitDefNames["ufo_wreck"].id] = true,
 }
 
@@ -108,8 +112,12 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
                 Spring.SetGameRulesParam("biomass", biomass + (udef.customParams.biomass or 0))
                 Spring.SetGameRulesParam("research", research + (udef.customParams.research or 0))
                 Spring.SetGameRulesParam("metal", metal + (udef.customParams.metal or 0))
-				Spring.PlaySoundFile("sounds/swoop.wav", 50, ux, uy, uz, 'sfx')
-				Spring.DestroyUnit(unitID)
+				if unitDefID == alienUnitDefID then
+					Spring.PlaySoundFile("sounds/yay.wav", 100, 'sfx')
+				else
+					Spring.PlaySoundFile("sounds/swoop.wav", 50, ux, uy, uz, 'sfx')
+				end
+				Spring.DestroyUnit(unitID, false, true)
                 if unitDefID == endcubeDefID then
                     Spring.SetGameRulesParam("gameOver", 1)
                     Spring.SetGameRulesParam("gameWon", 1)
