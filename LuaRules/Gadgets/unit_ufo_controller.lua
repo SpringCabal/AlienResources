@@ -27,7 +27,9 @@ local Vector = Spring.Utilities.Vector
 -------------------------------------------------------------------
 
 local ufoUnitDefID = UnitDefNames["ufo"].id
+local alienUnitDefID = UnitDefNames["alien"].id
 local ufoID
+local alienID
 
 local movementMessage
 local weaponMessage
@@ -78,6 +80,8 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if ufoID == unitID then
+		local x, y, z = Spring.GetUnitPosition(unitID)
+		Spring.CreateUnit(alienUnitDefID, x, y, z, 0, 1)
 		ufoID = nil
 	end
 end

@@ -35,6 +35,8 @@ local noAbduct = {
 	[UnitDefNames["building2"].id] = true,
 	[UnitDefNames["building3"].id] = true,
 	[UnitDefNames["building4"].id] = true,
+	[UnitDefNames["alien"].id] = true,
+	[UnitDefNames["ufo_wreck"].id] = true,
 }
 
 local Vector = Spring.Utilities.Vector

@@ -1,9 +1,9 @@
-local unitName  =  "civilian"
+local unitName  =  "alien"
 
 unitDef = {
 	--Internal settings
-	objectName             = "citizen.dae",
-    name                   = "Civilian",
+	objectName             = "alien.dae",
+    name                   = "Alien",
     unitName               = unitName,
     script                 = "human.lua",
 	
@@ -51,7 +51,7 @@ unitDef = {
 	category               = "land",
 	
 	mass                   = 100,
-	maxDamage              = 10,
+	maxDamage              = 1000,
 	autoHeal               = 5,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
