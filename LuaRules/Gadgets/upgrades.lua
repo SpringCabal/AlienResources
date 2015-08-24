@@ -21,6 +21,7 @@ local ufoDefID = UnitDefNames["ufo"].id
 
 local baseShieldRegen = 1.5
 local maxShieldPower = 1000
+local delayedUpdate
 
 local function explode(div,str)
 	if (div=='') then return 
@@ -51,6 +52,16 @@ function gadget:GameFrame()
 	if not ufoID then
 		return
 	end
+	if delayedUpdate then
+		for name, tech in pairs(GG.Tech.GetTechTree(name)) do
+			local tech = GG.Tech.GetTech(name)
+			if tech.level > 0 then
+				UpdateTech(name)
+			end
+		end
+		delayedUpdate = false
+	end
+	
 	local shieldTech = GG.Tech.GetTech("shield")
 	if not shieldTech.locked then
 		local enabled, power = Spring.GetUnitShieldState(ufoID)
@@ -63,9 +74,43 @@ function gadget:GameFrame()
 	end
 end
 
+function UpdateTech(name)
+	local tech = GG.Tech.GetTech(name)
+	
+	local _, value = GG.Tech.GetTechTooltip(name)
+	local multiplier = (100 + value) / 100
+	if name == "armor" then
+		if not ufoID then
+			return
+		end
+		local newMaxHealth = UnitDefs[ufoDefID].health * multiplier
+		local hp, maxHP = Spring.GetUnitHealth(ufoID)
+		local ratio = hp / maxHP
+		Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
+		Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
+	elseif name == "antiMissilePointDefense" then
+		GG.SetPDReload(multiplier)
+	elseif name == "incendiaryBeamLaser" then
+		GG.SetFireMults(multiplier, multiplier)
+		GG.SetFireBlockingMult(multiplier)
+	elseif name == "blackHoleGun" then
+		GG.SetBlackHoleMults(multiplier, multiplier)
+	elseif name == "gravityBeam" then
+		GG.SetGravityBeamMult(multiplier)
+	elseif name == "pulseLaser" then
+		GG.SetPulseLaserShots(tech.level)
+	elseif name == "carrierDrones" then
+		GG.UpdateDroneParameters(tech.level + 1, 5 - tech.level)
+	elseif name == "coneUpgrade" then
+		GG.UpdateAbductionParameters(45 * multiplier, 6 * multiplier, multiplier)
+	end
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
+		
+		delayedUpdate = true
 	end
 end
 
@@ -94,31 +139,7 @@ function HandleLuaMessage(msg)
 			Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. name)
 		end
 		
-		local tech = GG.Tech.GetTech(name)
-		local _, value = GG.Tech.GetTechTooltip(name)
-		local multiplier = (100 + value) / 100
-		if name == "armor" then
-			local newMaxHealth = UnitDefs[ufoDefID].health * multiplier
-			local hp, maxHP = Spring.GetUnitHealth(ufoID)
-			local ratio = hp / maxHP
-			Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
-			Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
-		elseif name == "antiMissilePointDefense" then
-			GG.SetPDReload(multiplier)
-		elseif name == "incendiaryBeamLaser" then
-			GG.SetFireMults(multiplier, multiplier)
-			GG.SetFireBlockingMult(multiplier)
-		elseif name == "blackHoleGun" then
-			GG.SetBlackHoleMults(multiplier, multiplier)
-		elseif name == "gravityBeam" then
-			GG.SetGravityBeamMult(multiplier)
-		elseif name == "pulseLaser" then
-			GG.SetPulseLaserShots(tech.level)
-		elseif name == "carrierDrones" then
-			GG.UpdateDroneParameters(tech.level + 1, 5 - tech.level)
-		elseif name == "coneUpgrade" then
-			GG.UpdateAbductionParameters(45 * multiplier, 6 * multiplier, multiplier)
-		end
+		UpdateTech(name)
 	end
 end
 

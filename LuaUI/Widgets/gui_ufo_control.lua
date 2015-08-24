@@ -266,6 +266,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 		ufoID = unitID
 		if currentWeapon ~= nil then
 			WG.UI.SetAbilityEnabled(currentWeapon, true)
+			Spring.SendLuaRulesMsg('changeWeapon|' .. currentWeapon)
 		end
 	end
 end
@@ -273,6 +274,5 @@ end
 function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if ufoID == unitID then
 		ufoID = nil
-		currentWeapon = nil
 	end
 end
