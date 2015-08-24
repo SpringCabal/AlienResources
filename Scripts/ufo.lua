@@ -171,7 +171,7 @@ function script.QueryWeapon(num)
 		return independencePiece
 	end
 	if currentWeapon == "pulseLaser" then
-		return lastGun
+		return muzzle[lastGun]
 	end
 	return muzzle[num % 4 + 1]
 end
@@ -181,12 +181,22 @@ function script.AimFromWeapon(num)
 		return independencePiece
 	end
 	if currentWeapon == "pulseLaser" then
-		return lastGun
+		return gun[lastGun]
 	end
 	return gun[num % 4 + 1]
 end
 
+local alwaysFire = { -- Interceptors
+	[13] = true,
+	[14] = true,
+	[15] = true,
+	[16] = true,
+}
+
 function script.AimWeapon(num, heading, pitch)
+	if alwaysFire[num] then
+		return true
+	end
 	if not currentWeapon then
 		return false
 	end
@@ -195,7 +205,7 @@ end
 
 function script.Shot(num)
 	if currentWeapon == "pulseLaser" then
-		lastGun = lastGun % 4 + 1
+		lastGun = (lastGun) % 4 + 1
 	end
 end
 
