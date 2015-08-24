@@ -197,7 +197,7 @@ local alwaysFire = { -- Interceptors
 }
 
 function script.AimWeapon(num, heading, pitch)
-	if alwaysFire[num] then
+	if alwaysFire[num] and Spring.GetUnitRulesParam(unitID, "PDisUnlocked") then
 		return true
 	end
 	if not currentWeapon then
