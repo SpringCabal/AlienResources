@@ -1,11 +1,10 @@
-local unitName  =  "tank"
 
-unitDef = {
+local Tank = Unit:New {
 	--Internal settings
 	objectName             = "tank.dae",
     name                   = "tank",
-    unitName               = unitName,
-    script                 = unitName .. ".lua",
+    unitName               = "tank",
+    script                 = "tank" .. ".lua",
 	
 	-- Movement
 	acceleration           = 0.5,
@@ -55,7 +54,7 @@ unitDef = {
 	category               = "land armed",
 	
 	mass                   = 100,
-	maxDamage              = 1000,
+	maxDamage              = 1500,
 	autoHeal               = 5,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
@@ -128,4 +127,20 @@ unitDef = {
 	},
 }
 
-return lowerkeys({[unitName] = unitDef})
+local Small_Tank = Tank:New {
+	name                = "small_tank",
+	maxDamage           = 750,
+	maxVelocity         = 60,
+	weaponDefs             = {
+		missile = {
+			damage = {
+				default = 25,
+			},
+		}
+	},
+}
+
+return lowerkeys({
+    Tank        = Tank,
+	Small_Tank = Small_Tank,
+})

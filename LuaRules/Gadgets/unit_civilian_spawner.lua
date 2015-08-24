@@ -22,6 +22,7 @@ end
 --------------------------------------------------------------------------------
 
 local tankDefID      = UnitDefNames["tank"].id
+local smallTankDefID = UnitDefNames["small_tank"].id
 local civilianDefID  = UnitDefNames["civilian"].id
 local scientistDefID = UnitDefNames["scientist"].id
 
@@ -78,10 +79,20 @@ local spawnerDefs = {
 	[UnitDefNames["building4"].id] = {
 		wanderRadius = 800,
 		spawns = {
+			[smallTankDefID] = {
+				unitDefID = smallTankDefID,
+				wanted = 3,
+				stockRate = 0.06/30,
+			},
+		}
+	},
+	[UnitDefNames["building4bigtank"].id] = {
+		wanderRadius = 800,
+		spawns = {
 			[tankDefID] = {
 				unitDefID = tankDefID,
 				wanted = 2,
-				stockRate = 0.3/30,
+				stockRate = 0.03/30,
 			},
 		}
 	},

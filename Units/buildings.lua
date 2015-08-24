@@ -61,9 +61,15 @@ local Building4 = Building:New {
     name                = "Building4",
 }
 
+-- same as building 4 but spawns "big" tanks
+local Building4BigTank = Building:New {
+    name                = "Building4BigTank",
+}
+
 return lowerkeys({
     Building1       = Building1,
     Building2       = Building2,
     Building3       = Building3,
     Building4       = Building4,
+	Building4BigTank = Building4BigTank,
 })
