@@ -41,7 +41,8 @@ function gadget:Initialize()
     end
 	
 	-- Spawn new things
-	Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
+	local ufoID = Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
+	GG.SetUnitPermanentFallDamageImmunity(ufoID, true)
 	
 	Spring.CreateUnit(buildingDefID, 13000, 300, 17000, 0, 0)
 	Spring.CreateUnit(buildingDefID, 13200, 300, 17000, 0, 0)

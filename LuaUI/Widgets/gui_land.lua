@@ -51,7 +51,7 @@ end
 
 function widget:GameFrame()
     canLand = false
-    if ufoID and not Spring.GetUnitStates(ufoID).autoland then
+    if ufoID and Spring.ValidUnitID(ufoID) and not Spring.GetUnitStates(ufoID).autoland then
         local x, _, z = Spring.GetUnitPosition(ufoID)
         local units = Spring.GetUnitsInCylinder(x, z, LANDING_RADIUS)
         for _, unitID in pairs(units) do

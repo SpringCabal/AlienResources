@@ -165,7 +165,7 @@ unitDef = {
 		},
 		gravityBeam = {
 			name                    = "Gravity Beam",
-			areaOfEffect            = 128,
+			areaOfEffect            = 400,
 			avoidFeature            = false,
 			avoidFriendly           = false,
 			avoidNeutral            = false,
@@ -233,16 +233,33 @@ unitDef = {
 		},
 		blackHoleGun = {
 			name                    = "Black Hole",
-			areaOfEffect            = 128,
+			areaOfEffect            = 500,
 			avoidFeature            = false,
 			avoidFriendly           = false,
 			avoidNeutral            = false,
 			avoidGround             = false,
-			craterBoost             = 0,
-			craterMult              = 0,
+			collideFeature          = false,
+			collideFriendly         = false,
+			craterBoost             = 10,
+			craterMult              = 2,
 
+			customParams            = {
+				falldamageimmunity = [[120]],
+
+				area_damage = 1,
+				area_damage_radius = 250,
+				area_damage_dps = 7000,
+				area_damage_is_impulse = 1,
+				area_damage_duration = 13.3,
+				area_damage_range_falloff = 0.4,
+				area_damage_time_falloff = 0.6,
+			},
+			
+			impulseBoost            = 150,
+			impulseFactor           = -2.5,
+			
 			damage                  = {
-				default = 20,
+				default = 0,
 			},
 
 			alphaDecay				= 0.2,
@@ -250,7 +267,7 @@ unitDef = {
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
-			reloadtime              = 0.3,
+			reloadtime              = 5,
 			rgbColor                = "0 0 0",
 			soundTrigger            = true,
 			tolerance               = 5000,
@@ -278,7 +295,7 @@ unitDef = {
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
-			reloadtime              = 0.3,
+			reloadtime              = 5,
 			rgbColor                = "0 0 0.7",
 			soundTrigger            = true,
 			tolerance               = 5000,
