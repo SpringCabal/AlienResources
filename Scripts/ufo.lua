@@ -106,15 +106,15 @@ local function AimGun(i, tx, ty, tz)
 	local dist = math.sqrt(dx * dx + dz * dz)
 	local pitch = math.atan2(dy, dist)
 	local heading = math.atan2(dx, dz) + gh + math.pi/4
-	
+
 	Turn(g, x_axis, -pitch, 0)
 	Turn(b, z_axis, heading, 0)
-	
+
 	--local diffHeading = (heading - lastHeading[i] + math.pi)%(2*math.pi) - math.pi - 0.03
 	--lastHeading[i] = heading
-	
+
 	--Spring.Echo("diffHeading", (diffHeading < 0 and "-") or "+")
-	
+
 	--if diffHeading < 0 then
 	--	Turn(b, z_axis, heading, 2.4)
 	--else
@@ -142,11 +142,11 @@ function script.Create()
 	for i=1, #outerhull do
 		Spin(outerhull[i],z_axis, 1)
 	end
-	
+
 	for i=1, #muzzle do
 		Turn(muzzle[i], x_axis, math.pi/2)
 	end
-	
+
 	Spin(innerHull,z_axis, -2)
 
 	Spin(turbine, z_axis, 4);
@@ -156,11 +156,9 @@ function script.Create()
 	for i = 1,#UnitDef.weapons do
 		if WeaponDefs[UnitDef.weapons[i].weaponDef].name:find("independence") then
 			independenceWeapon = i
-			break
 		end
 		if WeaponDefs[UnitDef.weapons[i].weaponDef].name:find("shield") then
 			shieldWeapon = i
-			break
 		end
 	end
 end
@@ -169,6 +167,9 @@ end
 local lastGun = 4
 
 function script.QueryWeapon(num)
+	if num == shieldWeapon then
+		return independencePiece
+	end
 	if currentWeapon == "pulseLaser" then
 		return lastGun
 	end
@@ -176,6 +177,9 @@ function script.QueryWeapon(num)
 end
 
 function script.AimFromWeapon(num)
+	if num == shieldWeapon then
+		return independencePiece
+	end
 	if currentWeapon == "pulseLaser" then
 		return lastGun
 	end

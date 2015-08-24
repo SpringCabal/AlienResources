@@ -137,10 +137,10 @@ unitDef = {
 			avoidFriendly           = false,
 			avoidNeutral            = false,
 			avoidGround             = false,
-			
+
 			collideEnemy            = false,
 			collideFriendly         = false,
-			
+
 			beamTime                = 0.01,
 			beamTtl                 = 2,
 			coreThickness           = 0.2,
@@ -155,7 +155,7 @@ unitDef = {
 				area_damage_range_falloff = 0.4,
 				area_damage_time_falloff = 0.6,
 			},
-			
+
 			damage                  = {
 				default = 2,
 			},
@@ -270,10 +270,10 @@ unitDef = {
 				area_damage_range_falloff = 0.4,
 				area_damage_time_falloff = 0.6,
 			},
-			
+
 			impulseBoost            = 150,
 			impulseFactor           = -2.5,
-			
+
 			damage                  = {
 				default = 0,
 			},
@@ -364,7 +364,7 @@ unitDef = {
 			},
 
 			exteriorShield          = true,
-			shieldAlpha             = 0.4,
+			shieldAlpha             = 1.0,
 			shieldBadColor          = [[1 0.1 0.1]],
 			shieldGoodColor         = [[0.1 0.1 1]],
 			shieldInterceptType     = 3,
