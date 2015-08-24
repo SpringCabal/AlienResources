@@ -8,9 +8,22 @@ local techTree = {
 		tier = 1,
 		x = 0,
 		y = 0,
+		locked = false,
 		iconPath = "LuaUI/Images/armour.png",
 		iconDisabledPath = "LuaUI/Images/armour_off.png",
 	},
+	coneUpgrade = {
+		desc = "Advanced gravitons (+10% beamup cone and size)",
+		title = "Cone upgrade",
+		tier = 2,
+		x = 80,
+		y = 0,
+		depends = { "armor" },
+		locked = false,
+		enabled = true,
+		iconPath = "LuaUI/Images/heart.png",
+		iconDisabledPath = "LuaUI/Images/heart_off.png",
+	},	
 	pulseLaser = {
 		desc = "Pulse laser (+10% damage)",
 		title = "Pulse laser",
@@ -92,18 +105,8 @@ local techTree = {
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 	},
--- 	carrierDrones = {
--- 		desc = "Carrier drones (+1 drone)",
--- 		title = "Drones",
--- 		tier = 2,
--- 		x = 80,
--- 		y = 300,
--- 		depends = { "shield" },
--- 		iconPath = "LuaUI/Images/heart.png",
--- 		iconDisabledPath = "LuaUI/Images/heart_off.png",
--- 	},
 	carrierDrones = {
-		desc = "Advanced gravitons (+10% beamup cone and size)",
+		desc = "Carrier drones (+1 drone)",
 		title = "Drones",
 		tier = 2,
 		x = 80,
@@ -111,7 +114,7 @@ local techTree = {
 		depends = { "shield" },
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
-	},	
+	},
 	haste = {
 		desc = "Haste (+30% speed)",
 		title = "Haste",
@@ -195,15 +198,16 @@ function Initialize()
 		if not tech.maxLevel then
 			tech.maxLevel = Tech.maxLevel
 		end
-		if tech.name ~= "armor" then
-			tech.locked = true
+		if tech._locked then
+			tech.locked = tech.locked
 		else
-			tech.locked = false
+			tech._locked = tech.locked
 		end
-		if tech.tier == 1 then
-			tech.enabled = true
-		else
+		if not tech.enabled then
 			tech.enabled = false
+		end
+		if tech.locked == nil then
+			tech.locked = true
 		end
 		if not tech.depends then
 			tech.depends = {}
@@ -217,12 +221,10 @@ function Initialize()
 			tech.ability.cooldown = tech.ability.cooldown * 30
 			table.insert(Tech.abilities, name)
 		end
+		
 	end
+	Tech._EnableTechs()
 	Tech._converted = true
-end
-
-if not Tech.initialized then
-	Initialize()
 end
 
 -- API
@@ -267,22 +269,7 @@ function Tech.UpgradeTech(name)
 	return true
 end
 
-function Tech.UnlockTech(name)
-	if not Tech.CanUnlock(name) then
-		return false
-	end
-	local tech = techTree[name]
-	
-	local resources = Tech.GetUnlockResources(name)
-	if Script.GetName() == "LuaRules" and Script.GetSynced() then
-		for resName, value in pairs(resources) do
-			local current = Spring.GetGameRulesParam(resName)
-			Spring.SetGameRulesParam(resName, current - value)
-		end
-	end
-	
-	tech.locked = false
-	
+function Tech._EnableTechs()
 	local enabledTechs = {}
 	-- check new techs to enable
 	for name, tech in pairs(techTree) do
@@ -300,6 +287,26 @@ function Tech.UnlockTech(name)
 			end
 		end
 	end
+	return enabledTechs
+end
+
+function Tech.UnlockTech(name)
+	if not Tech.CanUnlock(name) then
+		return false
+	end
+	local tech = techTree[name]
+	
+	local resources = Tech.GetUnlockResources(name)
+	if Script.GetName() == "LuaRules" and Script.GetSynced() then
+		for resName, value in pairs(resources) do
+			local current = Spring.GetGameRulesParam(resName)
+			Spring.SetGameRulesParam(resName, current - value)
+		end
+	end
+	
+	tech.locked = false
+	
+	local enabledTechs = Tech._EnableTechs()
 	return true, enabledTechs
 end
 
@@ -360,4 +367,8 @@ function Tech.CanUnlock(name)
 		end
 	end
 	return true
+end
+
+if not Tech.initialized then
+	Initialize()
 end
