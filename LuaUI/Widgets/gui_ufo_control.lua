@@ -244,6 +244,18 @@ function widget:Initialize()
 	end
 	weapons = WG.Tech.GetWeapons()
 	abilities = WG.Tech.GetAbilities()
+	
+	local newState = {
+		px = cx,
+		py = cy + 25,
+		pz = cz,
+		mode = 1,
+		flipped = -1,
+		fov = 45,
+		height = 2000,
+		angle = 0.4,
+	}
+	Spring.SetCameraState(newState, 0.4)
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)

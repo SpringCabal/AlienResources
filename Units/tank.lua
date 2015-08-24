@@ -12,8 +12,8 @@ unitDef = {
 	brakeRate              = 0.5,
 	maxVelocity            = 30,
 	turnRate               = 300,
-	footprintX             = 1,
-	footprintZ             = 1,
+	footprintX             = 2,
+	footprintZ             = 2,
 	
     movementClass          = "Bot1x1",
 	turnInPlace            = true,
@@ -64,7 +64,8 @@ unitDef = {
 	buildCostEnergy        = 100,
 	buildCostMetal         = 100,
 	buildTime              = 100,
-	maxWaterDepth          = 20,
+	maxWaterDepth          = 0,
+	maxSlope               = 55,
 	
 	weapons                = {
 		{

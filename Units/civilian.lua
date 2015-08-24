@@ -60,7 +60,8 @@ unitDef = {
 	buildCostEnergy        = 100,
 	buildCostMetal         = 100,
 	buildTime              = 100,
-	maxWaterDepth          = 20,
+	maxWaterDepth          = 0,
+	maxSlope               = 55,
 }
 
 return lowerkeys({[unitName] = unitDef})

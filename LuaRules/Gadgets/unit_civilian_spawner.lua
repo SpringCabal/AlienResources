@@ -250,7 +250,7 @@ local function SpawnWanderer(unitDefID, spawnerData)
 		sz = spawnerData.z + sz
 		local sy = Spring.GetGroundHeight(sx, sz)
 		
-		if Spring.TestMoveOrder(unitDefID, sx, sy, sz) then
+		if Spring.TestBuildOrder(unitDefID, sx, sy, sz, 0) ~= 0 then
 			local newID = Spring.CreateUnit(unitDefID, sx, sy, sz, 0, SPAWN_TEAM, false, false)
 			if not newID then
 				return false
