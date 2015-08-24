@@ -146,5 +146,17 @@ function script.StopMoving()
 end
 
 function script.Killed(recentDamage, maxHealth)
+	local flags = SFX.FIRE+SFX.SMOKE+SFX.NO_HEATCLOUD;
+	Explode(armLeft,flags)
+	Explode(armRight,flags)
+	Explode(footLeft,flags)
+	Explode(footRIght,flags)
+	Explode(handLeft,flags)
+	Explode(handRight,flags)
+	Explode(head,flags)
+	Explode(legLeft,flags)
+	Explode(legRight,flags)
+	Explode(thighLeft,flags)
+	Explode(thighRight,flags)
 	return 0
 end
