@@ -119,6 +119,7 @@ function updateHealthBar()
 	
 	if h ~= nil then
 		h = math.max(0, h)
+		h = math.min(mh, h)
 		SetBarValue('Health', h, mh)
 		SetBarColor('Health', h/mh)
 		if not window.visible then

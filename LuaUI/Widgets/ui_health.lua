@@ -117,10 +117,10 @@ end
 
 function updateHealthBar()
 	if ufoID and Spring.ValidUnitID(ufoID) then
-		local h, mh = 0, 1000
-		h, mh = Spring.GetUnitHealth(ufoID)
+		local h, mh = Spring.GetUnitHealth(ufoID)
 	
 		h = math.max(0, h)
+		h = math.min(mh, h)
 		SetBarValue('Health', h, mh)
 		SetBarColor('Health', h/mh)
 		if not window.visible then
