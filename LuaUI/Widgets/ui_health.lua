@@ -116,14 +116,19 @@ end
 -------------------------------------------
 
 function updateHealthBar()
-	local h, mh = 0, 1000
-	if ufoID then
+	if ufoID and Spring.ValidUnitID(ufoID) then
+		local h, mh = 0, 1000
 		h, mh = Spring.GetUnitHealth(ufoID)
-	end
 	
-    h = math.max(0, h)
-    SetBarValue('Health', h, mh)
-    SetBarColor('Health', h/mh)
+		h = math.max(0, h)
+		SetBarValue('Health', h, mh)
+		SetBarColor('Health', h/mh)
+		if not window.visible then
+			window:Show()
+		end
+	elseif window.visible then
+		window:Hide()
+	end
 end
 
 function widget:GameFrame(n)
@@ -139,10 +144,11 @@ function widget:Initialize()
 	Chili = WG.Chili
 	initWindow()
 	makeBar('Health')
-    if Spring.GetGameFrame()>0 then
-        updateHealthBar()
-    end
-    
+
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
+	end
+	updateHealthBar()
     local vsx,vsy = Spring.GetViewGeometry()
     resizeUI(vsx,vsy)
 end

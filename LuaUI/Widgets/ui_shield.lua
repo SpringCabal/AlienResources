@@ -18,7 +18,7 @@ local spGetMyTeamID      = Spring.GetMyTeamID
 local myTeamID = spGetMyTeamID()
 
 local images = {
-	Health  = 'luaui/images/heart.png',
+	Health  = 'luaui/images/shield-no-ship.png',
 }
 
 local meter = {}
@@ -115,11 +115,18 @@ end
 
 function updateHealthBar()
 	local h, mh = 0, 1000
-	local h = Spring.GetGameRulesParam("shieldPower") or 0
+	local h = Spring.GetGameRulesParam("shieldPower")
 	
-    h = math.max(0, h)
-    SetBarValue('Health', h, mh)
-    SetBarColor('Health', h/mh)
+	if h ~= nil then
+		h = math.max(0, h)
+		SetBarValue('Health', h, mh)
+		SetBarColor('Health', h/mh)
+		if not window.visible then
+			window:Show()
+		end
+	elseif window.visible then
+		window:Hide()
+	end
 end
 
 function widget:GameFrame(n)
@@ -135,10 +142,8 @@ function widget:Initialize()
 	Chili = WG.Chili
 	initWindow()
 	makeBar('Health')
-    if Spring.GetGameFrame()>0 then
-        updateHealthBar()
-    end
-    
+	updateHealthBar()
+        
     local vsx,vsy = Spring.GetViewGeometry()
     resizeUI(vsx,vsy)
 end
