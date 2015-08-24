@@ -20,12 +20,12 @@ local lblResearch
 
 local function UpdateBiomass()
     local biomass = Spring.GetGameRulesParam("biomass")
-    lblBiomass:SetCaption("\255\80\215\80[Icon]Biomass: " .. biomass .. "\b")
+    lblBiomass:SetCaption("\255\80\215\80" .. biomass .. "\b")
 end
 
 local function UpdateResearch()
     local research = Spring.GetGameRulesParam("research")
-    lblResearch:SetCaption("\255\2\180\250[Icon]Research: " .. research .. "\b")
+    lblResearch:SetCaption("\255\2\180\250" .. research .. "\b")
 end
 --[[
 local function UpdateMetal()
@@ -54,8 +54,16 @@ function widget:Initialize()
 	
 	local screenWidth, screenHeight = Spring.GetWindowGeometry()
 	
+	local imBiomass = Chili.Image:New {
+		file = "UI/biomass.png",
+		y = 0,
+		right = 10,
+		parent = screen0,
+		width = 50,
+		height = 50,
+	}
     lblBiomass = Chili.Label:New {
-        right = 10,
+        right = 60,
         width = 100,
         y = 10,
         height = 40,
@@ -65,6 +73,14 @@ function widget:Initialize()
         },
 		caption = "",
     }
+	local imResearch = Chili.Image:New {
+		file = "UI/research.png",
+		y = 0,
+		right = 150,
+		parent = screen0,
+		width = 50,
+		height = 50,
+	}
     lblResearch = Chili.Label:New {
         right = 200,
         width = 100,
