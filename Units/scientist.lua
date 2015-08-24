@@ -65,7 +65,7 @@ local Scientist = Unit:New {
 local Scientist2 = Scientist:New {
 	name				  = "Scientist2",
 	unitName               = "scientist2",
-	objectName             = "scientist2.dae",
+	objectName             = "scientist_2.dae",
 }
 
 
