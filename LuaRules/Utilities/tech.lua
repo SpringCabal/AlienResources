@@ -142,7 +142,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 		ability = {
 			duration = 0,
-			cooldown = 6,
+			cooldown = 15,
 		},
 		key = "e",
 	},
