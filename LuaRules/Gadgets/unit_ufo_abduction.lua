@@ -115,8 +115,17 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
     Spring.UnitScript.CallAsUnit(ufoID, env.script.SetBeamEnabled, enabled)
 end
 
+local function UpdateAbductionParameters(radius, speed)
+	abductionRadius = radius
+	abductionSpeed = speed
+	Spring.SetGameRulesParam("abductionRadius", radius)
+end
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
+
+local abductionRadius = 70
+local abductionSpeed = 6
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
@@ -125,6 +134,7 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:GameFrame(frame)
+
 	if ufoID then
 		local x,y,z = Spring.GetUnitPosition(ufoID)
 		local vx, _, vz = Spring.GetUnitVelocity(ufoID)
@@ -132,6 +142,12 @@ function gadget:GameFrame(frame)
 			return
 		end
 
-		SetAbductionArea(x, y, z, vx, vz, 20, 100, 8)
+		SetAbductionArea(x, y, z, vx, vz, 20, abductionRadius, abductionSpeed)
 	end
+end
+
+function gadget:Initialize()
+	GG.UpdateAbductionParameters = UpdateAbductionParameters
+	
+	UpdateAbductionParameters(70, 6)
 end
