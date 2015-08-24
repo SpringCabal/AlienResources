@@ -284,6 +284,8 @@ function UnlockTech(name)
 	techMapping[name].imgTechLocked:Hide()
 	local btnTech = techMapping[name].btnTech
 	btnTech.focusColor = btnTech.origFocusColor
+	local tooltip, value = Tech.GetTechTooltip(name)
+	techMapping[name].btnTech.tooltip = tooltip
 	
 	-- enable techs that depend on it
 	for _, enabledTechName in pairs(enabledTechs) do
