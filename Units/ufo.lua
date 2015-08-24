@@ -144,6 +144,15 @@ unitDef = {
 			craterBoost             = 0,
 			craterMult              = 0,
 
+			customParams            = {
+				area_damage = 1,
+				area_damage_radius = 30,
+				area_damage_dps = 200,
+				area_damage_duration = 7,
+				area_damage_range_falloff = 0.4,
+				area_damage_time_falloff = 0.6,
+			},
+			
 			damage                  = {
 				default = 2,
 			},
