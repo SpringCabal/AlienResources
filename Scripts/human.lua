@@ -50,7 +50,7 @@ function constructSkeleton(unit, piece, offset)
 
     for i=1,3 do
         info.offset[i] = offset[i]+info.offset[i];
-    end 
+    end
 
     bones[piece] = info.offset;
     local map = Spring.GetUnitPieceMap(unit);
@@ -64,14 +64,14 @@ function constructSkeleton(unit, piece, offset)
                 bones[cid] = cinfo;
             end
         end
-    end        
+    end
     return bones;
 end
 
 function script.Create()
     local map = Spring.GetUnitPieceMap(unitID);
     local offsets = constructSkeleton(unitID,map.Scene, {0,0,0});
-    
+
     for a,anim in pairs(Animations) do
         for i,keyframe in pairs(anim) do
             local commands = keyframe.commands;
@@ -87,7 +87,7 @@ function script.Create()
     end
     PlayAnimation('stop');
 end
-            
+
 local animCmd = {['turn']=Turn,['move']=Move};
 function PlayAnimation(animname)
     local anim = Animations[animname];
@@ -130,7 +130,7 @@ end
 
 function Abduction_float()
 	local ux, uy, uz = Spring.GetUnitPosition(unitID)
-	Spring.PlaySoundFile("sounds/scream.wav", 0.5, ux, uy, uz, 'sfx')
+	Spring.PlaySoundFile("sounds/scream.wav", 30, ux, uy, uz, 'sfx')
 	if (not floating) then
 		StartThread(Float)
 	end
