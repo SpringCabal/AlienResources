@@ -27,6 +27,7 @@ local baseDefID = UnitDefNames["building4"].id
 -------------------------------------------------------------------
 
 local ufoRespawnFrame 
+local ufoID
 
 function gadget:Initialize()
     if Spring.GetGameRulesParam("devMode") == 1 then
@@ -41,7 +42,7 @@ function gadget:Initialize()
     end
 	
 	-- Spawn new things
-	local ufoID = Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
+	ufoID = Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
 	GG.SetUnitPermanentFallDamageImmunity(ufoID, true)
 	
 	Spring.CreateUnit(buildingDefID, 13000, 300, 17000, 0, 0)
@@ -61,7 +62,7 @@ function gadget:Initialize()
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
-	if unitDefID == ufoUnitDefID then
+	if unitID == ufoID then
 		-- 		Spring.SetGameRulesParam("gameOver", 1)
 		-- 		Spring.SetGameRulesParam("gameWon", 0)
 		-- 		actually let's just respawn the UFO at the initial place after some time

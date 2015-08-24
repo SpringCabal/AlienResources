@@ -91,7 +91,13 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
                 end
 			else
                 enabled = true
-				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed, 2, GRAVITY + 0.4)
+				local mult = 1
+				local udef = UnitDefs[unitDefID]
+				if udef and udef.customParams and udef.customParams.abduct_mult then
+					mult = mult*tonumber(udef.customParams.abduct_mult)
+				end
+				
+				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed*mult, 2*mult, GRAVITY + 0.4*mult)
 				callScript(unitID, "Abduction_float")
 			end
 		end

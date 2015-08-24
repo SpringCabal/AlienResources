@@ -31,6 +31,8 @@ unitDef = {
 		
 		modelradius        = [[30]],
 		midposoffset       = [[0 25 0]],
+		
+		abduct_mult        = 0.2,
 	},
 	
 	-- Abiltiies
