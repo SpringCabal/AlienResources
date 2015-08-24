@@ -10,7 +10,7 @@ function widget:GetInfo()
   }
 end
 
-local VOLUME = 12
+local VOLUME = 1
 local BUFFER = 0.015
 
 local playingTime = 0
@@ -20,7 +20,6 @@ local startedPlaying = false
 local musicFile = "sounds/music.ogg"
 
 local function StartPlaying()
-    playingTime = 0
     if not startedPlaying then
         Spring.PlaySoundStream(musicFile, VOLUME)
         _, trackTime = Spring.GetSoundStreamTime()
@@ -29,10 +28,6 @@ local function StartPlaying()
 end
 
 function widget:Initialize()
-    if not musicFile then
-        widgetHandler:RemoveWidget()
-        return
-    end
     if Spring.GetGameFrame() > 0 then
         StartPlaying()
     end
@@ -47,7 +42,7 @@ function widget:Update(dt)
         playingTime = playingTime + dt
         --playingTime = Spring.GetSoundStreamTime()
         if playingTime > trackTime - BUFFER then
-            StartPlaying()
+            Spring.PlaySoundStream(musicFile, VOLUME, true)
             playingTime = 0
         end
     end
