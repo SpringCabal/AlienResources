@@ -135,6 +135,7 @@ local Tank = Unit:New {
 
 local Small_Tank = Tank:New {
 	name                = "small_tank",
+	mass                = 60,
 	maxDamage           = 550,
 	maxVelocity         = 180,
 	acceleration        = 1,
