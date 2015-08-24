@@ -22,7 +22,6 @@ local landText = "LAND"
 local landTextSize = 30
 local updateUI
 local upgratdeAvailable = false
-local lockedTechNum = 0
 
 local Chili, screen0
 
@@ -35,12 +34,6 @@ function widget:Initialize()
     end
 	VFS.Include("LuaRules/Utilities/tech.lua")
 	WG.Tech = Tech
-	lockedTechNum = 0
-	for name, tech in pairs(Tech.GetTechTree()) do
-		if tech.locked then
-			lockedTechNum = lockedTechNum + 1
-		end
-	end
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam)
@@ -68,6 +61,16 @@ function ToggleUpgradeUI()
 		if window then
 			window:Dispose()
 			window = nil
+		end
+	end
+end
+
+function widget:GameFrame()
+	upgradeAvailable = false
+	for name, _ in pairs(Tech.GetTechTree()) do
+		if Tech.CanUnlock(name) then
+			upgradeAvailable = true
+			return
 		end
 	end
 end
@@ -123,7 +126,6 @@ function UpdateUpgradeUI()
 		updateUI.lblUnlockAvailable = lblUnlockAvailable
 	end
 	local research = Spring.GetGameRulesParam("research") or 0
-	upgradeAvailable = lockedTechNum > 0 and research > 1000
 	if upgradeAvailable and not updateUI.lblUnlockAvailable.visible then
 		updateUI.lblUnlockAvailable:Show()
 	elseif not upgradeAvailable and updateUI.lblUnlockAvailable.visible then
@@ -282,8 +284,6 @@ function UnlockTech(name)
 	techMapping[name].imgTechLocked:Hide()
 	local btnTech = techMapping[name].btnTech
 	btnTech.focusColor = btnTech.origFocusColor
-
-	lockedTechNum = lockedTechNum - 1
 	
 	-- enable techs that depend on it
 	for _, enabledTechName in pairs(enabledTechs) do
