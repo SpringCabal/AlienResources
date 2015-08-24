@@ -53,7 +53,7 @@ local function MoveUFO(unitID, x, z, range, radius)
 		return
 	end
 
-	
+
 	local speed = Spring.GetUnitRulesParam(ufoID, "selfMoveSpeedChange") or 1
 	range = (range or 1000)*speed
 
@@ -73,8 +73,6 @@ function gadget:UnitCreated(unitID, unitDefID)
 		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
 
 		Spring.SetGameRulesParam("ufo_scare_radius", 500)
-		
-		aimx, aimy, aimz = Spring.GetUnitPosition(unitID)
 	end
 end
 
@@ -86,11 +84,12 @@ end
 
 function gadget:GameFrame(frame)
 	if ufoID then
+		local x, y, z = Spring.GetUnitPosition(ufoID)
 
 		if aimx then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then
-				Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx, aimy, aimz)
+				Spring.UnitScript.CallAsUnit(ufoID, env.script.AimWeapons, aimx + x, aimy + y, aimz + z)
 			end
 		end
 		if weaponMessage and weaponMessage.frame + 2 <= frame then
@@ -114,8 +113,8 @@ function gadget:GameFrame(frame)
 				if weaponMessage then
 					if weaponMessage.x then
 						Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
-					else	
-						Spring.SetUnitTarget(ufoID, aimx, aimy, aimz)
+					else
+						Spring.SetUnitTarget(ufoID, aimx + x, aimy + y, aimz + z)
 					end
 				end
 			end
@@ -123,7 +122,7 @@ function gadget:GameFrame(frame)
 			movementMessage = false
 		end
 
-		local x, y, z = Spring.GetUnitPosition(ufoID)
+
 		Spring.SetGameRulesParam("ufo_x", x)
 		Spring.SetGameRulesParam("ufo_y", y)
 		Spring.SetGameRulesParam("ufo_z", z)
@@ -161,7 +160,7 @@ function DisableAbility(abilityName)
 	elseif abilityName == "independenceDayGun" then
 		local env = Spring.UnitScript.GetScriptEnv(ufoID)
 		if env then
-			Spring.UnitScript.CallAsUnit(ufoID, env.script.StopIndependence, aimx, aimy, aimz)
+			Spring.UnitScript.CallAsUnit(ufoID, env.script.StopIndependence)
 		end
 	end
 end
@@ -178,8 +177,10 @@ end
 -- Aim Functions
 
 local function UpdateUfoAim(x, y, z)
-	
-	local diff = {x - aimx, y - aimy, z - aimz} 
+	local ux, uy, uz = Spring.GetUnitPosition(ufoID)
+	x, y, z = x - ux, y - uy, z - uz
+
+	local diff = {x - aimx, y - aimy, z - aimz}
 	local absVal = Vector.AbsVal(diff)
 
 	if absVal < 40 then
@@ -193,20 +194,20 @@ end
 local function Teleport(distance)
 	local x, y, z = Spring.GetUnitPosition(ufoID)
 	local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
-	
+
 	if not (x and vx) then
 		return
 	end
-	
+
 	local height = Spring.GetGroundHeight(x, z)
 	y = y - height
-	
+
 	vx, vz = Vector.Norm(distance, vx, vz)
 	x, z = Spring.Utilities.ClampPosition(vx + x, vz + z)
-	
+
 	height = Spring.GetGroundHeight(x, z)
 	y = y + height
-	
+
 	Spring.SetUnitPosition(ufoID, x, y, z)
 end
 
@@ -230,7 +231,7 @@ function HandleLuaMessage(msg)
 			}
 		end
 	end
-	
+
 	if msg_table[1] == 'aimWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
@@ -240,7 +241,7 @@ function HandleLuaMessage(msg)
 			UpdateUfoAim(x,y,z)
 		end
 	end
-	
+
 	if msg_table[1] == 'fireWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
@@ -257,7 +258,8 @@ function HandleLuaMessage(msg)
 					z = z
 				}
 			else
-				Spring.SetUnitTarget(ufoID, aimx, aimy, aimz)
+				local ux, uy, uz = Spring.GetUnitPosition(ufoID)
+				Spring.SetUnitTarget(ufoID, aimx + ux, aimy + uy, aimz + uz)
 
 				weaponMessage = {
 					frame = Spring.GetGameFrame(),
@@ -266,7 +268,7 @@ function HandleLuaMessage(msg)
 		end
 	end
 
-	
+
 
 	-- Handle all abilities here. Abilities can only be turned on and last a certain duration.
 	if msg_table[1] == 'ability' then
@@ -279,7 +281,7 @@ function HandleLuaMessage(msg)
 		local cooldown = tech.ability.cooldown
 
 		local _, multiplier = GG.Tech.GetTechTooltip(tech.name)
-		
+
 		Spring.SetGameRulesParam(abilityName .. "CD", cooldown)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
 
@@ -290,11 +292,11 @@ function HandleLuaMessage(msg)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
 			-- TODO
-			local baseHaste = 1.6 
+			local baseHaste = 1.6
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
 			local haste = baseHaste * speedModifier
 			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 300))
-			
+
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
 			Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", haste)
 			GG.UpdateUnitAttributes(ufoID)
@@ -308,7 +310,7 @@ function HandleLuaMessage(msg)
 		elseif abilityName == "independenceDayGun" then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then
-				Spring.UnitScript.CallAsUnit(ufoID, env.script.StartIndependence, aimx, aimy, aimz)
+				Spring.UnitScript.CallAsUnit(ufoID, env.script.StartIndependence)
 			end
 		end
 	end

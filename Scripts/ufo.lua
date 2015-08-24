@@ -87,16 +87,13 @@ local function GetGunHeading(i)
 	return math.atan2(bx - ox, bz - oz)
 end
 
-local gunHeading = {
-	math.pi/2,
-	0,
-	3*math.pi/2,
-	math.pi,
-}
-
-local lastHeading = {0,0,0,0}
+local gunHeading = { }
 
 local function AimGun(i, tx, ty, tz)
+	if not gunHeading[i] then
+		return
+	end
+
 	local b = gunBase[i]
 	local g = gun[i]
 	local gh = GetGunHeading(i) - gunHeading[i]
@@ -105,7 +102,7 @@ local function AimGun(i, tx, ty, tz)
 	local dx, dy, dz = tx - px, ty - py, tz - pz
 	local dist = math.sqrt(dx * dx + dz * dz)
 	local pitch = math.atan2(dy, dist)
-	local heading = math.atan2(dx, dz) + gh + math.pi/4
+	local heading = math.atan2(dx, dz) + gh
 
 	Turn(g, x_axis, -pitch, 0)
 	Turn(b, z_axis, heading, 0)
@@ -129,8 +126,18 @@ function script.AimWeapons(tx, ty, tz)
 	end
 end
 
+local function GetInitialHeading()
+	while GetGunHeading(1) == 0 do
+		Sleep(33)
+	end
+	for i = 1, #gun do
+		gunHeading[i] = GetGunHeading(i)
+	end
+end
+
 
 function script.Create()
+	StartThread(GetInitialHeading)
 	local weaponNames = GG.Tech.GetWeapons()
 	for _, name in pairs(weaponNames) do
 		weapons[name] = GG.Tech.GetTech(name).weapon
@@ -141,10 +148,6 @@ function script.Create()
 
 	for i=1, #outerhull do
 		Spin(outerhull[i],z_axis, 1)
-	end
-
-	for i=1, #muzzle do
-		Turn(muzzle[i], x_axis, math.pi/2)
 	end
 
 	Spin(innerHull,z_axis, -2)
