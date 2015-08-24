@@ -160,10 +160,10 @@ unitDef = {
 
 			customParams            = {
 				area_damage = 1,
-				area_damage_radius = 30,
+				area_damage_radius = 40,
 				area_damage_dps = 200,
-				area_damage_duration = 7,
-				area_damage_range_falloff = 0.4,
+				area_damage_duration = 5,
+				area_damage_range_falloff = 0.1,
 				area_damage_time_falloff = 0.6,
 			},
 
@@ -204,7 +204,7 @@ unitDef = {
 			craterMult              = 0,
 
 			customParams            = {
-				impulse             = "-60",
+				impulse             = "-30",
 				normaldamage        = "0",
 			},
 
@@ -320,7 +320,7 @@ unitDef = {
 				area_damage_radius = 250,
 				area_damage_dps = 7000,
 				area_damage_is_impulse = 1,
-				area_damage_duration = 13.3,
+				area_damage_duration = 8,
 				area_damage_range_falloff = 0.4,
 				area_damage_time_falloff = 0.6,
 			},

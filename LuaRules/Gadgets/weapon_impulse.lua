@@ -252,11 +252,17 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 end
 
+local function SetGravityBeamMult(pull)
+	impulseMults[gravityDefID] = pull
+end
+
 function gadget:Initialize()
 	GG.DetatchFromGround = DetatchFromGround
 	GG.AddGadgetImpulseRaw = AddGadgetImpulseRaw
 	GG.AddGadgetImpulse = AddGadgetImpulse
 	GG.DoAirDrag = DoAirDrag
+	
+	GG.SetGravityBeamMult = SetGravityBeamMult
 	
 	-- load active units
 	for _, transportID in ipairs(Spring.GetAllUnits()) do
@@ -380,13 +386,6 @@ end
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Game Frame
-local function SetGravityBeamMult(pull)
-	impulseMults[gravityDefID] = pull
-end
-
-function gadget:Initialize()
-	GG.SetGravityBeamMult = SetGravityBeamMult
-end
 
 function gadget:GameFrame(f)
 	--CheckSpaceGunships()

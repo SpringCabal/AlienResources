@@ -42,6 +42,20 @@ local Vector = Spring.Utilities.Vector
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
+local abductionRadius = 70
+local abductionSpeed = 6
+local abductionAccelMult = 1
+
+local function UpdateAbductionParameters(radius, speed, accel)
+	abductionRadius = radius
+	abductionSpeed = speed
+	abductionAccelMult = accel
+	Spring.SetGameRulesParam("abductionRadius", radius)
+end
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
 local function callScript(unitID, funcName, args)
 	local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
 	if func then
@@ -106,7 +120,7 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
 					mult = mult*tonumber(udef.customParams.abduct_mult)
 				end
 				
-				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed*mult, 2*mult, GRAVITY + 0.4*mult)
+				FloatUnitInDirection(unitID, ax - ux, ay - uy, az - uz, vx, vz, speed*mult, 2*mult*abductionAccelMult, GRAVITY + 0.4*mult*abductionAccelMult)
 				callScript(unitID, "Abduction_float")
 			end
 		end
@@ -115,17 +129,9 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
     Spring.UnitScript.CallAsUnit(ufoID, env.script.SetBeamEnabled, enabled)
 end
 
-local function UpdateAbductionParameters(radius, speed)
-	abductionRadius = radius
-	abductionSpeed = speed
-	Spring.SetGameRulesParam("abductionRadius", radius)
-end
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
-
-local abductionRadius = 70
-local abductionSpeed = 6
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if ufoUnitDefID == unitDefID then
@@ -149,5 +155,5 @@ end
 function gadget:Initialize()
 	GG.UpdateAbductionParameters = UpdateAbductionParameters
 	
-	UpdateAbductionParameters(70, 6)
+	UpdateAbductionParameters(45, 6, 1)
 end

@@ -65,6 +65,8 @@ local tempFire = {}
 
 local blockMap = {}
 
+local blockingTimeMult = 1
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -116,7 +118,7 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		px = math.floor((px + 4)/8)*8
 		pz = math.floor((pz + 4)/8)*8
 		
-		local timeout = Spring.GetGameFrame() + 210
+		local timeout = Spring.GetGameFrame() + 150*blockingTimeMult
 		
 		local data = terrainWeaponDefs[weaponID]
 		for x = -24, 24, 8 do 
@@ -147,7 +149,13 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local function SetFireBlockingMult(mult)
+	blockingTimeMult = mult
+end
+
 function gadget:Initialize()
+	GG.SetFireBlockingMult = SetFireBlockingMult
+
 	Spring.SetTerrainTypeData(IMPASSABLE, 0, 0, 0, 0)
 	Spring.SetTerrainTypeData(FIRE_TERRAIN, 0, 0, 0.8, 0.8)
 	Spring.SetTerrainTypeData(NORMAL_TERRAIN, 1, 1, 1, 1)

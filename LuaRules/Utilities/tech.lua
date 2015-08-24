@@ -13,7 +13,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/armour_off.png",
 	},
 	coneUpgrade = {
-		desc = "Advanced gravitons (+10% beamup cone and size)",
+		desc = "Advanced gravitons (+40% beamup cone and size)",
 		title = "Cone upgrade",
 		tier = 2,
 		x = 80,
@@ -25,7 +25,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 	},	
 	pulseLaser = {
-		desc = "Pulse laser (+10% damage)",
+		desc = "Pulse laser (+100% damage)",
 		title = "Pulse laser",
 		tier = 1,
 		x = 0,
@@ -36,7 +36,7 @@ local techTree = {
 		}
 	},
 	blackHoleGun = {
-		desc = "Black hole (+10% stun duration)",
+		desc = "Black hole (+20% duration, radius)",
 		title = "Black hole",
 		tier = 2,
 		x = 80,
@@ -47,7 +47,7 @@ local techTree = {
 		weapon = {},
 	},
 	incendiaryBeamLaser = {
-		desc = "Incendiary beam laser (+15% fire duration)",
+		desc = "Incendiary beam laser (+40% fire duration, damage)",
 		title = "Napalm",
 		tier = 1,
 		x = 0,
@@ -57,7 +57,7 @@ local techTree = {
 		weapon = {},
 	},
 	gravityBeam = {
-		desc = "Gravity beam (+20% strength)",
+		desc = "Gravity beam (+40% strength)",
 		title = "Gravity beam",
 		tier = 2,
 		x = 80,

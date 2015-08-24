@@ -83,7 +83,7 @@ function HandleLuaMessage(msg)
 			Spring.Log("tech", LOG.ERROR, "Something went wrong unlocking tech: " .. name)
 		end
 		if name == "carrierDrones" then
-			GG.UpdateDroneParameters(1, 0)
+			GG.UpdateDroneParameters(1, 5)
 		end
 	elseif msg_table[1] == 'upgrade' then
 		local name = msg_table[2]
@@ -101,13 +101,19 @@ function HandleLuaMessage(msg)
 			local ratio = hp / maxHP
 			Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
 			Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
+		elseif name == "incendiaryBeamLaser" then
+			GG.SetFireMults(multiplier, multiplier)
+			GG.SetFireBlockingMult(multiplier)
+		elseif name == "blackHoleGun" then
+			GG.SetBlackHoleMults(multiplier, multiplier)
+		elseif name == "gravityBeam" then
+			GG.SetGravityBeamMult(multiplier)
+		elseif name == "pulseLaser" then
+			GG.SetPulseLaserShots(tech.level)
 		elseif name == "carrierDrones" then
-			GG.UpdateDroneParameters(tech.level + 1, 0)
+			GG.UpdateDroneParameters(tech.level + 1, 5 - tech.level)
 		elseif name == "coneUpgrade" then
-			local radius = Spring.GetGameRulesParam("abductionRadius")
-			-- FIXME: hardcoded
-			local speed = 6
-			GG.UpdateAbductionParameters(radius * (1 + value/200), speed * multiplier)
+			GG.UpdateAbductionParameters(45 * multiplier, 6 * multiplier, multiplier)
 		end
 	end
 end
