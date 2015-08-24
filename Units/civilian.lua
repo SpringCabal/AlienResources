@@ -25,7 +25,7 @@ local Civilian = Unit:New {
 		midposoffset       = [[0 28 0]],
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
-        biomass            = 10,
+        biomass            = 100,
         research           = 0,
         metal              = 0, -- not to be confused with engine metal
 	},

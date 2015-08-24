@@ -30,9 +30,9 @@ local Tank = Unit:New {
 	customParams           = {
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
-        biomass            = 0,
+        biomass            = 5000,
         research           = 0,
-        metal              = 10, -- not to be confused with engine metal
+        metal              = 0, -- not to be confused with engine metal
 
 		modelradius        = [[30]],
 		midposoffset       = [[0 25 0]],
@@ -147,6 +147,11 @@ local Small_Tank = Tank:New {
 				default = 5,
 			},
 		}
+	},
+	customParams           = {
+        -- Capture resources (all capturable units should have these fields defined)
+        -- Use OOP maybe?
+        biomass            = 2000,
 	},
 }
 
