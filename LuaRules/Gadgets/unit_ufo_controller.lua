@@ -154,6 +154,7 @@ function DisableAbility(abilityName)
 		Spring.SetGameRulesParam("ufo_scare_radius", 500)
 	elseif abilityName == "haste" then
 		Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", 1)
+		Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", 1)
 		GG.UpdateUnitAttributes(ufoID)
 	elseif abilityName == "teleport" then
 		-- TODO
@@ -273,6 +274,7 @@ function HandleLuaMessage(msg)
 			local haste = baseHaste * speedModifier
 			
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
+			Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", haste)
 			GG.UpdateUnitAttributes(ufoID)
 		elseif abilityName == "teleport" then
 			-- TODO

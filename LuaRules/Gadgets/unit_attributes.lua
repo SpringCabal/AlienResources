@@ -226,7 +226,8 @@ local function updateMovementSpeed(unitID, ud, speedFactor, turnAccelFactor, max
 				maxSpeed        = state.origSpeed       *speedFactor,
 				--maxReverseSpeed = state.origReverseSpeed*speedFactor,
 				turnRate        = state.origTurnRate    *turnFactor,
-				accRate         = state.origMaxAcc      *(speedFactor > 0.001 and speedFactor or 0.001)*maxAccelerationFactor,
+				accRate         = state.origMaxAcc      *((speedFactor > 0.001 and speedFactor) or 0.001)*maxAccelerationFactor,
+				decRate         = state.origMaxDec      *((speedFactor > 0.001 and speedFactor) or 0.001)*maxAccelerationFactor,
 				--decRate         = state.origMaxDec      *(speedFactor > 0.01  and speedFactor or 0.01)
 			}
 			spSetGunshipMoveTypeData(unitID, attribute)
