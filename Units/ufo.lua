@@ -286,7 +286,7 @@ unitDef = {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 20,
+				default = 200,
 			},
 			
 			explosionGenerator      = [[custom:pulseflash]],
@@ -296,7 +296,7 @@ unitDef = {
 			reloadtime              = 0.01,
 			rgbColor                = "0.2 0.5 0.2",
 			soundTrigger            = true,
-			thickness               = 3,
+			thickness               = 5,
 			tolerance               = 5000,
 			turret                  = true,
 			weaponType              = "LaserCannon",
