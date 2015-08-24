@@ -265,8 +265,14 @@ function HandleLuaMessage(msg)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
 			-- TODO
+			local baseHaste = 1.2 -- 120% speed increase with no upgrades, customize
+			local speedModifier = multiplier/100 + 1 -- Tech modifier
+			local haste = baseHaste * speedModifiert
 		elseif abilityName == "teleport" then
 			-- TODO
+			local baseDistance = 100 -- elmo or w/e, customize
+			local distanceModifier = multiplier/100 + 1 -- Tech modifier
+			local distance = baseDistance * distanceModifier
 		elseif abilityName == "independenceDayGun" then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then
