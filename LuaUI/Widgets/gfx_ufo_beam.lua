@@ -22,15 +22,13 @@ VFS.Include("LuaUI/widgets/glVolumes.lua")
 
 local lightData = {
 	[0] = {
-		radius = 100,
-		radiusOscillation = 5,
+		radiusOscillation = 0.05,
 		period = 15,
 		color = {1, 0.9, 0, 0.4},
 		alphaOscillation = 0
 	},
 	[1] = {
-		radius = 80,
-		radiusOscillation = 10,
+		radiusOscillation = 0.15,
 		period = 3,
 		color = {1, 0.9, 0, 0.7},
 		alphaOscillation = -0.2
@@ -62,10 +60,10 @@ function widget:DrawWorld()
 	if not data then
 		return
 	end
-	local radius = data.radius * height / maxHeight
+	local radius = Spring.GetGameRulesParam("abductionRadius") * height / maxHeight
 
-	local r, ro, p, color, ao = data.radius, data.radiusOscillation, data.period, {unpack(data.color)}, data.alphaOscillation
-	local radius = math.sin(Spring.GetGameFrame() / p) * ro + r
+	local ro, p, color, ao = data.radiusOscillation, data.period, {unpack(data.color)}, data.alphaOscillation
+	radius = math.sin(Spring.GetGameFrame() / p) * ro * radius + radius
 	color[4] = math.sin(Spring.GetGameFrame() / p) * ao + color[4]
 	gl.Color(color)
 	gl.DepthTest(true)
