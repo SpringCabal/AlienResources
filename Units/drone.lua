@@ -80,7 +80,6 @@ unitDef = {
 			avoidNeutral            = false,
 			avoidGround             = false,
 
-			collideEnemy            = false,
 			collideFriendly         = false,
 
 			beamTime                = 0.01,
