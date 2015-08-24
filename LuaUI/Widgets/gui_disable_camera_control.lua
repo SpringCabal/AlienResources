@@ -26,21 +26,6 @@ function widget:Initialize()
 --         widgetHandler:RemoveWidget(widget)
 --         return
 --     end
-    s = {
-        px = 3150,
-        py = 102.34146118164,
-        pz = 3480,
-        mode = 1,
-        flipped = -1,
-        dy = -0.90149933099747,
-        dz = -0.43356931209564,
-        fov = 45,
-        height = 3300,
-        angle = 0.46399998664856,
-        dx = 0,
-        name = "spring",
-    }
-    Spring.SetCameraState(s, 0)
 end
 
 function widget:Shutdown()

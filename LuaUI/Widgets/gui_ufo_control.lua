@@ -40,6 +40,9 @@ local aimWeapons = {
 
 local LOOK_FORWARDS = 12
 
+local UFO_START_X = 14000
+local UFO_START_Z = 1600
+
 local AVERAGE_SPEEDS = 12
 local curIndex = 1
 local lastXSpeed = {average = 0}
@@ -48,11 +51,11 @@ local lastZSpeed = {average = 0}
 
 local mouseControl = false
 
-local lx, ly, lz = 0, 0, 0
+local lx, ly, lz = UFO_START_X, 0, UFO_START_Z
 
-local cx, cy, cz = 0, 0, 0
+local cx, cy, cz = UFO_START_X, 0, UFO_START_Z
 
-local function UpdateSpeed(newVal, values)
+local function UpdateSpeed(newVal, values, default)
 	newVal = newVal/AVERAGE_SPEEDS
 	values.average = values.average - (values[curIndex] or 0) + newVal
 	values[curIndex] = newVal
@@ -85,7 +88,7 @@ local function UpdateCamera()
 		sx = UpdateSpeed(sx, lastXSpeed)
 		sy = UpdateSpeed(sy, lastYSpeed)
 		sz = UpdateSpeed(sz, lastZSpeed)
-		
+
 		curIndex = curIndex + 1
 		if curIndex > AVERAGE_SPEEDS then
 			curIndex = 1
@@ -96,7 +99,7 @@ local function UpdateCamera()
 		-- has a slight delay which makes it smooth and gives a hint in which direction we're moving
 		cx, cy, cz = cx + sx, cy + sy, cz + sz
 		--Spring.SetCameraTarget(cx, cy + 25, cz, 0.4)
-		
+
 		local newState = {
 			px = cx,
 			py = cy + 25,
