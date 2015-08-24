@@ -84,6 +84,8 @@ function HandleLuaMessage(msg)
 		end
 		if name == "carrierDrones" then
 			GG.UpdateDroneParameters(1, 5)
+		elseif name == "antiMissilePointDefense" then
+			Spring.SetUnitRulesParam(ufoID, "PDisUnlocked", 1)
 		end
 	elseif msg_table[1] == 'upgrade' then
 		local name = msg_table[2]

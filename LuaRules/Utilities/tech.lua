@@ -130,7 +130,7 @@ local techTree = {
 		key = "q",
 	},
 	cloak = {
-		desc = "Cloak (-15% cooldown)",
+		desc = "Cloak (+15% shorter cooldown)", -- can't write -num% atm :(
 		title = "Cloak",
 		tier = 2,
 		x = 80,
