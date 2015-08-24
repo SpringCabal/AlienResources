@@ -131,7 +131,7 @@ local techTree = {
 		key = "c",
 	},
 	teleport = {
-		desc = "Teleport (+10% distance)",
+		desc = "Teleport (+30% distance)",
 		title = "Teleport",
 		tier = 2,
 		x = 80,

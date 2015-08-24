@@ -284,7 +284,7 @@ function HandleLuaMessage(msg)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
 
 		if abilityName == "cloak" then
-			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 100))
+			Spring.SetGameRulesParam(abilityName .. "CD", duration * (1 + multiplier / 100))
 			Spring.SetUnitCloak(ufoID, 4)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
@@ -292,7 +292,7 @@ function HandleLuaMessage(msg)
 			local baseHaste = 1.6 
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
 			local haste = baseHaste * speedModifier
-			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 100))
+			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 300))
 			
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
 			Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", haste)
