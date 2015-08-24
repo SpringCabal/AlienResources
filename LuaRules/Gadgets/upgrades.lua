@@ -101,6 +101,8 @@ function HandleLuaMessage(msg)
 			local ratio = hp / maxHP
 			Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
 			Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
+		elseif name == "antiMissilePointDefense" then
+			GG.SetPDReload(multiplier)
 		elseif name == "incendiaryBeamLaser" then
 			GG.SetFireMults(multiplier, multiplier)
 			GG.SetFireBlockingMult(multiplier)

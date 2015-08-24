@@ -33,6 +33,24 @@ local function SetPulseLaserShots(shots)
 	})
 end
 
+local function SetPDReload(mult)
+	if not ufoID then
+		return
+	end
+	Spring.SetUnitWeaponState(ufoID, 13, {
+		reloadTime = 20*(1 - mult),
+	})
+	Spring.SetUnitWeaponState(ufoID, 14, {
+		reloadTime = 20*(1 - mult),
+	})
+	Spring.SetUnitWeaponState(ufoID, 15, {
+		reloadTime = 20*(1 - mult),
+	})
+	Spring.SetUnitWeaponState(ufoID, 16, {
+		reloadTime = 20*(1 - mult),
+	})
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if unitDefID == ufoDefID then
 		ufoID = unitID
@@ -41,4 +59,5 @@ end
 
 function gadget:Initialize()
 	GG.SetPulseLaserShots = SetPulseLaserShots
+	GG.SetPDReload = SetPDReload
 end

@@ -97,7 +97,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/shield_off.png",
 	},
 	antiMissilePointDefense = {
-		desc = "Anti missile point defense (+20% recharge rate)",
+		desc = "Anti missile point defense (+15% fire rate)",
 		tier = 2,
 		x = 80,
 		y = 240,
