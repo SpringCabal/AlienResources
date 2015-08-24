@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.75.0 commit date:2015-07-07, commit time:14:56, hash:c27589e</authoring_tool>
     </contributor>
-    <created>2015-08-24T18:21:29</created>
-    <modified>2015-08-24T18:21:29</modified>
+    <created>2015-08-24T18:22:52</created>
+    <modified>2015-08-24T18:22:52</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -479,6 +479,9 @@
                   </technique_common>
                 </bind_material>
               </instance_geometry>
+              <node id="muzzle" name="muzzle" type="NODE">
+                <matrix sid="transform">1 5.96046e-8 0 -0.9764757 0 1 0 -35.46 0 0 1 0.1628952 0 0 0 1</matrix>
+              </node>
             </node>
           </node>
         </node>
