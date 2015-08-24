@@ -120,6 +120,8 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		
 		local timeout = Spring.GetGameFrame() + 150*blockingTimeMult
 		
+		Spring.SpawnCEG("you_ceg_name", px, py, pz, 0, 1, 0, timeout, timeout)
+		
 		local data = terrainWeaponDefs[weaponID]
 		for x = -24, 24, 8 do 
 			for z = -24, 24, 8 do 
