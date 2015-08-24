@@ -217,26 +217,53 @@ end
 -- returns the tooltip and the modified value
 function Tech.GetTechTooltip(name)
 	local tech = techTree[name]
-	local tooltip = techTree[name].desc
+	local tooltip = techTree[name].desc	
 	local x1, x2 = tooltip:find("(%d+)")
 	local val = tonumber(tooltip:sub(x1, x2))
 	if tech.level > 0 then
 		tooltip = tooltip:sub(1, x1-2) .. "\255\0\255\0+" .. (val*tech.level) ..  tooltip:sub(x2+1, x2+1) .. "\b" .. tooltip:sub(x2+2)
+	end
+	if tech.locked then
+		local resources = Tech.GetUnlockResources(name)
+		tooltip = tooltip .. "\n\255\2\180\250Unlock: " .. resources.research .. "\b"
+	elseif tech.level ~= 5 then
+		local resources = Tech.GetUpgradeResources(name)
+		tooltip = tooltip .. "\n\255\80\215\80Upgrade: " .. resources.biomass .. "\b"
 	end
 	return tooltip, val*tech.level
 end
 
 function Tech.UpgradeTech(name)
 	local tech = techTree[name]
-	if not tech.enabled or tech.level >= 5 then
+	if not Tech.CanUpgrade(name) then
 		return false
+	end	
+	local resources = Tech.GetUpgradeResources(name)
+	if Script.GetName() == "LuaRules" and Script.GetSynced() then
+		for resName, value in pairs(resources) do
+			local current = Spring.GetGameRulesParam(resName)
+			Spring.SetGameRulesParam(resName, current - value)
+		end
 	end
+	
 	tech.level = tech.level + 1
 	return true
 end
 
 function Tech.UnlockTech(name)
+	if not Tech.CanUnlock(name) then
+		return false
+	end
 	local tech = techTree[name]
+	
+	local resources = Tech.GetUnlockResources(name)
+	if Script.GetName() == "LuaRules" and Script.GetSynced() then
+		for resName, value in pairs(resources) do
+			local current = Spring.GetGameRulesParam(resName)
+			Spring.SetGameRulesParam(resName, current - value)
+		end
+	end
+	
 	tech.locked = false
 	
 	local enabledTechs = {}
@@ -276,4 +303,44 @@ function Tech.ResetTechTree()
 	Tech.weapons = {}
 	Tech.abilities = {}
 	Initialize()
+end
+
+function Tech.GetUpgradeResources(name)
+	local tech = techTree[name]
+	local resource = (2 * tech.tier - 1) * ((tech.level+1) * 500)
+	return { biomass = resource }
+end
+
+function Tech.GetUnlockResources(name)
+	local tech = techTree[name]
+	local resource = (2 * tech.tier - 1) * 1000
+	return { research = resource }
+end
+
+function Tech.CanUpgrade(name)
+	local tech = techTree[name] 
+	if tech.locked or not tech.enabled or tech.level >= 5 then
+		return false
+	end
+	local resources = Tech.GetUpgradeResources(name)
+	for resName, value in pairs(resources) do
+		if value > (Spring.GetGameRulesParam(resName) or 0) then
+			return false
+		end
+	end
+	return true
+end
+
+function Tech.CanUnlock(name)
+	local tech = techTree[name]
+	if not tech.locked or not tech.enabled then
+		return false
+	end
+	local resources = Tech.GetUnlockResources(name)
+	for resName, value in pairs(resources) do
+		if value > (Spring.GetGameRulesParam(resName) or 0) then
+			return false
+		end
+	end
+	return true
 end

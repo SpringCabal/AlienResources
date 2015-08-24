@@ -37,9 +37,14 @@ local function explode(div,str)
 end
 
 function gadget:Initialize()
-    Spring.SetGameRulesParam("biomass", 0)
-    Spring.SetGameRulesParam("research", 0)
+	-- TEST resources, revert to 0s on release
+    Spring.SetGameRulesParam("biomass", 500000)
+    Spring.SetGameRulesParam("research", 50000)
     Spring.SetGameRulesParam("metal", 0)
+	
+--     Spring.SetGameRulesParam("biomass", 0)
+--     Spring.SetGameRulesParam("research", 0)
+--     Spring.SetGameRulesParam("metal", 0)
 end
 
 function gadget:GameFrame()
@@ -79,10 +84,6 @@ function HandleLuaMessage(msg)
 		if not GG.Tech.UnlockTech(name) then
 			Spring.Log("tech", LOG.ERROR, "Something went wrong unlocking tech: " .. name)
 		end
-		
-		local research = Spring.GetGameRulesParam("research")
-		Spring.SetGameRulesParam("research", research - 1000)
-		return
 	elseif msg_table[1] == 'upgrade' then
 		local name = msg_table[2]
 		local level = msg_table[3]
