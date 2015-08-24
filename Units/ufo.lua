@@ -189,7 +189,7 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
--- 			soundstart  			= "indendiary.wav",
+ 			soundstart  			= "firemono.wav",
 		},
 		gravityBeam = {
 			name                    = "Gravity Beam",
@@ -273,6 +273,7 @@ unitDef = {
 			turret                  = true,
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 500,
+			soundstart  			= "pointDefense.wav",
 		},
 		pulseLaser = {
 			name                    = "Pulse laser",
