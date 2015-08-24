@@ -261,7 +261,7 @@ unitDef = {
 			minIntensity            = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
-			reloadtime              = 1,
+			reloadtime              = 6,
 			rgbColor                = "0.2 1.0 0.2",
 			scrollSpeed             = 10,
 			soundTrigger            = true,
@@ -416,7 +416,7 @@ unitDef = {
 			damage                  = {
 				default = 10,
 			},
-
+			
 			exteriorShield          = true,
 			shieldAlpha             = 1.0,
 			shieldBadColor          = [[1 0.1 0.1]],
@@ -429,6 +429,7 @@ unitDef = {
 			shieldRepulser          = false,
 			shieldStartingPower     = 1000,
 			smartShield             = true,
+			smart                   = true,
 -- 			texture1                = [[shield3mist]],
 			visibleShield           = true,
 			visibleShieldHitFrames  = 20,
