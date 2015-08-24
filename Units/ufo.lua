@@ -170,7 +170,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-			explosionGenerator      = [[custom:sickfires]],
+			explosionGenerator      = [[custom:fireflash]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,

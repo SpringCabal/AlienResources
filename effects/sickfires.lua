@@ -1,4 +1,25 @@
 return {
+  ["fireflash"] = {
+    usedefaultexplosions = false,
+	spikes = {
+		air                = false,
+		class              = [[CExploSpikeProjectile]],
+		count              = 1,
+		ground             = true,
+		water              = false,
+		properties = {
+			alwaysVisible      = false,
+			length 				= 25,
+			width					= 10,
+			alpha					= 1,
+			alphaDecay 			= 0.2,
+			lengthGrowth			= 2.8,
+			dir 				= [[r3 -1.5,r3 -1.5, r3-1.5]],
+			color 				= [[1, 0, 0]],
+			pos					= [[0, 0,0]],
+		},
+	},
+  },
   ["sickfires"] = {
     usedefaultexplosions = false,
     cinder = {
