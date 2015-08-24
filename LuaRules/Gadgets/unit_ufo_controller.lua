@@ -287,27 +287,27 @@ function HandleLuaMessage(msg)
 		Spring.SetGameRulesParam(abilityName .. "CD", cooldown)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
 
+		local x, y, z = Spring.GetUnitPosition(ufoID)
 		if abilityName == "cloak" then
-			Spring.Echo(multiplier)
 			Spring.SetGameRulesParam(abilityName .. "CD", cooldown * (1 - multiplier / 100))
 			Spring.SetUnitCloak(ufoID, 4)
+			Spring.PlaySoundFile("sounds/cloak.wav", 40, x, y, z, 'sfx')
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
-			-- TODO
 			local baseHaste = 1.6
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
 			local haste = baseHaste * speedModifier
 			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 300))
+			Spring.PlaySoundFile("sounds/haste.wav", 40, x, y, z, 'sfx')
 
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
 			Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", haste)
 			GG.UpdateUnitAttributes(ufoID)
 		elseif abilityName == "teleport" then
-			-- TODO
 			local baseDistance = 800 -- elmo or w/e, customize
 			local distanceModifier = multiplier/100 + 1 -- Tech modifier
 			local distance = baseDistance * distanceModifier
-			Spring.Echo("distance", distance)
+			Spring.PlaySoundFile("sounds/teleport.wav", 40, x, y, z, 'sfx')
 			Teleport(distance)
 		elseif abilityName == "independenceDayGun" then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
