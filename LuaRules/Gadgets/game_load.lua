@@ -21,6 +21,10 @@ end
 local file = "LuaRules/Configs/spawn.lua"
 
 function gadget:Initialize()
+	if Game.gameName == "Scenario Editor Alien resources" then
+		gadgetHandler:RemoveGadget()
+		return
+	end
 	local data = loadstring(VFS.LoadFile(file))()
 	self:load(data.units)
 end

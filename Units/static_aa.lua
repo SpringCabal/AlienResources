@@ -56,7 +56,7 @@ local Static_AA = Unit:New {
 
 			beamTime                = 0.01,
 			beamTtl                 = 2,
-			coreThickness           = 0.2,
+			coreThickness           = 0.1,
 			craterBoost             = 0,
 			craterMult              = 0,
 
@@ -71,11 +71,11 @@ local Static_AA = Unit:New {
 			noSelfDamage            = true,
 			range                   = 2000,
 			reloadtime              = 0.01,
-			rgbColor                = "0.5 0.1 0.9",
+			rgbColor                = "0.1 0.2 0.9",
 			scrollSpeed             = 10,
 			soundTrigger            = true,
 			sweepfire               = false,
-			thickness               = 20,
+			thickness               = 15,
 			tileLength              = 10000,
 			tolerance               = 5000,
 			turret                  = true,
@@ -86,6 +86,25 @@ local Static_AA = Unit:New {
 	},
 }
 
+local Strong_AA = Static_AA:New {
+	name                = "Strong AA",
+	weaponDefs             = {
+		beamLaser = {
+			name                    = "Beam Laser",
+			coreThickness           = 0.3,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			damage                  = {
+				default = 10,
+			},
+			rgbColor                = "0.5 0.1 0.9",
+			thickness               = 25,
+		},
+	},
+}
+
 return lowerkeys({
     Static_AA       = Static_AA,
+	Strong_AA 	    = Strong_AA,
 })
