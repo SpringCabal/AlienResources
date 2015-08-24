@@ -13,6 +13,11 @@ local Building = Unit:New {
 	upright				    = true,
     sightDistance		    = 0,
     script                  = "building.lua",
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:explosion]],
+		},
+	},
 }
 
 local Building1 = Building:New {
