@@ -34,7 +34,7 @@ local SPAWN_TEAM  = 0 -- teamID of spawned units
 local drones = {}
 local idleDrones = {}
 
-local wantedDrones = 10
+local wantedDrones = 0
 local spawnRate = 1/(2*30)
 
 local spawnProgress = 0
@@ -95,10 +95,14 @@ local function UpdateDroneSpawning(deltaTime)
 	end
 end
 
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Callins
+
+local function UpdateDroneParameters(newWanted, newDronePerSecond)
+	wantedDrones = newWanted
+	spawnRate = 1/(newDronePerSecond*30)
+end
 
 function gadget:GameFrame(n)
 	ufoX = Spring.GetGameRulesParam("ufo_x") or 0
@@ -110,4 +114,8 @@ function gadget:GameFrame(n)
 	if n%15 == 0 then
 		UpdateDroneMovement()
 	end
+end
+
+function gadget:Initialize()
+	GG.UpdateDroneParameters = UpdateDroneParameters
 end
