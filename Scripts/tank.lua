@@ -5,7 +5,7 @@ local barrels = {
 	piece "muzzleLeft",
 	piece "muzzleRight"
 }
-				
+
 local pieces = {
 	piece "tubeLeft",
 	piece "tubeRight",
@@ -15,24 +15,24 @@ local pieces = {
 
 local barrels = {piece "muzzleLeft",
 				piece "muzzleRight"}
-local turret = piece 'turret' 
-local tubeLeft = piece "tubeLeft"				
+local turret = piece 'turret'
+local tubeLeft = piece "tubeLeft"
 local tubeRight = piece "tubeRight"
 
 local SIG_AIM = 2
 
-				
+
 local currentBarrel = #barrels
 function script.Create()
 
 end
 
 function script.QueryWeapon(num)
-	
+
 	return barrels[currentBarrel]
 end
 
-function script.AimFromWeapon(num) 
+function script.AimFromWeapon(num)
 	return barrels[currentBarrel]
 end
 
@@ -51,6 +51,8 @@ end
 
 function script.Shot(num)
 	currentBarrel = currentBarrel % #barrels + 1
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	Spring.PlaySoundFile("sounds/rocket.wav", 70, x, y, z)
 end
 
 function script.Killed(recentDamage, maxHealth)

@@ -118,7 +118,6 @@ local Tank = Unit:New {
 			smokedelay              = [[0.1]],
 			smokeTrail              = true,
 			--soundHit                = [[explosion/ex_med11]],
-			soundStart              = "rocket.wav",
 			startsmoke              = [[1]],
 			startVelocity           = 700,
 			--texture2                = [[AAsmoketrail]],

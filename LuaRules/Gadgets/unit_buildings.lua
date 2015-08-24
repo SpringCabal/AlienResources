@@ -33,6 +33,6 @@ local explode = {
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if explode[unitDefID] then
 		local x, y, z = Spring.GetUnitPosition(unitID)
-		Spring.PlaySoundFile("sounds/explosion.wav", 2, x, y, z)
+		Spring.PlaySoundFile("sounds/explosion.wav", 40, x, y, z)
 	end
 end
