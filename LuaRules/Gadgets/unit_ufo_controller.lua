@@ -254,10 +254,13 @@ function HandleLuaMessage(msg)
 		local duration = tech.ability.duration
 		local cooldown = tech.ability.cooldown
 
+		local _, multiplier = GG.Tech.GetTechTooltip(tech.name)
+		
 		Spring.SetGameRulesParam(abilityName .. "CD", cooldown)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
 
 		if abilityName == "cloak" then
+			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 100))
 			Spring.SetUnitCloak(ufoID, 4)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then

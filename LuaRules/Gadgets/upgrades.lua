@@ -73,28 +73,30 @@ end
 function HandleLuaMessage(msg)
 	local msg_table = explode('|', msg)
 	if msg_table[1] == 'unlock' then
-		local tech = msg_table[2]
+		local name = msg_table[2]
 		local value = msg_table[3]
 		
-		GG.Tech.GetTech(tech).locked = false
+		if not GG.Tech.UnlockTech(name) then
+			Spring.Log("tech", LOG.ERROR, "Something went wrong unlocking tech: " .. name)
+		end
 		
 		local research = Spring.GetGameRulesParam("research")
 		Spring.SetGameRulesParam("research", research - 1000)
-	elseif msg_table[1] ~= 'upgrade' then
-        return
-    end
-	local tech = msg_table[2]
-	local level = msg_table[3]
-	local value = msg_table[4]
-    if tech == "armor" then
-		local newMaxHealth = UnitDefs[ufoDefID].health * (100 + value) / 100
-        local hp, maxHP = Spring.GetUnitHealth(ufoID)
-        local ratio = hp / maxHP
-        Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
-        Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
-	end
-	if not GG.Tech.UpgradeTech(tech) then
-		Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. tech)
+		return
+	elseif msg_table[1] == 'upgrade' then
+		local name = msg_table[2]
+		local level = msg_table[3]
+		local value = msg_table[4]
+		if name == "armor" then
+			local newMaxHealth = UnitDefs[ufoDefID].health * (100 + value) / 100
+			local hp, maxHP = Spring.GetUnitHealth(ufoID)
+			local ratio = hp / maxHP
+			Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
+			Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
+		end
+		if not GG.Tech.UpgradeTech(name) then
+			Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. name)
+		end
 	end
 end
 
