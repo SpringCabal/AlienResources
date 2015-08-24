@@ -74,7 +74,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 	},
 	shield = {
-		desc = "Shield (+25% strength)",
+		desc = "Shield (+50% recharge speed)",
 		title = "Shield",
 		tier = 1,
 		x = 0,

@@ -48,6 +48,7 @@ local weapons = {}
 
 local independencePiece = piece "independence"
 local independenceWeapon
+local shieldWeapon
 
 local SIG_INDEPENDENCE = 1
 local function Independence()
@@ -155,6 +156,10 @@ function script.Create()
 	for i = 1,#UnitDef.weapons do
 		if WeaponDefs[UnitDef.weapons[i].weaponDef].name:find("independence") then
 			independenceWeapon = i
+			break
+		end
+		if WeaponDefs[UnitDef.weapons[i].weaponDef].name:find("shield") then
+			shieldWeapon = i
 			break
 		end
 	end

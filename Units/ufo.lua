@@ -53,8 +53,8 @@ unitDef = {
 	-- Attributes
 	mass                   = 200,
 	maxDamage              = 1000,
-    -- disable auto heal, healing will happen via repairs; additionally we'll use shields?
-	autoHeal               = 0,
+    -- small auto heal; additionally we'll use shields?
+	autoHeal               = 5,
 	idleAutoHeal           = 0,
 	idleTime               = 1,
 
@@ -123,6 +123,9 @@ unitDef = {
 		{
 			def                = "pulseLaser",
 			onlyTargetCategory = "land",
+		},
+		{
+			def 			   = "shield",
 		},
 	},
 
@@ -352,6 +355,31 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
+		},
+		shield = {
+			name                    = "Shield",
+
+			damage                  = {
+				default = 10,
+			},
+
+			exteriorShield          = true,
+			shieldAlpha             = 0.4,
+			shieldBadColor          = [[1 0.1 0.1]],
+			shieldGoodColor         = [[0.1 0.1 1]],
+			shieldInterceptType     = 3,
+			shieldPower             = 1000,
+			shieldPowerRegen        = 0, -- we'll do regen in a gadget
+			shieldPowerRegenEnergy  = 0,
+			shieldRadius            = 120,
+			shieldRepulser          = false,
+			shieldStartingPower     = 1000,
+			smartShield             = true,
+-- 			texture1                = [[shield3mist]],
+			visibleShield           = true,
+			visibleShieldHitFrames  = 20,
+			visibleShieldRepulse    = true,
+			weaponType              = "Shield",
 		},
 	},
 }
