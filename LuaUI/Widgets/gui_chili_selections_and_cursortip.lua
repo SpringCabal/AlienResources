@@ -315,7 +315,7 @@ options = {
 		name = "Hide Unit Text Tooltips",
 		type = 'bool',
 		advanced = true,
-		value = false,
+		value = true,
 		desc = 'Don\'t show the text-only tooltips for units selected but not pointed at, even when showing extended tooltips.',
 	},
 	showdrawtooltip = {
@@ -328,7 +328,7 @@ options = {
 	showterratooltip = {
 		name = "Show Terraform Tooltip",
 		type = 'bool',
-		value = true,
+		value = false,
 		desc = 'Show terraform tooltip when performing terraform commands.',
 	},
 	
@@ -922,7 +922,7 @@ local function AddSelectionIcon(index,unitid,defid,unitids,counts)
 					spSelectUnitArray(selectedIds)
 					--update selected units right now
 					local sel = spGetSelectedUnits()
-					widget:SelectionChanged(sel)
+-- 					widget:SelectionChanged(sel)
 				elseif button == 1 then
 					if shift then
 						spSelectUnitArray(selectedUnitsByDef[squareData.defid]) -- select all
@@ -2116,7 +2116,7 @@ local function MakeTooltip()
 		return
 	elseif unitDef then
 		tt_ud = unitDef
-		MakeToolTip_UD(tt_table)
+		--MakeToolTip_UD(tt_table)
 		return
 	end
 	
@@ -2133,9 +2133,10 @@ local function MakeTooltip()
 	
 	--unit(s) selected/pointed at
 	if unit_tooltip then
+		KillTooltip()
 		-- pointing at unit/feature
 		if type == 'unit' then
-			MakeToolTip_Unit(data, tooltip)
+			--MakeToolTip_Unit(data, tooltip)
 			return
 		elseif type == 'feature' then
 			if MakeToolTip_Feature(data, tooltip) then
@@ -2242,133 +2243,133 @@ end
 --callins
 
 function widget:Update(dt)
-	if widgetHandler.InTweakMode and widgetHandler:InTweakMode() then
-		tweakShow = true
-		Show(real_window_corner)
-	elseif tweakShow then
-		tweakShow = false
-		widget:SelectionChanged(Spring.GetSelectedUnits())
-	end
-	
-	timer = timer + dt
-	if timer >= updateFrequency  then
-		UpdateSelectedUnitsTooltip() --this has numSelectedUnits check. Will only run with numSelectedUnits > 1
-		UpdateDynamicGroupInfo()
-		WriteGroupInfo()
-		
-		SetHealthbars()
-		if stt_unitID then
-			local tt_table = tooltipBreakdown( spGetCurrentTooltip() )
-			local tooltip, unitDef  = tt_table.tooltip, tt_table.unitDef
-			
-			local ctrlm = controls['selunit2']['res_m']
-			if ctrlm then
-				local ctrle = controls['selunit2']['res_e']
-				local m, e = GetResources( 'selunit', stt_unitID, stt_ud, tooltip)
-				ctrlm:SetCaption(m)
-				ctrle:SetCaption(e)
-			end
-			
-			local nanobar_stack = globalitems['bp_selunit']
-			local nanobar = nanobar_stack:GetChildByName('bar')
-			if nanobar then
-				local metalMake, metalUse, energyMake,energyUse = Spring.GetUnitResources(stt_unitID)
-			
-				if metalUse then
-					nanobar:SetValue(metalUse/stt_ud.buildSpeed,true)
-					nanobar:SetCaption(round(100*metalUse/stt_ud.buildSpeed)..'%')
-				else
-					nanobar:SetValue(1)
-					nanobar:SetCaption('??? / ' .. numformat(stt_ud.buildSpeed))
-				end
-			end
-			
-		end
-		changeNow = true
-		timer = 0
-	end
+-- 	if widgetHandler.InTweakMode and widgetHandler:InTweakMode() then
+-- 		tweakShow = true
+-- 		Show(real_window_corner)
+-- 	elseif tweakShow then
+-- 		tweakShow = false
+-- -- 		widget:SelectionChanged(Spring.GetSelectedUnits())
+-- 	end
+-- 	
+-- 	timer = timer + dt
+-- 	if timer >= updateFrequency  then
+-- 		UpdateSelectedUnitsTooltip() --this has numSelectedUnits check. Will only run with numSelectedUnits > 1
+-- 		UpdateDynamicGroupInfo()
+-- 		WriteGroupInfo()
+-- 		
+-- 		SetHealthbars()
+-- 		if stt_unitID then
+-- 			local tt_table = tooltipBreakdown( spGetCurrentTooltip() )
+-- 			local tooltip, unitDef  = tt_table.tooltip, tt_table.unitDef
+-- 			
+-- 			local ctrlm = controls['selunit2']['res_m']
+-- 			if ctrlm then
+-- 				local ctrle = controls['selunit2']['res_e']
+-- 				local m, e = GetResources( 'selunit', stt_unitID, stt_ud, tooltip)
+-- 				ctrlm:SetCaption(m)
+-- 				ctrle:SetCaption(e)
+-- 			end
+-- 			
+-- 			local nanobar_stack = globalitems['bp_selunit']
+-- 			local nanobar = nanobar_stack:GetChildByName('bar')
+-- 			if nanobar then
+-- 				local metalMake, metalUse, energyMake,energyUse = Spring.GetUnitResources(stt_unitID)
+-- 			
+-- 				if metalUse then
+-- 					nanobar:SetValue(metalUse/stt_ud.buildSpeed,true)
+-- 					nanobar:SetCaption(round(100*metalUse/stt_ud.buildSpeed)..'%')
+-- 				else
+-- 					nanobar:SetValue(1)
+-- 					nanobar:SetCaption('??? / ' .. numformat(stt_ud.buildSpeed))
+-- 				end
+-- 			end
+-- 			
+-- 		end
+-- 		changeNow = true
+-- 		timer = 0
+-- 	end
 	--UNIT.STATUS start (by msafwan), function: add/show units task whenever individual pic is shown.
-	timer2 = timer2 + dt
-	if timer2 >= updateFrequency2  then
-		if options.unitCommand.value and numSelectedUnits >= 2 then
-			local barGrid = window_corner.childrenByName['Bars'] --//find chili element that we want to modify. REFERENCE: gui_chili_facbar.lua, by CarRepairer
-			for i=1,numSelectedUnits do --//iterate over all selected unit *this variable is updated by 'widget:SelectionChanged()'
-				local unitID = selectedUnits[i][1]
-				local barGridItem = nil
-				local itemImg =nil
-				if barGrid then	barGridItem = barGrid.childrenByName[unitID] end --only ungrouped icon will be named by unitID & thus return barGridItem
-				if barGridItem then itemImg = barGridItem.childrenByName['selImage'] end
-				if itemImg then
-					local cQueue = spGetCommandQueue(unitID, 1)
-					local commandName
-					local color = {1,1,1,1}
-					if cQueue and cQueue[1] ~= nil then
-						local commandID = cQueue[1].id				
-						commandName = ":" .. commandID --"unrecognized" 
-						if commandID < 0 then
-							commandName = "Build"
-						else
-							local commandList = {
-													{{CMD.WAIT}, "Wait"},
-													{{CMD.MOVE}, "Move", {0.2,0.8,0.2,1}},
-													{{CMD.PATROL}, "Patrol",{0.4,0,1,1}},
-													{{CMD.FIGHT}, "Fight", {0.4,0,0.8,1}},
-													{{CMD.ATTACK, CMD.AREA_ATTACK}, "Attack",{0.6,0,0,1}}, 
-													{{CMD.GUARD}, "Guard", {0.2,0,0.8,1}},
-													{{CMD.REPAIR}, "Repair",{0.2,0.8,1,1}},
-													--{{CMD.SELFD},  "Suicide"},
-													{{CMD.LOAD_UNITS, CMD_EXTENDED_LOAD},  "Load",{0,0.6,0.6,1}},
-													{{CMD.LOAD_ONTO}, "Load",{0,0.6,0.6,1}},
-													{{CMD.UNLOAD_UNITS, CMD.UNLOAD_UNIT}, "Unload", {0.6,0.6,0,1}},
-													{{CMD.RECLAIM}, "Reclaim",{0.6,0,0.4,1}},
-													{{CMD.RESURRECT},"Resurrect",{0.2,0,0.8,1}},
-													{{CMD.MANUALFIRE},"DGun",{1,1,1,1}},
-													{{CMD_ONECLICK_WEAPON},"Special",{0.8,0.6,0.0,1}},
-													{{CMD_JUMP},"Jump",{0,0.8,0,1}},
-													{{CMD_REARM},"Re-Arm",{0.2,0.8,1,1}},
-													{{CMD_PLACE_BEACON},"Bridge",{0.6,0.6,0,1}},
-													{{CMD_WAIT_AT_BEACON},"Teleport",{0,0.6,0.6,1}},
-												}										
-							for i=1, #commandList, 1 do --iterate over the commandList so we could find a match with unit's current command.
-								if #commandList[i][1] == 1 then --if commandList don't have sub-table at first row
-									if commandList[i][1][1] == commandID then
-										commandName = commandList[i][2]
-										color = commandList[i][3]
-										break
-									end
-								else
-									if commandList[i][1][1] == commandID or commandList[i][1][2] == commandID then --if commandList has sub-table with 2 content at first row
-										commandName = commandList[i][2]
-										color = commandList[i][3]
-										break
-									end
-								end
-							end
-						end
-					end
-					local cmdLabel = itemImg.childrenByName['commandLabel']
-					if cmdLabel and cmdLabel.caption ~= commandName then --is differing label?
-						cmdLabel:Dispose(); --remove existing label and recreate chili element (to eliminate color bug)
-						cmdLabel = nil;
-					end
-					if not cmdLabel and commandName then
-						Label:New{ --create new chili element
-							parent = itemImg;
-							name = "commandLabel";
-							align  = "left";
-							valign = "top";
-							fontsize   = 14;
-							fontshadow = true;
-							fontOutline = true;
-							textColor = color; --//Reference: gui_chili_crudeplayerlist.lua by KingRaptor
-							caption    = commandName;
-						};
-					end
-				end
-			end
-		end
-		timer2 = 0
-	end	
+-- 	timer2 = timer2 + dt
+-- 	if timer2 >= updateFrequency2  then
+-- 		if options.unitCommand.value and numSelectedUnits >= 2 then
+-- 			local barGrid = window_corner.childrenByName['Bars'] --//find chili element that we want to modify. REFERENCE: gui_chili_facbar.lua, by CarRepairer
+-- 			for i=1,numSelectedUnits do --//iterate over all selected unit *this variable is updated by 'widget:SelectionChanged()'
+-- 				local unitID = selectedUnits[i][1]
+-- 				local barGridItem = nil
+-- 				local itemImg =nil
+-- 				if barGrid then	barGridItem = barGrid.childrenByName[unitID] end --only ungrouped icon will be named by unitID & thus return barGridItem
+-- 				if barGridItem then itemImg = barGridItem.childrenByName['selImage'] end
+-- 				if itemImg then
+-- 					local cQueue = spGetCommandQueue(unitID, 1)
+-- 					local commandName
+-- 					local color = {1,1,1,1}
+-- 					if cQueue and cQueue[1] ~= nil then
+-- 						local commandID = cQueue[1].id				
+-- 						commandName = ":" .. commandID --"unrecognized" 
+-- 						if commandID < 0 then
+-- 							commandName = "Build"
+-- 						else
+-- 							local commandList = {
+-- 													{{CMD.WAIT}, "Wait"},
+-- 													{{CMD.MOVE}, "Move", {0.2,0.8,0.2,1}},
+-- 													{{CMD.PATROL}, "Patrol",{0.4,0,1,1}},
+-- 													{{CMD.FIGHT}, "Fight", {0.4,0,0.8,1}},
+-- 													{{CMD.ATTACK, CMD.AREA_ATTACK}, "Attack",{0.6,0,0,1}}, 
+-- 													{{CMD.GUARD}, "Guard", {0.2,0,0.8,1}},
+-- 													{{CMD.REPAIR}, "Repair",{0.2,0.8,1,1}},
+-- 													--{{CMD.SELFD},  "Suicide"},
+-- 													{{CMD.LOAD_UNITS, CMD_EXTENDED_LOAD},  "Load",{0,0.6,0.6,1}},
+-- 													{{CMD.LOAD_ONTO}, "Load",{0,0.6,0.6,1}},
+-- 													{{CMD.UNLOAD_UNITS, CMD.UNLOAD_UNIT}, "Unload", {0.6,0.6,0,1}},
+-- 													{{CMD.RECLAIM}, "Reclaim",{0.6,0,0.4,1}},
+-- 													{{CMD.RESURRECT},"Resurrect",{0.2,0,0.8,1}},
+-- 													{{CMD.MANUALFIRE},"DGun",{1,1,1,1}},
+-- 													{{CMD_ONECLICK_WEAPON},"Special",{0.8,0.6,0.0,1}},
+-- 													{{CMD_JUMP},"Jump",{0,0.8,0,1}},
+-- 													{{CMD_REARM},"Re-Arm",{0.2,0.8,1,1}},
+-- 													{{CMD_PLACE_BEACON},"Bridge",{0.6,0.6,0,1}},
+-- 													{{CMD_WAIT_AT_BEACON},"Teleport",{0,0.6,0.6,1}},
+-- 												}										
+-- 							for i=1, #commandList, 1 do --iterate over the commandList so we could find a match with unit's current command.
+-- 								if #commandList[i][1] == 1 then --if commandList don't have sub-table at first row
+-- 									if commandList[i][1][1] == commandID then
+-- 										commandName = commandList[i][2]
+-- 										color = commandList[i][3]
+-- 										break
+-- 									end
+-- 								else
+-- 									if commandList[i][1][1] == commandID or commandList[i][1][2] == commandID then --if commandList has sub-table with 2 content at first row
+-- 										commandName = commandList[i][2]
+-- 										color = commandList[i][3]
+-- 										break
+-- 									end
+-- 								end
+-- 							end
+-- 						end
+-- 					end
+-- 					local cmdLabel = itemImg.childrenByName['commandLabel']
+-- 					if cmdLabel and cmdLabel.caption ~= commandName then --is differing label?
+-- 						cmdLabel:Dispose(); --remove existing label and recreate chili element (to eliminate color bug)
+-- 						cmdLabel = nil;
+-- 					end
+-- 					if not cmdLabel and commandName then
+-- 						Label:New{ --create new chili element
+-- 							parent = itemImg;
+-- 							name = "commandLabel";
+-- 							align  = "left";
+-- 							valign = "top";
+-- 							fontsize   = 14;
+-- 							fontshadow = true;
+-- 							fontOutline = true;
+-- 							textColor = color; --//Reference: gui_chili_crudeplayerlist.lua by KingRaptor
+-- 							caption    = commandName;
+-- 						};
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- 		timer2 = 0
+-- 	end	
 	--UNIT.STATUS end
 	--TOOLTIP start
 	old_mx, old_my = mx,my
@@ -2549,78 +2550,78 @@ end
 --end
 --
 function widget:SelectionChanged(newSelection)
-	selectedUnits = {}
-	numSelectedUnits = 0
-	--store selected unitID list in a table with unitDefID. This prevent NIL error if selecting using limited LOS spectator
-	if (spGetSelectedUnitsCount() > 0) then 
-		local count = 0
-		local unitID, defID
-		for i=1, #newSelection do
-			unitID = newSelection[i]
-			defID = spGetUnitDefID(unitID)
-			if defID then --in LOS/not enemy
-				count = count+1
-				selectedUnits[count] = {unitID,defID}
-			end
-		end
-		numSelectedUnits = count 
-	end
-	if (numSelectedUnits>0) then
-		UpdateStaticGroupInfo()
-		UpdateDynamicGroupInfo()
-		selectedUnitsByDef       = spGetSelectedUnitsByDef()
-		selectedUnitsByDef.n     = nil -- REMOVE IN 0.83
-		selectedUnitsByDefCounts = {}
-		for i,v in pairs(selectedUnitsByDef) do
-			selectedUnitsByDefCounts[i] = #v
-		end
-
-		--// spGetSelectedUnitsByDef() doesn't save the order for the different defids, so we reconstruct it from spGetSelectedUnits()
-		--// else the sort order would change each time we select a new unit or deselect one!
-		selectionSortOrder = {}
-		local alreadyInList = {}
-		local defid
-		local count = 1
-		for i=1,#selectedUnits do
-			defid = selectedUnits[i][2]
-			if (not alreadyInList[defid]) then
-				alreadyInList[defid] = true
-				selectionSortOrder[count] = defid
-				count = count + 1
-			end
-		end
-
-		if (numSelectedUnits == 1) then
-			local tt_table = tooltipBreakdown( spGetCurrentTooltip() )
-			local tooltip, unitDef  = tt_table.tooltip, tt_table.unitDef
-			
-			local cur1, cur2 = MakeToolTip_SelUnit(selectedUnits[1][1], tooltip) --healthbar/resource consumption/ect chili element
-			if cur1 then
-				DisposeSelectionDisplay()
-				window_corner:AddChild(cur1)
-				window_corner:AddChild(cur2)
-				globalitems["window_corner_direct_child"]= {cur1,cur2, disposable = true}
-			end
-		else
-			stt_unitID = nil
-			DisposeSelectionDisplay()
-			local cur1 = MakeUnitGroupSelectionToolTip()
-			globalitems["window_corner_direct_child"]= {cur1}
-			window_corner:AddChild(cur1)
-		end
-		real_window_corner.caption = nil
-		real_window_corner:Invalidate()
-		Show(real_window_corner)
-	else
-		stt_unitID = nil
-		DisposeSelectionDisplay()
-		if not options.alwaysShowSelectionWin.value then
-			screen0:RemoveChild(real_window_corner)
-		else
-			real_window_corner.caption = 'No Units Selected'
-			real_window_corner:Invalidate()
-		end
-	end
+-- 	selectedUnits = {}
+-- 	numSelectedUnits = 0
+-- 	--store selected unitID list in a table with unitDefID. This prevent NIL error if selecting using limited LOS spectator
+-- 	if (spGetSelectedUnitsCount() > 0) then 
+-- 		local count = 0
+-- 		local unitID, defID
+-- 		for i=1, #newSelection do
+-- 			unitID = newSelection[i]
+-- 			defID = spGetUnitDefID(unitID)
+-- 			if defID then --in LOS/not enemy
+-- 				count = count+1
+-- 				selectedUnits[count] = {unitID,defID}
+-- 			end
+-- 		end
+-- 		numSelectedUnits = count 
+-- 	end
+-- 	if (numSelectedUnits>0) then
+-- 		UpdateStaticGroupInfo()
+-- 		UpdateDynamicGroupInfo()
+-- 		selectedUnitsByDef       = spGetSelectedUnitsByDef()
+-- 		selectedUnitsByDef.n     = nil -- REMOVE IN 0.83
+-- 		selectedUnitsByDefCounts = {}
+-- 		for i,v in pairs(selectedUnitsByDef) do
+-- 			selectedUnitsByDefCounts[i] = #v
+-- 		end
+-- 
+-- 		--// spGetSelectedUnitsByDef() doesn't save the order for the different defids, so we reconstruct it from spGetSelectedUnits()
+-- 		--// else the sort order would change each time we select a new unit or deselect one!
+-- 		selectionSortOrder = {}
+-- 		local alreadyInList = {}
+-- 		local defid
+-- 		local count = 1
+-- 		for i=1,#selectedUnits do
+-- 			defid = selectedUnits[i][2]
+-- 			if (not alreadyInList[defid]) then
+-- 				alreadyInList[defid] = true
+-- 				selectionSortOrder[count] = defid
+-- 				count = count + 1
+-- 			end
+-- 		end
+-- 
+-- 		if (numSelectedUnits == 1) then
+-- 			local tt_table = tooltipBreakdown( spGetCurrentTooltip() )
+-- 			local tooltip, unitDef  = tt_table.tooltip, tt_table.unitDef
+-- 			
+-- 			local cur1, cur2 = MakeToolTip_SelUnit(selectedUnits[1][1], tooltip) --healthbar/resource consumption/ect chili element
+-- 			if cur1 then
+-- 				DisposeSelectionDisplay()
+-- 				window_corner:AddChild(cur1)
+-- 				window_corner:AddChild(cur2)
+-- 				globalitems["window_corner_direct_child"]= {cur1,cur2, disposable = true}
+-- 			end
+-- 		else
+-- 			stt_unitID = nil
+-- 			DisposeSelectionDisplay()
+-- 			local cur1 = MakeUnitGroupSelectionToolTip()
+-- 			globalitems["window_corner_direct_child"]= {cur1}
+-- 			window_corner:AddChild(cur1)
+-- 		end
+-- 		real_window_corner.caption = nil
+-- 		real_window_corner:Invalidate()
+-- 		Show(real_window_corner)
+-- 	else
+-- 		stt_unitID = nil
+-- 		DisposeSelectionDisplay()
+-- 		if not options.alwaysShowSelectionWin.value then
+-- 			screen0:RemoveChild(real_window_corner)
+-- 		else
+-- 			real_window_corner.caption = 'No Units Selected'
+-- 			real_window_corner:Invalidate()
+-- 		end
+-- 	end
 end
 
 

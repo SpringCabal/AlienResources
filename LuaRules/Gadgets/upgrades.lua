@@ -43,9 +43,9 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("metal", 0)
 	
 	-- TEST resources, uncomment on release
-    Spring.SetGameRulesParam("biomass", 500000)
-    Spring.SetGameRulesParam("research", 50000)
-    Spring.SetGameRulesParam("metal", 0)
+--     Spring.SetGameRulesParam("biomass", 500000)
+--     Spring.SetGameRulesParam("research", 50000)
+--     Spring.SetGameRulesParam("metal", 0)
 end
 
 function gadget:GameFrame()
