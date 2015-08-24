@@ -129,6 +129,8 @@ local function Float()
 end
 
 function Abduction_float()
+	local ux, uy, uz = Spring.GetUnitPosition(unitID)
+	Spring.PlaySoundFile("sounds/scream.wav", 0.5, ux, uy, uz, 'sfx')
 	if (not floating) then
 		StartThread(Float)
 	end
