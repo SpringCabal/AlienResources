@@ -177,7 +177,12 @@ function Initialize()
 	for name, tech in pairs(techTree) do
 		tech.name = name
 		tech.level = 0
-		tech.locked = true
+		-- unlock armor
+		if tech.name ~= "armor" then
+			tech.locked = true
+		else
+			tech.locked = false
+		end
 		if tech.tier == 1 then
 			tech.enabled = true
 		else
