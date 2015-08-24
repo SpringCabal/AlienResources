@@ -16,31 +16,31 @@ local Static_AA = Unit:New {
     yardMap                 = "oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo",
 
 	category               = "land armed",
-	
+
     name                = "Static AA",
     script              = "static_aa.lua",
-	
+
 	 customParams        = {
 		modelradius        = [[40]],
 		midposoffset       = [[0 50 0]],
-		
+
 		terrainblock_x     = 64,
 		terrainblock_z     = 64,
     },
-	
+
     footprintX			    = 6,
 	footprintZ			    = 6,
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
 	collisionVolumeScales  = "50 60 50",
 	collisionVolumeType    = "cylY",
-	
+
 	sfxtypes               = {
 		explosiongenerators = {
 		  [[custom:explosion]],
 		},
 	},
-	
+
 	weapons                = {
 		{
 			def                = "beamLaser",
@@ -50,43 +50,33 @@ local Static_AA = Unit:New {
 
 	weaponDefs             = {
 		beamLaser = {
-			name                    = "Beam Laser",
-			areaOfEffect            = 32,
+			name                    = "Pulse laser",
+			areaOfEffect            = 128,
 			avoidFeature            = false,
 			avoidFriendly           = false,
 			avoidNeutral            = false,
 			avoidGround             = false,
-
-			collideFriendly         = false,
-
-			beamTime                = 0.01,
-			beamTtl                 = 2,
-			coreThickness           = 0.1,
+			coreThickness           = 0,
 			craterBoost             = 0,
 			craterMult              = 0,
 
 			damage                  = {
-				default = 2,
+				default = 4,
 			},
 
+			explosionGenerator      = [[custom:pulseflash]],
 			interceptedByShieldType = 1,
-			largeBeamLaser          = true,
-			laserFlareSize          = 0.1,
-			minIntensity            = 1,
 			noSelfDamage            = true,
 			range                   = 2000,
 			reloadtime              = 0.01,
-			rgbColor                = "0.1 0.2 0.9",
-			scrollSpeed             = 10,
+			rgbColor                = "0.8 0.2 0.2",
 			soundTrigger            = true,
-			sweepfire               = false,
-			thickness               = 15,
-			tileLength              = 10000,
+			thickness               = 5,
 			tolerance               = 5000,
 			turret                  = true,
-			weaponType              = "BeamLaser",
-			weaponVelocity          = 100,
-			pulseSpeed				= 0.1,
+			weaponType              = "LaserCannon",
+			weaponVelocity          = 2500,
+			soundstart  			= "pulse.wav",
 		},
 	},
 }
