@@ -6,9 +6,17 @@ local stalk = piece 'stalk'
 local turret = piece 'turret' 
 local muzzle = piece 'muzzle' 
 
+local explodePieces = {barrel, turret, stalk, base}
+
 local SIG_AIM = 2
 
 function script.Killed(recentDamage, maxHealth)
+	local flags = SFX.FIRE+SFX.SMOKE+SFX.NO_HEATCLOUD+SFX.EXPLODE_ON_HIT;
+	for i=1,#explodePieces do
+		EmitSfx(explodePieces[i],1024);
+		Explode(explodePieces[i],flags);
+		Sleep(math.random(400));
+	end
 	return 0
 end
 

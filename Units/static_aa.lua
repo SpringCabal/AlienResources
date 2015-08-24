@@ -35,6 +35,11 @@ local Static_AA = Unit:New {
 	collisionVolumeScales  = "50 60 50",
 	collisionVolumeType    = "cylY",
 	
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:explosion]],
+		},
+	},
 	
 	weapons                = {
 		{
