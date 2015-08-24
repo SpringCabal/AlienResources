@@ -33,7 +33,7 @@ local movementMessage
 local weaponMessage
 local ufoMoving
 
-local aimx, aimy, aimz
+local aimx, aimy, aimz = 0, 0, 0
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
@@ -71,6 +71,8 @@ function gadget:UnitCreated(unitID, unitDefID)
 		Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, {}) --no land
 
 		Spring.SetGameRulesParam("ufo_scare_radius", 500)
+		
+		aimx, aimy, aimz = Spring.GetUnitPosition(unitID)
 	end
 end
 
@@ -108,7 +110,11 @@ function gadget:GameFrame(frame)
 				end
 
 				if weaponMessage then
-					Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
+					if weaponMessage.x then
+						Spring.SetUnitTarget(ufoID, weaponMessage.x, weaponMessage.y, weaponMessage.z)
+					else	
+						Spring.SetUnitTarget(ufoID, aimx, aimy, aimz)
+					end
 				end
 			end
 
@@ -165,6 +171,23 @@ end
 
 -------------------------------------------------------------------
 -------------------------------------------------------------------
+-- Aim Functions
+
+local function UpdateUfoAim(x, y, z)
+	
+	local diff = {x - aimx, y - aimy, z - aimz} 
+	local absVal = Vector.AbsVal(diff)
+
+	if absVal < 40 then
+		aimx, aimy, aimz = x, y, z
+	else
+		diff = Vector.Norm(40, diff)
+		aimx, aimy, aimz = aimx + diff[1], aimy + diff[2], aimz + diff[3]
+	end
+end
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
 -- Handling messages
 
 function HandleLuaMessage(msg)
@@ -183,33 +206,43 @@ function HandleLuaMessage(msg)
 			}
 		end
 	end
-
-	if msg_table[1] == 'fireWeapon' then
-		local x = tonumber(msg_table[2])
-		local y = tonumber(msg_table[3])
-		local z = tonumber(msg_table[4])
-
-		if ufoID then
-			Spring.SetUnitTarget(ufoID, x, y, z)
-
-			weaponMessage = {
-				frame = Spring.GetGameFrame(),
-				x = x,
-				y = y,
-				z = z
-			}
-		end
-	end
-
+	
 	if msg_table[1] == 'aimWeapon' then
 		local x = tonumber(msg_table[2])
 		local y = tonumber(msg_table[3])
 		local z = tonumber(msg_table[4])
 
 		if ufoID then
-			aimx, aimy, aimz = x, y, z
+			UpdateUfoAim(x,y,z)
 		end
 	end
+	
+	if msg_table[1] == 'fireWeapon' then
+		local x = tonumber(msg_table[2])
+		local y = tonumber(msg_table[3])
+		local z = tonumber(msg_table[4])
+
+		if ufoID then
+			if x then
+				Spring.SetUnitTarget(ufoID, x, y, z)
+
+				weaponMessage = {
+					frame = Spring.GetGameFrame(),
+					x = x,
+					y = y,
+					z = z
+				}
+			else
+				Spring.SetUnitTarget(ufoID, aimx, aimy, aimz)
+
+				weaponMessage = {
+					frame = Spring.GetGameFrame(),
+				}
+			end
+		end
+	end
+
+	
 
 	-- Handle all abilities here. Abilities can only be turned on and last a certain duration.
 	if msg_table[1] == 'ability' then

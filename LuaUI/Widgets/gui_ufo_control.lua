@@ -29,6 +29,11 @@ local cloak = 0
 local weapons, abilities
 local currentWeapon
 
+local aimWeapons = {
+	["incendiaryBeamLaser"] = true,
+	["gravityBeam"] = true,
+}
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 -- Camera
@@ -131,10 +136,14 @@ end
 local function WeaponControl()
 	local mx, my, lmb, mmb, rmb = Spring.GetMouseState()
 	if lmb then
-		local _, pos = Spring.TraceScreenRay(mx, my, true)
-		if pos then
-			local x, y, z = pos[1], pos[2], pos[3]
-			Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
+		if aimWeapons[currentWeapon] then
+			Spring.SendLuaRulesMsg('fireWeapon')
+		else
+			local _, pos = Spring.TraceScreenRay(mx, my, true)
+			if pos then
+				local x, y, z = pos[1], pos[2], pos[3]
+				Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
+			end
 		end
 	end
 end
@@ -146,10 +155,10 @@ local function AimingControl()
 	local _, pos = Spring.TraceScreenRay(mx, my, true)
 	if pos then
 		local x, y, z = pos[1], pos[2], pos[3]
-		if x ~= lastx or y ~= lasty or z ~= lastz then
+		--if x ~= lastx or y ~= lasty or z ~= lastz then
 			lastx, lasty, lastz = x, y, z
 			Spring.SendLuaRulesMsg('aimWeapon|' .. x .. '|' .. y .. '|' .. z )
-		end
+		--end
 	end
 end
 
@@ -188,11 +197,13 @@ function widget:GameFrame(n)
 	if not ufoID then
 		return
 	end
+	
+	AimingControl()
 	MovementControl()
+	
 	if mouseControl then
 		WeaponControl()
 	end
-	AimingControl()
 	
 	UpdateCamera()
 
@@ -204,13 +215,13 @@ end
 
 function widget:MousePress(mx, my, button)
 	local alt, ctrl, meta, shift = Spring.GetModKeyState()
-	if button == 1 and not Spring.IsAboveMiniMap(mx, my) and (Spring.GetGameRulesParam("devMode") ~= 1) then
+	if button == 1 and not Spring.IsAboveMiniMap(mx, my) then
 		local _, pos = Spring.TraceScreenRay(mx, my, true)
 		if pos then
 			local x, y, z = pos[1], pos[2], pos[3]
 			Spring.SendLuaRulesMsg('fireWeapon|' .. x .. '|' .. y .. '|' .. z )
 			mouseControl = true
-			return true
+			return (Spring.GetGameRulesParam("devMode") ~= 1)
 		end
 	end	
 end

@@ -86,6 +86,15 @@ local function GetGunHeading(i)
 	return math.atan2(bx - ox, bz - oz)
 end
 
+local gunHeading = {
+	math.pi/2,
+	0,
+	3*math.pi/2,
+	math.pi,
+}
+
+local lastHeading = {0,0,0,0}
+
 local function AimGun(i, tx, ty, tz)
 	local b = gunBase[i]
 	local g = gun[i]
@@ -95,19 +104,26 @@ local function AimGun(i, tx, ty, tz)
 	local dx, dy, dz = tx - px, ty - py, tz - pz
 	local dist = math.sqrt(dx * dx + dz * dz)
 	local pitch = math.atan2(dy, dist)
-	local heading = math.atan2(dx, dz) + gh
-
-
+	local heading = math.atan2(dx, dz) + gh + math.pi/4
+	
 	Turn(g, x_axis, -pitch, 0)
 	Turn(b, z_axis, heading, 0)
+	
+	--local diffHeading = (heading - lastHeading[i] + math.pi)%(2*math.pi) - math.pi - 0.03
+	--lastHeading[i] = heading
+	
+	--Spring.Echo("diffHeading", (diffHeading < 0 and "-") or "+")
+	
+	--if diffHeading < 0 then
+	--	Turn(b, z_axis, heading, 2.4)
+	--else
+	--	Turn(b, z_axis, heading, 0.6)
+	--end
 	--Turn(p, y_axis, 0, 0)
 end
 
 function script.AimWeapons(tx, ty, tz)
 	for i = 1, #gun do
-		if not gunHeading[i] then
-			gunHeading[i] = GetGunHeading(i)
-		end
 		AimGun(i, tx, ty, tz)
 	end
 end
@@ -125,7 +141,11 @@ function script.Create()
 	for i=1, #outerhull do
 		Spin(outerhull[i],z_axis, 1)
 	end
-
+	
+	for i=1, #muzzle do
+		Turn(muzzle[i], x_axis, math.pi/2)
+	end
+	
 	Spin(innerHull,z_axis, -2)
 
 	Spin(turbine, z_axis, 4);

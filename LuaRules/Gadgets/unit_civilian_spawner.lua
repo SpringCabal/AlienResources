@@ -190,7 +190,7 @@ local function WandererCheckFlee(unitID)
 	local x,_,z = Spring.GetUnitPosition(unitID)
 	
 	if GetDistSqToUFO(x, z) < ufoScareRadiusSq then
-		local fx, fz = Vector.Norm(150, x - ufoX, z - ufoZ)
+		local fx, fz = Vector.Norm(450, x - ufoX, z - ufoZ)
 		Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.FIGHT, {x + fx, 0, z + fz}, {})
 		data.wandering = false
 		

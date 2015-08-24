@@ -30,10 +30,6 @@ local ufoRespawnFrame
 local ufoID
 
 function gadget:Initialize()
-    if Spring.GetGameRulesParam("devMode") == 1 then
-		return
-	end
-	
 	-- cleanup
     Spring.SetGameRulesParam("gameOver", 0)
     Spring.SetGameRulesParam("gameWon", 0)
@@ -58,7 +54,7 @@ function gadget:Initialize()
 	Spring.CreateUnit(buildingDefID, 13400, 300, 18000, 0, 0)
 	Spring.CreateUnit(buildingDefID, 13600, 300, 18000, 0, 0)
 	
-	Spring.CreateUnit(baseDefID, 10500, 300, 18000, 0, 0)
+	Spring.CreateUnit(baseDefID, 8500, 300, 18000, 0, 0)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID)

@@ -21,6 +21,9 @@ local Building1 = Building:New {
     customParams        = {
 		modelradius        = [[60]],
 		midposoffset       = [[0 50 0]],
+		
+		terrainblock_x     = 96,
+		terrainblock_z     = 96,
     },
 	
     footprintX			    = 6,
@@ -37,10 +40,13 @@ local Building2 = Building:New {
 	customParams        = {
 		modelradius        = [[60]],
 		midposoffset       = [[0 80 0]],
+		
+		terrainblock_x     = 96,
+		terrainblock_z     = 96,
     },
 	
-    footprintX			    = 4,
-	footprintZ			    = 4,
+    footprintX			    = 6,
+	footprintZ			    = 6,
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
 	collisionVolumeScales  = "96 160 96",

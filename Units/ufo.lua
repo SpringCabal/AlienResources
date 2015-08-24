@@ -134,6 +134,10 @@ unitDef = {
 			avoidFriendly           = false,
 			avoidNeutral            = false,
 			avoidGround             = false,
+			
+			collideEnemy            = false,
+			collideFriendly         = false,
+			
 			beamTime                = 0.01,
 			beamTtl                 = 2,
 			coreThickness           = 0.2,
