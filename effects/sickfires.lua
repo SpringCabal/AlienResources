@@ -150,6 +150,44 @@ return {
 		},
 	},
   },
-
+  ["independenceflash"] = {
+    usedefaultexplosions = false,
+	spikes = {
+		air                = true,
+		class              = [[CExploSpikeProjectile]],
+		count              = 5,
+		ground             = true,
+		water              = true,
+		properties = {
+			alwaysVisible      = false,
+			length 				= 40,
+			width				= 15,
+			alpha				= 1,
+			alphaDecay 			= 0.2,
+			lengthGrowth		= 5.6,
+			dir 				= [[r3 -1.5,r3 -1.5, r3-1.5]],
+			color 				= [[0, 0, 1]],
+			pos					= [[0, 0,0]],
+		},
+	},
+	core = {
+		air                = true,
+		class              = [[CExploSpikeProjectile]],
+		count              = 5,
+		ground             = true,
+		water              = true,
+		properties = {
+			alwaysVisible      = false,
+			length 				= 20,
+			width				= 10,
+			alpha				= 1,
+			alphaDecay 			= 0.2,
+			lengthGrowth		= 5.6,
+			dir 				= [[r3 -1.5,r3 -1.5, r3-1.5]],
+			color 				= [[1, 1, 1]],
+			pos					= [[0, 0,0]],
+		},
+	},
+  },
 }
 

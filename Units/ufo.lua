@@ -233,7 +233,7 @@ unitDef = {
 		},
 		pointDefense = {
 			name                    = "Point Defense Laser",
-	
+
 			avoidFeature            = false,
 			avoidFriendly           = false,
 			avoidNeutral            = false,
@@ -289,7 +289,7 @@ unitDef = {
 			damage                  = {
 				default = 200,
 			},
-			
+
 			explosionGenerator      = [[custom:pulseflash]],
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
@@ -394,6 +394,7 @@ unitDef = {
 				default = 10000,
 			},
 
+			explosionGenerator      = [[custom:independenceflash]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -405,7 +406,7 @@ unitDef = {
 			scrollSpeed             = 10,
 			soundTrigger            = true,
 			sweepfire               = false,
-			thickness               = 30,
+			thickness               = 200,
 			tileLength              = 10000,
 			tolerance               = 5000,
 			turret                  = true,
@@ -419,7 +420,7 @@ unitDef = {
 			damage                  = {
 				default = 10,
 			},
-			
+
 			exteriorShield          = true,
 			shieldAlpha             = 1.0,
 			shieldBadColor          = [[1 0.1 0.1]],

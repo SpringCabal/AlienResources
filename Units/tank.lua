@@ -11,7 +11,7 @@ local Tank = Unit:New {
 		  [[custom:explosion]],
 		},
 	},
-	
+
 	-- Movement
 	acceleration           = 0.5,
 	brakeRate              = 0.5,
@@ -19,27 +19,27 @@ local Tank = Unit:New {
 	turnRate               = 300,
 	footprintX             = 2,
 	footprintZ             = 2,
-	
+
     movementClass          = "Bot1x1",
 	turnInPlace            = true,
-	turnInPlaceSpeedLimit  = 1.6, 
+	turnInPlaceSpeedLimit  = 1.6,
 	turnInPlaceAngleLimit  = 90,
-	
+
 	upright                = true,
-	
+
 	customParams           = {
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
         biomass            = 0,
         research           = 0,
         metal              = 10, -- not to be confused with engine metal
-		
+
 		modelradius        = [[30]],
 		midposoffset       = [[0 25 0]],
-		
+
 		abduct_mult        = 0.2,
 	},
-	
+
 	-- Abiltiies
 	builder                = false,
 	canAttack              = true,
@@ -49,36 +49,36 @@ local Tank = Unit:New {
 	canStop                = true,
 	collide                = true,
 	leaveTracks            = false, -- Todo, add tracks
-	
+
 	movestate              = 2,
-	
+
 	collisionVolumeOffsets = "0 0 8",
 	collisionVolumeScales  = "50 50 70",
 	collisionVolumeType    = "cylZ",
-	
+
 	-- Attributes
 	category               = "land armed",
-	
+
 	mass                   = 100,
 	maxDamage              = 1500,
 	autoHeal               = 5,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
-	
+
 	-- Economy
 	buildCostEnergy        = 100,
 	buildCostMetal         = 100,
 	buildTime              = 100,
 	maxWaterDepth          = 0,
 	maxSlope               = 55,
-	
+
 	weapons                = {
 		{
 			def                = "missile",
 			onlyTargetCategory = "ufo",
 		},
 	},
-	
+
 	weaponDefs             = {
 
 		missile = {
@@ -94,7 +94,7 @@ local Tank = Unit:New {
 
 			collisionsize = 20,
 			targetable              = 1,
-			
+
 			damage                  = {
 				default = 100,
 			},
@@ -125,10 +125,10 @@ local Tank = Unit:New {
 			tracks                  = true,
 			turnRate                = 70000,
 			turret                  = true,
-			weaponAcceleration      = 200,
+			weaponAcceleration      = 400,
 			weaponTimer             = 5,
 			weaponType              = "MissileLauncher",
-			weaponVelocity          = 1000,
+			weaponVelocity          = 4000,
 		},
 	},
 }
