@@ -1,6 +1,6 @@
 include "constants.lua"
 
--- pieces
+
 local barrels = {
 	piece "muzzleLeft",
 	piece "muzzleRight"
@@ -12,6 +12,15 @@ local pieces = {
 	piece "turret",
 	piece "base",
 }
+
+local barrels = {piece "muzzleLeft",
+				piece "muzzleRight"}
+local turret = piece 'turret' 
+local tubeLeft = piece "tubeLeft"				
+local tubeRight = piece "tubeRight"
+
+local SIG_AIM = 2
+
 				
 local currentBarrel = #barrels
 function script.Create()
@@ -28,6 +37,15 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
+	Signal(SIG_AIM)
+	SetSignalMask(SIG_AIM)
+
+	Turn(turret, z_axis, heading, math.rad(100))
+ 	Turn(tubeLeft, x_axis, -pitch, math.rad(50))
+	Turn(tubeRight, x_axis, -pitch, math.rad(50))
+	WaitForTurn(turret, y_axis)
+ 	WaitForTurn(tubeLeft, x_axis)
+	WaitForTurn(tubeRight, x_axis)
 	return true
 end
 

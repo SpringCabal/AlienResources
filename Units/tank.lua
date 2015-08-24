@@ -135,12 +135,15 @@ local Tank = Unit:New {
 
 local Small_Tank = Tank:New {
 	name                = "small_tank",
-	maxDamage           = 750,
-	maxVelocity         = 60,
+	maxDamage           = 550,
+	maxVelocity         = 180,
+	acceleration        = 1,
+	brakeRate           = 1,
 	weaponDefs             = {
 		missile = {
+			reloadtime              = 3,
 			damage = {
-				default = 25,
+				default = 5,
 			},
 		}
 	},
