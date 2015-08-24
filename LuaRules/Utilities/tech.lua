@@ -146,8 +146,9 @@ local techTree = {
 		key = "e",
 	},
 	independenceDayGun = {
-		desc = "Independence day gun (+20% duration)",
+		desc = "Independence day gun (+100% duration)",
 		title = "God gun",
+		maxLevel = 1,
 		tier = 3,
 		x = 160,
 		y = 240,
@@ -167,6 +168,8 @@ Tech = {
 	abilities = {}, -- non targetable/selectable weapons
 	initialized = false,
 	_converted = false,
+	-- global configs
+	maxLevel = 3, -- maximum level per tech if not defined
 }
 
 function Initialize()
@@ -178,6 +181,9 @@ function Initialize()
 		tech.name = name
 		tech.level = 0
 		-- unlock armor
+		if not tech.maxLevel then
+			tech.maxLevel = Tech.maxLevel
+		end
 		if tech.name ~= "armor" then
 			tech.locked = true
 		else
@@ -226,7 +232,7 @@ function Tech.GetTechTooltip(name)
 	if tech.locked then
 		local resources = Tech.GetUnlockResources(name)
 		tooltip = tooltip .. "\n\255\2\180\250Unlock: " .. resources.research .. "\b"
-	elseif tech.level ~= 5 then
+	elseif tech.level ~= tech.maxLevel then
 		local resources = Tech.GetUpgradeResources(name)
 		tooltip = tooltip .. "\n\255\80\215\80Upgrade: " .. resources.biomass .. "\b"
 	end
@@ -319,7 +325,7 @@ end
 
 function Tech.CanUpgrade(name)
 	local tech = techTree[name] 
-	if tech.locked or not tech.enabled or tech.level >= 5 then
+	if tech.locked or not tech.enabled or tech.level >= tech.maxLevel then
 		return false
 	end
 	local resources = Tech.GetUpgradeResources(name)

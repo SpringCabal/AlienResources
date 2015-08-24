@@ -144,7 +144,7 @@ function widget:Initialize()
 	initWindow()
 	makeBar('Health')
 	updateHealthBar()
-        
+
     local vsx,vsy = Spring.GetViewGeometry()
     resizeUI(vsx,vsy)
 end

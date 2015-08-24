@@ -198,12 +198,12 @@ function SpawnUpgradeUI()
 			keepAspect = false,
         }
 		local lvlCaption
-		if tech.level == 5 then
-			lvlCaption = "\255\0\255\0" .. tech.level .. "/5\b"
+		if tech.level == tech.maxLevel then
+			lvlCaption = "\255\0\255\0" .. tech.level .. "/" .. tech.maxLevel .. "\b"
 		elseif tech.level > 0 then
-			lvlCaption = "\255\0\255\0" .. tech.level .. "\b/5"
+			lvlCaption = "\255\0\255\0" .. tech.level .. "\b/" .. tech.maxLevel
 		else
-			lvlCaption = tech.level .. "/5"
+			lvlCaption = tech.level .. "/" .. tech.maxLevel
 		end
         lblTech = Chili.Label:New {
             right = 3,
@@ -236,7 +236,7 @@ function SpawnUpgradeUI()
 		elseif tech.locked then
 			btnTech.focusColor = btnTech.lockedColor
 		else
-			if tech.level == 5 then
+			if tech.level == tech.maxLevel then
 				btnTech.backgroundColor = btnTech.completedColor
 				btnTech.focusColor = btnTech.completedColor
 			end
@@ -302,13 +302,13 @@ function UpgradeTech(name)
 	end
 	local tech = Tech.GetTech(name)
 	Spring.PlaySoundFile("sounds/click.wav", 1, "ui")
-	if tech.level < 5 then
-		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "\b/5")
+	if tech.level < tech.maxLevel then
+		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "\b/" .. tech.maxLevel)
 	else
 		local btnTech = techMapping[name].btnTech
 		btnTech.backgroundColor = btnTech.completedColor
 		btnTech.focusColor = btnTech.completedColor
-		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "/5\b")
+		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "/" .. tech.maxLevel .. "\b")
 	end
 	local tooltip, value = Tech.GetTechTooltip(name)
 	techMapping[name].btnTech.tooltip = tooltip
