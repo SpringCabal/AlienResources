@@ -1,0 +1,71 @@
+return {
+  ["sickfires"] = {
+    usedefaultexplosions = false,
+    cinder = {
+      air                = true,
+      class              = [[heatcloud]],
+      count              = 1,
+      ground             = true,
+      water              = true,
+      properties = {
+        alwaysvisible      = false,
+        heat               = [[d1 5]],
+        heatfalloff        = 1,
+        maxheat            = 15,
+        pos                = 0,
+        size               = [[5]],
+        sizegrowth         = -0.05,
+        speed              = [[0, 0, 0]],
+      },
+    },
+    airflash = {
+      air                = true,
+      class              = [[heatcloud]],
+      count              = 1,
+      ground             = true,
+      water              = true,
+      properties = {
+        alwaysvisible      = false,
+        heat               = [[d1 5]],
+        heatfalloff        = 2,
+        maxheat            = 15,
+        pos                = 0,
+        size               = [[3]],
+        sizegrowth         = 1,
+        speed              = [[0, 0, 0]],
+      },
+    },
+    groundflash = {
+      circlealpha        = 1,
+      circlegrowth       = 0.125,
+      flashalpha         = 0.5,
+      flashsize          = 8,
+      ttl                = 64,
+      color = {
+        [1]  = 1,
+        [2]  = 0.25,
+        [3]  = 0,
+      },
+    },
+	flame = {
+		air                = false,
+		class              = [[CExploSpikeProjectile]],
+		count              = 1,
+		ground             = true,
+		water              = false,
+		properties = {
+			alwaysVisible      = false,
+			length 				= 5,
+			width					= 10,
+			alpha					= 0.67,
+			alphaDecay 			= 0.0135,
+			lengthGrowth			= 2.8,
+			dir 					= [[0,2.5 i0.8, 0]],
+			color 				= [[1, 0.15, 0]],
+			pos					= [[0, 0,0]],
+		},
+	},
+  },
+
+}
+
