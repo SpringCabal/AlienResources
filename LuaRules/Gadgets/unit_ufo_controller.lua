@@ -53,7 +53,9 @@ local function MoveUFO(unitID, x, z, range, radius)
 		return
 	end
 
-	range = range or 1000
+	
+	local speed = Spring.GetUnitRulesParam(ufoID, "selfMoveSpeedChange") or 1
+	range = (range or 1000)*speed
 
 	local ux, uy, uz = Spring.GetUnitPosition(unitID)
 
@@ -151,7 +153,8 @@ function DisableAbility(abilityName)
 		Spring.SetUnitCloak(ufoID, false)
 		Spring.SetGameRulesParam("ufo_scare_radius", 500)
 	elseif abilityName == "haste" then
-		-- TODO
+		Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", 1)
+		GG.UpdateUnitAttributes(ufoID)
 	elseif abilityName == "teleport" then
 		-- TODO
 	elseif abilityName == "independenceDayGun" then
@@ -265,9 +268,12 @@ function HandleLuaMessage(msg)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
 			-- TODO
-			local baseHaste = 1.2 -- 120% speed increase with no upgrades, customize
+			local baseHaste = 2 -- 200% speed increase with no upgrades, customize
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
-			local haste = baseHaste * speedModifiert
+			local haste = baseHaste * speedModifier
+			
+			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
+			GG.UpdateUnitAttributes(ufoID)
 		elseif abilityName == "teleport" then
 			-- TODO
 			local baseDistance = 100 -- elmo or w/e, customize

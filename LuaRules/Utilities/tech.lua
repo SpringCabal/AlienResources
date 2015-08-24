@@ -110,7 +110,7 @@ local techTree = {
 		iconPath = "LuaUI/Images/haste.png",
 		iconDisabledPath = "LuaUI/Images/haste_off.png",
 		ability = {
-			duration = 10,
+			duration = 5,
 			cooldown = 20,
 		},
 		key = "q",
