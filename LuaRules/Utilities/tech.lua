@@ -4,6 +4,7 @@
 local techTree = {
 	armor = {
 		desc = "Armor upgrade (+20% armor)",
+		maxLevel = 10,
 		tier = 1,
 		x = 0,
 		y = 0,
@@ -169,7 +170,7 @@ Tech = {
 	initialized = false,
 	_converted = false,
 	-- global configs
-	maxLevel = 3, -- maximum level per tech if not defined
+	maxLevel = 5, -- maximum level per tech if not defined
 }
 
 function Initialize()
