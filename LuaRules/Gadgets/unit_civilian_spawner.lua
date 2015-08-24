@@ -35,12 +35,12 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 10,
+				wanted = 5,
 				stockRate = 0.3/30,
 			},
 			[scientistDefID] = {
 				unitDefID = scientistDefID,
-				wanted = 4,
+				wanted = 2,
 				stockRate = 0.3/30,
 			},
 		}
@@ -50,12 +50,12 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 10,
+				wanted = 5,
 				stockRate = 0.3/30,
 			},
 			[scientistDefID] = {
 				unitDefID = scientistDefID,
-				wanted = 4,
+				wanted = 2,
 				stockRate = 0.3/30,
 			},
 		}
@@ -65,12 +65,12 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 10,
+				wanted = 2,
 				stockRate = 0.3/30,
 			},
 			[scientistDefID] = {
 				unitDefID = scientistDefID,
-				wanted = 4,
+				wanted = 0,
 				stockRate = 0.3/30,
 			},
 		}
@@ -80,7 +80,7 @@ local spawnerDefs = {
 		spawns = {
 			[tankDefID] = {
 				unitDefID = tankDefID,
-				wanted = 10,
+				wanted = 2,
 				stockRate = 0.3/30,
 			},
 		}
