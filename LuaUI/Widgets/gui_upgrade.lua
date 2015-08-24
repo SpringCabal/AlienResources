@@ -271,7 +271,7 @@ function UnlockTech(name)
 	if not unlocked then
 		return false
 	end
-	Spring.SendLuaRulesMsg('unlock|' .. name .. '|' .. 1000)
+	Spring.SendLuaRulesMsg('unlock|' .. name)
 	
 	Spring.PlaySoundFile("sounds/select.wav", 1, "ui")
 	techMapping[name].imgTechLocked:Hide()
@@ -303,5 +303,5 @@ function UpgradeTech(name)
 	local tooltip, value = Tech.GetTechTooltip(name)
 	techMapping[name].btnTech.tooltip = tooltip
 
-	Spring.SendLuaRulesMsg('upgrade|' .. name .. '|' .. tech.level .. '|' .. value)
+	Spring.SendLuaRulesMsg('upgrade|' .. name)
 end

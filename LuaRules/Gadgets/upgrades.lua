@@ -79,16 +79,13 @@ function HandleLuaMessage(msg)
 	local msg_table = explode('|', msg)
 	if msg_table[1] == 'unlock' then
 		local name = msg_table[2]
-		local value = msg_table[3]
-		
 		if not GG.Tech.UnlockTech(name) then
 			Spring.Log("tech", LOG.ERROR, "Something went wrong unlocking tech: " .. name)
 		end
 	elseif msg_table[1] == 'upgrade' then
 		local name = msg_table[2]
-		local level = msg_table[3]
-		local value = msg_table[4]
 		if name == "armor" then
+			local _, value = GG.Tech.GetTechTooltip(name)
 			local newMaxHealth = UnitDefs[ufoDefID].health * (100 + value) / 100
 			local hp, maxHP = Spring.GetUnitHealth(ufoID)
 			local ratio = hp / maxHP
