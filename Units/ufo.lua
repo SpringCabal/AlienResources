@@ -347,7 +347,7 @@ unitDef = {
 			turret                  = true,
 			weaponType              = "Cannon",
 			weaponVelocity          = 4500,
-			--soundstart  			= "pulse.wav",
+			soundstart  			= "blackHole.wav",
 		},
 		empBomb = {
 			name                    = "EMP Bomb",
