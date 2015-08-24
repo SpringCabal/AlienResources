@@ -170,7 +170,7 @@ function SpawnUpgradeUI()
 	}
 
     local children = { btnClose, lblTitle, imgShip }
-    x, y = 10, 70
+    x, y = 10, 50
     for name, tech in pairs(Tech.GetTechTree()) do
         local btnTech, imgTech, lblTech, imgTechUnlocked
         local enabled = false
@@ -250,7 +250,7 @@ function SpawnUpgradeUI()
         x = 200,
         width = 400,
         bottom = 100,
-        height = 600,
+        height = 500,
         draggable = false,
         resizable = false,
         children = children,

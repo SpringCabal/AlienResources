@@ -77,7 +77,7 @@ function MakeImage(name, text, i, enabled)
 	local imgAbility = Chili.Image:New {
 		file = image,
 		x = 0,
-		y = 400 + i * 50,
+		bottom = 600 - i * 50,
 		width = 200,
 		parent = screen0,
 		children = {

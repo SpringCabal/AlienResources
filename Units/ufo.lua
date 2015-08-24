@@ -189,6 +189,7 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
+-- 			soundstart  			= "indendiary.wav",
 		},
 		gravityBeam = {
 			name                    = "Gravity Beam",
@@ -337,7 +338,7 @@ unitDef = {
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
-			reloadtime              = 5,
+			reloadtime              = 1,
 			rgbColor                = "0 0 0",
 			soundTrigger            = true,
 			tolerance               = 5000,
