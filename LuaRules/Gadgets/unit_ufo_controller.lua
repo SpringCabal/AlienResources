@@ -190,6 +190,26 @@ local function UpdateUfoAim(x, y, z)
 	end
 end
 
+local function Teleport(distance)
+	local x, y, z = Spring.GetUnitPosition(ufoID)
+	local vx, vy, vz = Spring.GetUnitVelocity(ufoID)
+	
+	if not (x and vx) then
+		return
+	end
+	
+	local height = Spring.GetGroundHeight(x, z)
+	y = y - height
+	
+	vx, vz = Vector.Norm(distance, vx, vz)
+	x, z = vx + x, vz + z
+	
+	height = Spring.GetGroundHeight(x, z)
+	y = y + height
+	
+	Spring.SetUnitPosition(ufoID, x, y, z)
+end
+
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 -- Handling messages
@@ -269,18 +289,21 @@ function HandleLuaMessage(msg)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
 			-- TODO
-			local baseHaste = 2 -- 200% speed increase with no upgrades, customize
+			local baseHaste = 1.6 
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
 			local haste = baseHaste * speedModifier
+			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 100))
 			
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
 			Spring.SetUnitRulesParam(ufoID, "selfMaxAccelerationChange", haste)
 			GG.UpdateUnitAttributes(ufoID)
 		elseif abilityName == "teleport" then
 			-- TODO
-			local baseDistance = 100 -- elmo or w/e, customize
+			local baseDistance = 800 -- elmo or w/e, customize
 			local distanceModifier = multiplier/100 + 1 -- Tech modifier
 			local distance = baseDistance * distanceModifier
+			Spring.Echo("distance", distance)
+			Teleport(distance)
 		elseif abilityName == "independenceDayGun" then
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then

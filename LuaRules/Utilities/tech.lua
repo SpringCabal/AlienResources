@@ -102,7 +102,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 	},
 	haste = {
-		desc = "Haste (+5% speed)",
+		desc = "Haste (+30% speed)",
 		title = "Haste",
 		tier = 1,
 		x = 0,
