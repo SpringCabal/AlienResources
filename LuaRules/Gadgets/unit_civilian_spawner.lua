@@ -25,6 +25,8 @@ local tankDefID      = UnitDefNames["tank"].id
 local smallTankDefID = UnitDefNames["small_tank"].id
 local civilianDefID  = UnitDefNames["civilian"].id
 local scientistDefID = UnitDefNames["scientist"].id
+local civilian1DefID  = UnitDefNames["civilian1"].id
+local scientist2DefID = UnitDefNames["scientist2"].id
 
 local function LoadCustomParam(ud, key)
 	return (ud and ud.customParams and ud.customParams[key] and tonumber(ud.customParams[key])) or nil
@@ -36,12 +38,22 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 5,
+				wanted = 3,
 				stockRate = 0.3/30,
 			},
 			[scientistDefID] = {
 				unitDefID = scientistDefID,
+				wanted = 1,
+				stockRate = 0.3/30,
+			},
+			[civilian1DefID] = {
+				unitDefID = civilian1DefID,
 				wanted = 2,
+				stockRate = 0.3/30,
+			},
+			[scientist2DefID] = {
+				unitDefID = scientist2DefID,
+				wanted = 1,
 				stockRate = 0.3/30,
 			},
 		}
@@ -51,12 +63,22 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 5,
+				wanted = 2,
 				stockRate = 0.3/30,
 			},
 			[scientistDefID] = {
 				unitDefID = scientistDefID,
-				wanted = 2,
+				wanted = 1,
+				stockRate = 0.3/30,
+			},
+			[civilian1DefID] = {
+				unitDefID = civilian1DefID,
+				wanted = 3,
+				stockRate = 0.3/30,
+			},
+			[scientist2DefID] = {
+				unitDefID = scientist2DefID,
+				wanted = 1,
 				stockRate = 0.3/30,
 			},
 		}
@@ -66,12 +88,12 @@ local spawnerDefs = {
 		spawns = {
 			[civilianDefID] = {
 				unitDefID = civilianDefID,
-				wanted = 2,
+				wanted = 1,
 				stockRate = 0.3/30,
 			},
-			[scientistDefID] = {
-				unitDefID = scientistDefID,
-				wanted = 0,
+			[civilian1DefID] = {
+				unitDefID = civilian1DefID,
+				wanted = 1,
 				stockRate = 0.3/30,
 			},
 		}

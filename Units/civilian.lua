@@ -1,10 +1,8 @@
-local unitName  =  "civilian"
-
-unitDef = {
+local Civilian = Unit:New {
 	--Internal settings
 	objectName             = "citizen.dae",
     name                   = "Civilian",
-    unitName               = unitName,
+    unitName               = "civilian",
     script                 = "human.lua",
 	
 	-- Movement
@@ -64,4 +62,12 @@ unitDef = {
 	maxSlope               = 55,
 }
 
-return lowerkeys({[unitName] = unitDef})
+local Civilian1 = Civilian:New {
+	name				  = "Civilian1",
+	objectName             = "citizen1.dae",
+}
+
+return lowerkeys({
+    Civilian       = Civilian,
+	Civilian1 	    = Civilian1,
+})
