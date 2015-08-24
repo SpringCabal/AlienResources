@@ -102,8 +102,8 @@ local techTree = {
 		x = 80,
 		y = 240 - 60,
 		depends = { "shield" },
-		iconPath = "LuaUI/Images/heart.png",
-		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		iconPath = "LuaUI/Images/antiMissilePointDefense.png",
+		iconDisabledPath = "LuaUI/Images/antiMissilePointDefense_off.png",
 	},
 	carrierDrones = {
 		desc = "Carrier drones (+1 drone)",
@@ -112,8 +112,8 @@ local techTree = {
 		x = 80,
 		y = 300 - 60,
 		depends = { "shield" },
-		iconPath = "LuaUI/Images/heart.png",
-		iconDisabledPath = "LuaUI/Images/heart_off.png",
+		iconPath = "LuaUI/Images/carrierDrones.png",
+		iconDisabledPath = "LuaUI/Images/carrierDrones_off.png",
 	},
 	haste = {
 		desc = "Haste (+30% speed)",
