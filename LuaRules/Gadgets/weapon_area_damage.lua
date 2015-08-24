@@ -54,6 +54,15 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 			pos = {x = px, y = py, z = pz},
 			owner=ownerID,
 		}
+		
+		local timeout = weaponInfo[weaponID].duration * (durationMult[weaponID] or 1)
+		
+		if weaponID == fireDefID then
+			Spring.SpawnCEG("you_ceg_name", px, py, pz, 0, 1, 0, timeout, timeout)
+		elseif weaponID == holeDefID then
+			Spring.SpawnCEG("you_ceg_name", px, py, pz, 0, 1, 0, timeout, timeout)
+		end
+		
 		if emptyRow.count > 0 then
 			local emptyPos = emptyRow[emptyRow.count]
 			emptyRow.count = emptyRow.count-1
