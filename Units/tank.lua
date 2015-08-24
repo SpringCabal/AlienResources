@@ -86,6 +86,9 @@ unitDef = {
 			craterMult              = 0,
 			cylinderTargeting       = 3,
 
+			collisionsize = 20,
+			targetable              = 1,
+			
 			damage                  = {
 				default = 100,
 			},

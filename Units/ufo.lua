@@ -113,6 +113,18 @@ unitDef = {
 			onlyTargetCategory = "land",
 		},
 		{
+			def                = "pointDefense",
+		},
+		{
+			def                = "pointDefense",
+		},
+		{
+			def                = "pointDefense",
+		},
+		{
+			def                = "pointDefense",
+		},
+		{
 			def                = "blackHoleGun",
 			onlyTargetCategory = "land",
 		},
@@ -209,6 +221,49 @@ unitDef = {
 			range                   = 10000,
 			reloadtime              = 0.02,
 			rgbColor                = "0.2 0.2 0.2",
+			scrollSpeed             = 10,
+			soundTrigger            = true,
+			sweepfire               = false,
+			thickness               = 7,
+			tileLength              = 100,
+			tolerance               = 5000,
+			turret                  = true,
+			weaponType              = "BeamLaser",
+			weaponVelocity          = 500,
+		},
+		pointDefense = {
+			name                    = "Point Defense Laser",
+	
+			avoidFeature            = false,
+			avoidFriendly           = false,
+			avoidNeutral            = false,
+			avoidGround             = false,
+			beamTime                = 0.01,
+			beamTtl                 = 10,
+			burnBlow                = true,
+			coreThickness           = 0,
+			craterBoost             = 0,
+			craterMult              = 0,
+
+			collisionsize = 5,
+			interceptor = 1,
+			coverage = 400,
+			interceptsolo = true,
+			accuracy = 0,
+			predictboost = 0,
+
+			damage                  = {
+				default = 2,
+			},
+
+			interceptedByShieldType = 1,
+			largeBeamLaser          = true,
+			laserFlareSize          = 0,
+			minIntensity            = 1,
+			noSelfDamage            = true,
+			range                   = 10000,
+			reloadtime              = 1,
+			rgbColor                = "0.2 1.0 0.2",
 			scrollSpeed             = 10,
 			soundTrigger            = true,
 			sweepfire               = false,
