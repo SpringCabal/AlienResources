@@ -84,7 +84,7 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
 			local _,_,_,ux,uy,uz = Spring.GetUnitPosition(unitID, true)
 			local unitHeight = Spring.GetUnitHeight(unitID)
 
-			if ay - uy < grabDistance + unitHeight then
+			if ay - uy < grabDistance + unitHeight*2 then
                 local udef = UnitDefs[unitDefID]
                 local biomass = Spring.GetGameRulesParam("biomass") or 0
                 local research = Spring.GetGameRulesParam("research") or 0
