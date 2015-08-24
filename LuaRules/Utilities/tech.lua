@@ -117,7 +117,7 @@ local techTree = {
 		key = "q",
 	},
 	cloak = {
-		desc = "Cloak (+15% duration)",
+		desc = "Cloak (-15% cooldown)",
 		title = "Cloak",
 		tier = 2,
 		x = 80,
@@ -126,7 +126,7 @@ local techTree = {
 		iconPath = "LuaUI/Images/cloak.png",
 		iconDisabledPath = "LuaUI/Images/cloak_off.png",
 		ability = {
-			duration = 10,
+			duration = 5,
 			cooldown = 60,
 		},
 		key = "c",

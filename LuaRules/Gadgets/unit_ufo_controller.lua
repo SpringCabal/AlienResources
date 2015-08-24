@@ -284,7 +284,8 @@ function HandleLuaMessage(msg)
 		Spring.SetGameRulesParam(abilityName .. "Duration", duration)
 
 		if abilityName == "cloak" then
-			Spring.SetGameRulesParam(abilityName .. "CD", duration * (1 + multiplier / 100))
+			Spring.Echo(multiplier)
+			Spring.SetGameRulesParam(abilityName .. "CD", cooldown * (1 - multiplier / 100))
 			Spring.SetUnitCloak(ufoID, 4)
 			Spring.SetGameRulesParam("ufo_scare_radius", 0)
 		elseif abilityName == "haste" then
