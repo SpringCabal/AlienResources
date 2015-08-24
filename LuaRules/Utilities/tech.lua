@@ -116,7 +116,7 @@ local techTree = {
 		iconDisabledPath = "LuaUI/Images/carrierDrones_off.png",
 	},
 	haste = {
-		desc = "Haste (+15% speed)",
+		desc = "Haste (+10% speed and duration)",
 		title = "Haste",
 		tier = 1,
 		x = 0,

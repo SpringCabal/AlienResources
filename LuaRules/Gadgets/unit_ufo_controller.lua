@@ -301,7 +301,7 @@ function HandleLuaMessage(msg)
 			local baseHaste = 1.6
 			local speedModifier = multiplier/100 + 1 -- Tech modifier
 			local haste = baseHaste * speedModifier
-			Spring.SetGameRulesParam(abilityName .. "Duration", duration * (1 + multiplier / 300))
+			Spring.SetGameRulesParam(abilityName .. "Duration", duration * speedModifier)
 			Spring.PlaySoundFile("sounds/haste.wav", 40, x, y, z, 'sfx')
 
 			Spring.SetUnitRulesParam(ufoID, "selfMoveSpeedChange", haste)
