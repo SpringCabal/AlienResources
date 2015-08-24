@@ -52,7 +52,7 @@ unitDef = {
 	collisionVolumeType    = "cylZ",
 	
 	-- Attributes
-	category               = "land",
+	category               = "land armed",
 	
 	mass                   = 100,
 	maxDamage              = 1000,

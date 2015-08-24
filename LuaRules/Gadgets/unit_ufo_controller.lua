@@ -202,7 +202,7 @@ local function Teleport(distance)
 	y = y - height
 	
 	vx, vz = Vector.Norm(distance, vx, vz)
-	x, z = vx + x, vz + z
+	x, z = Spring.Utilities.ClampPosition(vx + x, vz + z)
 	
 	height = Spring.GetGroundHeight(x, z)
 	y = y + height

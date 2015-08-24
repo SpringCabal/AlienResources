@@ -28,6 +28,15 @@ local ufoID
 local endcubeDefID = UnitDefNames["endcube"].id
 local helipadDefID = UnitDefNames["helipad"].id
 
+local noAbduct = {
+	[UnitDefNames["drone"].id] = true,
+	[UnitDefNames["helipad"].id] = true,
+	[UnitDefNames["building1"].id] = true,
+	[UnitDefNames["building2"].id] = true,
+	[UnitDefNames["building3"].id] = true,
+	[UnitDefNames["building4"].id] = true,
+}
+
 local Vector = Spring.Utilities.Vector
 
 -------------------------------------------------------------------
@@ -71,7 +80,7 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
 	for i = 1, #units do
 		local unitID = units[i]
         local unitDefID = Spring.GetUnitDefID(unitID)
-		if unitID ~= ufoID and unitDefID ~= helipadDefID then
+		if unitID ~= ufoID and not noAbduct[unitDefID] then
 			local _,_,_,ux,uy,uz = Spring.GetUnitPosition(unitID, true)
 			local unitHeight = Spring.GetUnitHeight(unitID)
 

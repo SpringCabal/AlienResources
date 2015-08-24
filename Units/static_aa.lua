@@ -20,6 +20,8 @@ local Static_AA = Unit:New {
     sightDistance		    = 0,
     yardMap                 = "oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo",
 
+	category               = "land armed",
+	
     name                = "Static AA",
     script              = "static_aa.lua",
     onoffable               = true,
