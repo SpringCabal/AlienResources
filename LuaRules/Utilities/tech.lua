@@ -92,8 +92,18 @@ local techTree = {
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
 	},
+-- 	carrierDrones = {
+-- 		desc = "Carrier drones (+1 drone)",
+-- 		title = "Drones",
+-- 		tier = 2,
+-- 		x = 80,
+-- 		y = 300,
+-- 		depends = { "shield" },
+-- 		iconPath = "LuaUI/Images/heart.png",
+-- 		iconDisabledPath = "LuaUI/Images/heart_off.png",
+-- 	},
 	carrierDrones = {
-		desc = "Carrier drones (+1 drone)",
+		desc = "Advanced gravitons (+10% beamup cone and size)",
 		title = "Drones",
 		tier = 2,
 		x = 80,
@@ -101,7 +111,7 @@ local techTree = {
 		depends = { "shield" },
 		iconPath = "LuaUI/Images/heart.png",
 		iconDisabledPath = "LuaUI/Images/heart_off.png",
-	},
+	},	
 	haste = {
 		desc = "Haste (+30% speed)",
 		title = "Haste",

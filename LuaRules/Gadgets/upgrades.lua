@@ -84,6 +84,11 @@ function HandleLuaMessage(msg)
 		end
 	elseif msg_table[1] == 'upgrade' then
 		local name = msg_table[2]
+		
+		if not GG.Tech.UpgradeTech(name) then
+			Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. name)
+		end
+		
 		if name == "armor" then
 			local _, value = GG.Tech.GetTechTooltip(name)
 			local newMaxHealth = UnitDefs[ufoDefID].health * (100 + value) / 100
@@ -91,9 +96,6 @@ function HandleLuaMessage(msg)
 			local ratio = hp / maxHP
 			Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
 			Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
-		end
-		if not GG.Tech.UpgradeTech(name) then
-			Spring.Log("tech", LOG.ERROR, "Something went wrong upgrading tech: " .. name)
 		end
 	end
 end
