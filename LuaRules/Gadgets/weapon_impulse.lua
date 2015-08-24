@@ -76,6 +76,9 @@ for i=1,#UnitDefs do
 	moveTypeByID[i] = getMovetype(ud)
 end
 
+local gravityDefID = WeaponDefNames["ufo_gravitybeam"].id
+local impulseMults = {}
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
@@ -296,7 +299,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		local_,_,_,ax, ay, az = spGetUnitPosition(attackerID, true)
 		
 		local x,y,z = (ux-ax), (uy-ay), (uz-az)
-		local magnitude = defData.impulse
+		local magnitude = defData.impulse*(impulseMults[weaponDefID] or 1)
 		
 		if defData.impulseMaxDepth then
 			local depth = spGetGroundHeight(ax,az)
@@ -377,6 +380,13 @@ end
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Game Frame
+local function SetGravityBeamMult(pull)
+	impulseMults[gravityDefID] = pull
+end
+
+function gadget:Initialize()
+	GG.SetGravityBeamMult = SetGravityBeamMult
+end
 
 function gadget:GameFrame(f)
 	--CheckSpaceGunships()
