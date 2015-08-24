@@ -21,6 +21,13 @@ local frameNum
 local explosionList = {}
 local DAMAGE_PERIOD, weaponInfo = include("LuaRules/Configs/area_damage_defs.lua")
 
+local fireDefID = WeaponDefNames["ufo_incendiarybeamlaser"].id
+local holeDefID = WeaponDefNames["ufo_blackholegun"].id
+
+local damageMult = {}
+local radiusMult = {}
+local durationMult = {}
+
 --misc
 local rowCount = 0 --remember the lenght of explosionList table
 local emptyRow = {count=0} --remember empty position in explosionList table.
@@ -37,12 +44,12 @@ end
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
 	if (weaponInfo[weaponID]) then
 		local w = {
-			radius = weaponInfo[weaponID].radius,
-			damage = weaponInfo[weaponID].damage,
+			radius = weaponInfo[weaponID].radius * (radiusMult[weaponID] or 1),
+			damage = weaponInfo[weaponID].damage * (damageMult[weaponID] or 1),
 			impulse = weaponInfo[weaponID].impulse,
-			expiry = frameNum + weaponInfo[weaponID].duration,
+			expiry = frameNum + weaponInfo[weaponID].duration * (durationMult[weaponID] or 1),
 			rangeFall = weaponInfo[weaponID].rangeFall,
-			timeLoss = weaponInfo[weaponID].timeLoss,
+			timeLoss = weaponInfo[weaponID].timeLoss / (durationMult[weaponID] or 1),
 			id = weaponID,
 			pos = {x = px, y = py, z = pz},
 			owner=ownerID,
@@ -97,7 +104,20 @@ function gadget:GameFrame(f)
 	end
 end
 
+local function SetFireMults(damage, duration)
+	damageMult[fireDefID] = damage
+	durationMult[fireDefID] = duration
+end
+
+local function SetBlackHoleMults(radius, duration)
+	radiusMult[holeDefID] = radius
+	durationMult[holeDefID] = duration
+end
+
 function gadget:Initialize()
+	GG.SetFireMults = SetFireMults
+	GG.SetBlackHoleMults = SetBlackHoleMults
+	
 	for w,_ in pairs(weaponInfo) do
 		Script.SetWatchWeapon(w, true)
 	end
