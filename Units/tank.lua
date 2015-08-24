@@ -28,6 +28,9 @@ unitDef = {
         biomass            = 0,
         research           = 0,
         metal              = 10, -- not to be confused with engine metal
+		
+		modelradius        = [[30]],
+		midposoffset       = [[0 25 0]],
 	},
 	
 	-- Abiltiies
@@ -41,6 +44,10 @@ unitDef = {
 	leaveTracks            = false, -- Todo, add tracks
 	
 	movestate              = 2,
+	
+	collisionVolumeOffsets = "0 0 8",
+	collisionVolumeScales  = "50 50 70",
+	collisionVolumeType    = "cylZ",
 	
 	-- Attributes
 	category               = "land",

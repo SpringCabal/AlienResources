@@ -24,7 +24,7 @@ unitDef = {
 	
 	customParams           = {
 		modelradius        = [[12]],
-		midposoffset       = [[0 0 0]],
+		midposoffset       = [[0 28 0]],
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
         biomass            = 10,
@@ -44,7 +44,7 @@ unitDef = {
 	
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
-	collisionVolumeScales  = "16 32 16",
+	collisionVolumeScales  = "18 45 18",
 	collisionVolumeType    = "cylY",
 	
 	-- Attributes
