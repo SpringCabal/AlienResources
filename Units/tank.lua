@@ -5,6 +5,12 @@ local Tank = Unit:New {
     name                   = "tank",
     unitName               = "tank",
     script                 = "tank" .. ".lua",
+
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:explosion]],
+		},
+	},
 	
 	-- Movement
 	acceleration           = 0.5,

@@ -288,7 +288,8 @@ unitDef = {
 			damage                  = {
 				default = 20,
 			},
-
+			
+			explosionGenerator      = [[custom:pulseflash]],
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,

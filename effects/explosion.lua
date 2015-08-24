@@ -1,26 +1,97 @@
 return {
-    ["explosion"] = {
-        -- EXPLOSION LEVEL
-        useDefaultExplosions = true,
-        
---         spawner1_name = {
---             -- SPAWNER LEVEL
---             class         = "CExpGenSpawner",
---             count              = 1,
---             air                = true,
---             ground             = true,
---             water              = true,
---             properties = {
---                 -- CLASS LEVEL
---             },
---         },
---         spawner2_name = {
---             -- SPAWNER LEVEL
---             -- each spawner follows the above format
---         },
---         groundflash = {
---             -- groundflash is a special spawner name; it always generates a CStandardGroundFlash
---             -- CStandardGroundFlash properties
---         },
+  ["explosion"] = {
+    groundflash = {
+      air                = true,
+      circlealpha        = 0.6,
+      circlegrowth       = 3,
+      flashalpha         = 0.9,
+      flashsize          = 40,
+      ground             = true,
+      ttl                = 15,
+      water              = true,
+      color = {
+        [1]  = 1,
+        [2]  = 0.30000001192093,
+        [3]  = 0.20000000298023,
+      },
     },
+    pop1 = {
+      air                = true,
+      class              = [[heatcloud]],
+      count              = 4,
+      ground             = true,
+      water              = true,
+      properties = {
+        heat               = 10,
+        heatfalloff        = 0.4,
+        maxheat            = 15,
+        pos                = [[-20 r40, -20 r40, -20 r40]],
+        size               = 30,
+        sizegrowth         = 0.9,
+        speed              = [[0, 1 0, 0]],
+        texture            = [[flame]],
+      },
+    },
+    pop2 = {
+      air                = true,
+      class              = [[heatcloud]],
+      count              = 5,
+      ground             = true,
+      water              = true,
+      color = {
+        [1]  = 1,
+        [2]  = 0.30000001192093,
+        [3]  = 0,
+      },
+      properties = {
+        heat               = 10,
+        heatfalloff        = 0.5,
+        maxheat            = 15,
+        pos                = [[-25 r50, 5, -25 r50]],
+        size               = [[20 r-10]],
+        sizegrowth         = 2,
+        sizegrowthmod      = -0.1,
+        speed              = [[-1 r2, 1 0, -1 r2]],
+        texture            = [[smoke_orange]],
+      },
+    },
+    pop3 = {
+      air                = true,
+      class              = [[heatcloud]],
+      count              = 5,
+      ground             = true,
+      water              = true,
+      color = {
+        [1]  = 1,
+        [2]  = 0.30000001192093,
+        [3]  = 0,
+      },
+      properties = {
+        heat               = 15,
+        heatfalloff        = 0.5,
+        maxheat            = 15,
+        pos                = [[0 0 0]],
+        size               = [[10]],
+        sizegrowth         = 5,
+        sizegrowthmod      = 1.2,
+        speed              = [[-1 r2, 1 0, -1 r2]],
+        texture            = [[flare]],
+      },
+    },
+    smoke = {
+      air                = true,
+      count              = 3,
+      ground             = true,
+      water              = true,
+      properties = {
+        agespeed           = 0.04,
+        color              = 0.1,
+        pos                = [[-6 r12, -6 r12, -6 r12]],
+        size               = 16,
+        sizeexpansion      = 1.6,
+        speed              = [[1 r-2, -1 r2.3, 1r-2]],
+        startsize          = 2,
+      },
+    },
+  },
 }

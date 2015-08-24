@@ -37,6 +37,7 @@ local	resources = {
 			muzzleside			= 'muzzleside.tga',
 			muzzlefront			= 'muzzlefront.tga',
 			largebeam			= 'largelaserfalloff.tga',
+			smoke_orange		= 'GPL/smoke_orange.png',
 		},
 	}
 }
