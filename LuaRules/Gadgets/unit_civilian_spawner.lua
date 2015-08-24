@@ -94,6 +94,8 @@ local Vector = Spring.Utilities.Vector
 
 local SPAWN_TEAM  = 1 -- teamID of spawned units
 
+local RUN_AWAY_DISTANCE = 450
+
 local UFO_DIST_SPAWN = 3500^2 -- Spawn wanderers if UFO is further from this
 local UFO_DIST_ACTIVE = 3000^2 -- Move wanders if UFO is closer than this
 
@@ -104,6 +106,7 @@ local spawners = {}  -- Units which spawn and recieve units
 local idleWanderer = {}
 
 local ufoX, ufoZ, ufoScareRadiusSq = 0, 0, 0
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -190,7 +193,7 @@ local function WandererCheckFlee(unitID)
 	local x,_,z = Spring.GetUnitPosition(unitID)
 	
 	if GetDistSqToUFO(x, z) < ufoScareRadiusSq then
-		local fx, fz = Vector.Norm(450, x - ufoX, z - ufoZ)
+		local fx, fz = Vector.Norm(RUN_AWAY_DISTANCE, x - ufoX, z - ufoZ)
 		Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.FIGHT, {x + fx, 0, z + fz}, {})
 		data.wandering = false
 		
