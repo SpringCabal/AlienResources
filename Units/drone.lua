@@ -44,7 +44,8 @@ unitDef = {
 	collide                = true,
 	upright                = true,
 
-	category               = "ufo",
+	--category               = "ufo",
+	category               = "drone",
 
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",

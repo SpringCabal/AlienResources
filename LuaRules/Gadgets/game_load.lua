@@ -8,7 +8,7 @@ end
 
 function gadget:GetInfo()
 	return {
-		name 	= "Unit Spawner",
+		name 	= "Game load",
 		desc	= "Spawns units for the game.",
 		author	= "gajop",
 		date	= "August 2015",

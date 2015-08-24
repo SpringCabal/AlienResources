@@ -11,7 +11,7 @@ function gadget:GetInfo()
 		author	= "Google Frog",
 		date	= "24 August 2015",
 		license	= "GNU GPL, v2 or later",
-		layer	= 100,
+		layer	= 80,
 		enabled = true
 	}
 end
@@ -28,6 +28,7 @@ local baseDefID = UnitDefNames["building4"].id
 
 local ufoRespawnFrame 
 local ufoID
+local x, y, z
 
 function gadget:Initialize()
 	-- cleanup
@@ -43,24 +44,31 @@ function gadget:Initialize()
         Spring.DestroyUnit(unitID)
     end
 	
-	-- Spawn new things
-	ufoID = Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
-	GG.SetUnitPermanentFallDamageImmunity(ufoID, true)
-	
-	Spring.CreateUnit(buildingDefID, 13000, 300, 17000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13200, 300, 17000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13400, 300, 17000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13600, 300, 17000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13000, 300, 17500, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13200, 300, 17500, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13400, 300, 17500, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13600, 300, 17500, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13000, 300, 18000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13200, 300, 18000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13400, 300, 18000, 0, 1)
-	Spring.CreateUnit(buildingDefID, 13600, 300, 18000, 0, 1)
-	
-	Spring.CreateUnit(baseDefID, 8500, 300, 18000, 0, 1)
+-- 	-- Spawn new things
+-- 	ufoID = Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
+-- 	
+-- 	Spring.CreateUnit(buildingDefID, 13000, 300, 17000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13200, 300, 17000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13400, 300, 17000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13600, 300, 17000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13000, 300, 17500, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13200, 300, 17500, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13400, 300, 17500, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13600, 300, 17500, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13000, 300, 18000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13200, 300, 18000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13400, 300, 18000, 0, 1)
+-- 	Spring.CreateUnit(buildingDefID, 13600, 300, 18000, 0, 1)
+-- 	
+-- 	Spring.CreateUnit(baseDefID, 8500, 300, 18000, 0, 1)
+end
+
+function gadget:UnitCreated(unitID, unitDefID) 
+	if unitDefID == ufoUnitDefID then
+		ufoID = unitID
+		x, y, z = Spring.GetUnitPosition(ufoID)
+		GG.SetUnitPermanentFallDamageImmunity(ufoID, true)
+	end
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
@@ -74,7 +82,7 @@ end
 
 function gadget:GameFrame()
 	if ufoRespawnFrame == Spring.GetGameFrame() then
-		Spring.CreateUnit(ufoUnitDefID, 12000, 300, 18000, 0, 0)
+		Spring.CreateUnit(ufoUnitDefID, x, y, z, 0, 0)
 		ufoRespawnFrame = nil
 	end
 end

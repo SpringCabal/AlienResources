@@ -39,7 +39,7 @@ local Static_AA = Unit:New {
 	weapons                = {
 		{
 			def                = "beamLaser",
-			onlyTargetCategory = "armed",
+			onlyTargetCategory = "ufo",
 		},
 	},
 
@@ -61,7 +61,7 @@ local Static_AA = Unit:New {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 20,
+				default = 2,
 			},
 
 			interceptedByShieldType = 1,
