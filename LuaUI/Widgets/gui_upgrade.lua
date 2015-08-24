@@ -220,6 +220,7 @@ function SpawnUpgradeUI()
             itemPadding = {0, 0, 0, 0},
             backgroundColor = {0.5, 0.5, 0.5, 1},
 			lockedColor = { 0, 0.8, 1, 1},
+			completedColor = { 0.4, 1, 0.4, 1}, 
             children = {lblTech, imgTechLocked, imgTech},
             OnClick = { function(ctrl, x, y, button)
                 if button == 1 then
@@ -233,6 +234,10 @@ function SpawnUpgradeUI()
 		elseif tech.locked then
 			btnTech.focusColor = btnTech.lockedColor
 		else
+			if tech.level == 5 then
+				btnTech.backgroundColor = btnTech.completedColor
+				btnTech.focusColor = btnTech.completedColor
+			end
 			imgTechLocked:Hide()
 		end
         techMapping[name] = { btnTech = btnTech, imgTech = imgTech, lblTech = lblTech, imgTechLocked = imgTechLocked }
@@ -298,6 +303,9 @@ function UpgradeTech(name)
 	if tech.level < 5 then
 		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "\b/5")
 	else
+		local btnTech = techMapping[name].btnTech
+		btnTech.backgroundColor = btnTech.completedColor
+		btnTech.focusColor = btnTech.completedColor
 		techMapping[name].lblTech:SetCaption("\255\0\255\0" .. tech.level .. "/5\b")
 	end
 	local tooltip, value = Tech.GetTechTooltip(name)
