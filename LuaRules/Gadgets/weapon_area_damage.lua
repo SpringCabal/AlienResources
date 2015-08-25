@@ -40,6 +40,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	return damage
 end
 
+local bhList = {}
 
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
 	if (weaponInfo[weaponID]) then
@@ -60,6 +61,7 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		if weaponID == fireDefID then
 			Spring.SpawnCEG("sickfires", px, py, pz, 0, 1, 0, timeout, timeout)
 		elseif weaponID == holeDefID then
+			bhList[Spring.GetGameFrame() + timeout] = {px, py, pz, timeout, timeout}
 			Spring.SpawnCEG("genericshellexplosion-large-blue", px, py, pz, 0, 1, 0, timeout, timeout)
 		end
 		
@@ -108,6 +110,16 @@ function gadget:GameFrame(f)
 				explosionList[i] = nil
 				emptyRow.count = emptyRow.count + 1
 				emptyRow[emptyRow.count] = i --remember where is all empty position in explosionList table
+			end
+		end
+	end
+
+	if f % 10 == 0 then
+		for v, bh in pairs(bhList) do
+			if v < f then
+				bhList[v] = nil
+			else
+				Spring.SpawnCEG("genericshellexplosion-large-blue", bh[1], bh[2], bh[3], 0, 1, 0, bh[4], bh[4])
 			end
 		end
 	end
