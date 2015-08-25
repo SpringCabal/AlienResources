@@ -158,12 +158,12 @@ function gadget:GameFrame(frame)
 			return
 		end
 
-		SetAbductionArea(x, y, z, vx, vz, 20, abductionRadius, abductionSpeed)
+		SetAbductionArea(x, y, z, vx, vz, 40, abductionRadius, abductionSpeed)
 	end
 end
 
 function gadget:Initialize()
 	GG.UpdateAbductionParameters = UpdateAbductionParameters
 	
-	UpdateAbductionParameters(45, 6, 1)
+	UpdateAbductionParameters(70, 7, 1)
 end

@@ -166,7 +166,6 @@ function script.Create()
 	end
 end
 
-
 local lastGun = 4
 
 function script.QueryWeapon(num)
@@ -212,6 +211,26 @@ function script.Shot(num)
 	end
 end
 
+local function ExplodePiece(piece, flags)
+	EmitSfx(piece,1024);
+	Explode(piece,flags);
+end
+
 function script.Killed(recentDamage, maxHealth)
+	local flags = SFX.FIRE+SFX.SMOKE+SFX.NO_HEATCLOUD+SFX.EXPLODE_ON_HIT;
+	for i=1, #gunBase do
+		ExplodePiece(gunBase[i],flags);
+	end
+	
+	--Sleep (200) -- sleeps cause the guy to be insantly yay'd
+	
+	flags = SFX.FIRE+SFX.SMOKE+SFX.NO_HEATCLOUD+SFX.EXPLODE_ON_HIT+SFX.RECURSIVE;
+	for i=1, #outerhull do
+		ExplodePiece(outerhull[i],flags);
+		--Sleep(math.random(200)+100);
+	end
+	
+	ExplodePiece(innerHull,SFX.FIRE+SFX.SMOKE+SFX.NO_HEATCLOUD+SFX.EXPLODE_ON_HIT);
+	
 	return 0
 end
