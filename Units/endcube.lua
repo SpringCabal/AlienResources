@@ -3,10 +3,10 @@ local unitName  =  "endcube"
 -- capture this = win game
 unitDef = {
 	--Internal settings
-	objectName             = "cube.dae",
+	objectName             = "alien_2.dae",
     name                   = "Endcube",
     unitName               = unitName,
-    script                 = unitName .. ".lua",
+    script                 = "human.lua",
 	
 	-- Movement
 	acceleration           = 0.5,
