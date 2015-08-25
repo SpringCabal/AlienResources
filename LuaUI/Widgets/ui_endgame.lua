@@ -157,29 +157,29 @@ local function SetupControls()
 		end},
 	}
 
-    restartButton = Button:New{
-		bottom  = 30;
-		width   = 90;
-		x       = 150;
-		height  = 55;
-		caption = "Restart",
- 		fontsize = 20,
-		OnClick = {
-			function()
-				nameBox = nil
-				restartButton = nil
-				submitButton = nil
-                -- FIXME: cheating is already on it seems
-				-- WG.Tech.ResetTechTree()
-                Spring.SendCommands("cheat", "luarules reload", "cheat", "luaui reload")
-				-- this won't happen
-                window_endgame:Dispose()
-                window_endgame = nil
-                frame_delay = Spring.GetGameFrame()
-            end
-		};
-		parent = window_endgame;
-	}
+--     restartButton = Button:New{
+-- 		bottom  = 30;
+-- 		width   = 90;
+-- 		x       = 150;
+-- 		height  = 55;
+-- 		caption = "Restart",
+--  		fontsize = 20,
+-- 		OnClick = {
+-- 			function()
+-- 				nameBox = nil
+-- 				restartButton = nil
+-- 				submitButton = nil
+--                 -- FIXME: cheating is already on it seems
+-- 				-- WG.Tech.ResetTechTree()
+--                 Spring.SendCommands("cheat", "luarules reload", "cheat", "luaui reload")
+-- 				-- this won't happen
+--                 window_endgame:Dispose()
+--                 window_endgame = nil
+--                 frame_delay = Spring.GetGameFrame()
+--             end
+-- 		};
+-- 		parent = window_endgame;
+-- 	}
 	Button:New{
 		bottom  = 30;
 		width   = 90;

@@ -52,8 +52,8 @@ unitDef = {
 	category               = "land",
 	
 	mass                   = 100,
-	maxDamage              = 1000,
-	autoHeal               = 5,
+	maxDamage              = 1000000000,
+	autoHeal               = 500000,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
 	
