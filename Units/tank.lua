@@ -152,6 +152,7 @@ local Small_Tank = Tank:New {
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
         biomass            = 2000,
+		abduct_mult        = 0.6,
 	},
 }
 
