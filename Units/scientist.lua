@@ -49,7 +49,7 @@ local Scientist = Unit:New {
 	category               = "land",
 	
 	mass                   = 100,
-	maxDamage              = 10,
+	maxDamage              = 100,
 	autoHeal               = 5,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
