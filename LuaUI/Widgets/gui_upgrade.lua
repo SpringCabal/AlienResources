@@ -110,10 +110,10 @@ function UpdateUpgradeUI()
 			},
 		}
 		local lblUnlockAvailable = Chili.Label:New {
-			x = 100,
+			x = 85,
 			--y = 50,
-			y = 30,
-			fontsize = 15,
+			y = 20,
+			fontsize = 20,
 			caption = "* unlock available *",
 			parent = updateUI,
 			font = {
@@ -132,7 +132,7 @@ function UpdateUpgradeUI()
 		updateUI.lblUnlockAvailable:Hide()
 	end
 	if upgradeAvailable then
-		local v = 0.7 + math.sin(os.clock() * 10) / 3.14 * 0.4
+		local v = 0.8 + math.sin(os.clock() * 10) / 3.14 * 0.6
 		local v256 = string.char(math.floor(v * 255))
 		updateUI.lblUnlockAvailable:SetCaption("\255" .. v256 .. v256 .. v256 .. "* unlock available *\b")
 		--updateUI.lblUnlockAvailable.font.color = { v, v, v, 1 }
