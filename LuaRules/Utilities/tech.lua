@@ -3,7 +3,7 @@
 -- also contains some GUI data that's not needed (x, y pos, etc.)
 local techTree = {
 	armor = {
-		desc = "Armor upgrade (+20% armor)",
+		desc = "Armor upgrade (+40% armor)",
 		maxLevel = 10,
 		tier = 1,
 		x = 0,
