@@ -171,7 +171,8 @@ local function SetupControls()
 				submitButton = nil
                 -- FIXME: cheating is already on it seems
 				-- WG.Tech.ResetTechTree()
-                -- Spring.SendCommands("cheat", "luarules reload", "cheat")
+                Spring.SendCommands("cheat", "luarules reload", "cheat", "luaui reload")
+				-- this won't happen
                 window_endgame:Dispose()
                 window_endgame = nil
                 frame_delay = Spring.GetGameFrame()

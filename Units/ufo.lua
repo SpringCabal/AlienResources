@@ -57,7 +57,7 @@ unitDef = {
 
 	-- Attributes
 	mass                   = 200,
-	maxDamage              = 1000,
+	maxDamage              = 5000,
     -- small auto heal; additionally we'll use shields?
 	autoHeal               = 5,
 	idleAutoHeal           = 0,
