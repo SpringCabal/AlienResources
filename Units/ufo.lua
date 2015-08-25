@@ -384,6 +384,7 @@ unitDef = {
 		},
 		independenceDayGun = {
 			name                    = "Independence Day Gun",
+			cameraShake				= 400,
 			areaOfEffect            = 128,
 			avoidFeature            = false,
 			avoidFriendly           = false,

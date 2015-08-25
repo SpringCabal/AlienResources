@@ -60,7 +60,7 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		if weaponID == fireDefID then
 			Spring.SpawnCEG("sickfires", px, py, pz, 0, 1, 0, timeout, timeout)
 		elseif weaponID == holeDefID then
-			Spring.SpawnCEG("sickfires", px, py, pz, 0, 1, 0, timeout, timeout)
+			Spring.SpawnCEG("genericshellexplosion-large-blue", px, py, pz, 0, 1, 0, timeout, timeout)
 		end
 		
 		if emptyRow.count > 0 then
