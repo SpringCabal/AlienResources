@@ -3,6 +3,7 @@ return {
     usedefaultexplosions = false,
 	spikes = {
 		air                = true,
+		unit               = true,
 		class              = [[CExploSpikeProjectile]],
 		count              = 5,
 		ground             = true,

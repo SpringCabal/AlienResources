@@ -38,6 +38,7 @@ local	resources = {
 			muzzlefront			= 'muzzlefront.tga',
 			largebeam			= 'largelaserfalloff.tga',
 			smoke_orange		= 'GPL/smoke_orange.png',
+			explosionwave       = 'projectiletextures/explosionwave.png',
 		},
 	}
 }

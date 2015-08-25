@@ -6,6 +6,11 @@ unitDef = {
     name                   = "UFO",
     unitName               = unitName,
     script                 = unitName .. ".lua",
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:ufoblast]],
+		},
+	},
 
 	-- Movement
 	acceleration           = 0.9,
