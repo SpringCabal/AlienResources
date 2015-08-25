@@ -79,7 +79,7 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if ufoID == unitID then
 		local x, y, z = Spring.GetUnitPosition(unitID)
-		delayedCall = {Spring.GetGameFrame() + 2, {x,y,z}} -- we should really use GG.delayCall API
+		delayedCall = {Spring.GetGameFrame() + 10, {x,y,z}} -- we should really use GG.delayCall API
 		ufoID = nil
 	end
 end

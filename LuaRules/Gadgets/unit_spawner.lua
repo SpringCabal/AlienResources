@@ -76,7 +76,7 @@ function gadget:UnitDestroyed(unitID, unitDefID)
 		-- 		Spring.SetGameRulesParam("gameOver", 1)
 		-- 		Spring.SetGameRulesParam("gameWon", 0)
 		-- 		actually let's just respawn the UFO at the initial place after some time
-		ufoRespawnFrame = Spring.GetGameFrame() + 2 * 30
+		ufoRespawnFrame = math.floor(Spring.GetGameFrame() + 2.3 * 30)
 	end
 end
 

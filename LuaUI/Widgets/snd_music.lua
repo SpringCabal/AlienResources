@@ -10,7 +10,7 @@ function widget:GetInfo()
   }
 end
 
-local VOLUME = 1
+local VOLUME = 0.7
 local BUFFER = 0.015
 
 local playingTime = 0
