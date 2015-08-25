@@ -277,7 +277,7 @@ function widget:GameOver(winningAllyTeams)
         if myAllyTeamID == winningAllyTeamID then
             Spring.SendCommands("endgraph 0")
             SetupControls()
-            caption:SetCaption("You win!");
+            caption:SetCaption("The Queen is saved!");
             caption.font.color={0,1,0,1};
             ShowEndGameWindow()
             return

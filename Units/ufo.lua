@@ -57,7 +57,7 @@ unitDef = {
 
 	-- Attributes
 	mass                   = 200,
-	maxDamage              = 5000,
+	maxDamage              = 2000,
     -- small auto heal; additionally we'll use shields?
 	autoHeal               = 5,
 	idleAutoHeal           = 0,
@@ -235,6 +235,7 @@ unitDef = {
 			turret                  = true,
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 500,
+			soundstart  			= "firemono.wav",
 		},
 		pointDefense = {
 			name                    = "Point Defense Laser",
@@ -418,6 +419,7 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
+			soundstart  			= "firemono.wav",
 		},
 		shield = {
 			name                    = "Shield",
