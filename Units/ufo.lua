@@ -394,14 +394,14 @@ unitDef = {
 			beamTime                = 0.01,
 			beamTtl                 = 1,
 			coreThickness           = 0.3,
-			craterBoost             = 1,
-			craterMult              = 1,
+			craterBoost             = 20,
+			craterMult              = 15,
 
 			damage                  = {
 				default = 10000,
 			},
-
-			explosionGenerator      = [[custom:independenceflash]],
+			-- This makes it much less epic, but using the default makes FPS drop because of the smoke
+ 			explosionGenerator      = [[custom:independenceflash]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -409,7 +409,7 @@ unitDef = {
 			noSelfDamage            = true,
 			range                   = 10000,
 			reloadtime              = 0.01,
-			rgbColor                = "0.2 0.3 0.9",
+			rgbColor                = "0.2 0.3 0.5",
 			scrollSpeed             = 10,
 			soundTrigger            = true,
 			sweepfire               = false,
