@@ -238,7 +238,7 @@ end
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 function widget:Initialize()
-	if Game.gameName == "Scenario Editor Alien resources" then
+	if Game.gameName == "Scenario Editor Area 17" then
 		widgetHandler:RemoveWidget()
 		return
 	end

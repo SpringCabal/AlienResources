@@ -50,7 +50,7 @@ function SetBindings()
 end
 
 function widget:Initialize()
-    local devMode = false
+    local devMode = true
     if devMode then
         Spring.SendCommands("unbindkeyset w")
         Spring.SendCommands("unbindkeyset s")
