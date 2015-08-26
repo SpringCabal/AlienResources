@@ -60,14 +60,44 @@ local Building2 = Building:New {
 
 local Building3 = Building:New {
     name                = "Building3",
+	
+	customParams        = {
+		modelradius        = [[100]],
+		midposoffset       = [[0 80 0]],
+		
+		terrainblock_x     = 142,
+		terrainblock_z     = 142,
+    },
+	
+    footprintX			    = 6,
+	footprintZ			    = 6,
+	-- Hitbox
+	collisionVolumeScales   = '142 50 142',
+	collisionVolumeOffsets  = '9 -60 -1',
+	collisionVolumeType     = 'box',
+
 }
 
 local Building4 = Building:New {
     name                = "Building4",
+	customParams        = {
+		modelradius        = [[90]],
+		midposoffset       = [[0 80 0]],
+		
+		terrainblock_x     = 96,
+		terrainblock_z     = 96,
+    },
+	
+    footprintX			    = 6,
+	footprintZ			    = 6,
+	-- Hitbox
+	collisionVolumeScales   = '123 90 129',
+	collisionVolumeOffsets  = '3 0 2',
+	collisionVolumeType     = 'box',
 }
 
--- same as building 4 but spawns "big" tanks
-local Building4BigTank = Building:New {
+-- same as building 4 but spawns "big" tanks (this inherits from Building4, not Building)
+local Building4BigTank = Building4:New {
     name                = "Building4BigTank",
 }
 
