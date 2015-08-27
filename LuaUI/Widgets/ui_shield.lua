@@ -117,7 +117,7 @@ function updateHealthBar()
 	local h, mh = 0, 1000
 	local h = Spring.GetGameRulesParam("shieldPower")
 	
-	if h ~= nil then
+	if h ~= nil and ufoID ~= nil then
 		h = math.max(0, h)
 		h = math.min(mh, h)
 		SetBarValue('Health', h, mh)
@@ -143,6 +143,10 @@ function widget:Initialize()
 	Chili = WG.Chili
 	initWindow()
 	makeBar('Health')
+	
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
+	end
 	updateHealthBar()
 
     local vsx,vsy = Spring.GetViewGeometry()
