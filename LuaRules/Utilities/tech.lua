@@ -331,13 +331,25 @@ end
 
 function Tech.GetUpgradeResources(name)
 	local tech = techTree[name]
-	local resource = (2 * tech.tier - 1) * ((tech.level+1) * 500)
+	local lvlMultiplier = 1
+	if tech.level > 0 then
+		lvlMultiplier = tech.level * 3
+	end
+	-- hack
+	if tech.tier == 3 then
+		lvlMultiplier = 5 * 3
+	end
+	local resource = (2 * tech.tier - 1) * (lvlMultiplier * 500)
 	return { biomass = resource }
 end
 
 function Tech.GetUnlockResources(name)
 	local tech = techTree[name]
-	local resource = (2 * tech.tier - 1) * 1000
+	local tierMultiplier = 1
+	if tech.tier > 1 then
+		tierMultiplier = 5 * tech.tier
+	end
+	local resource = tierMultiplier * 1000
 	return { research = resource }
 end
 
