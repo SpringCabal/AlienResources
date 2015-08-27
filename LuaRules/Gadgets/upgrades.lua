@@ -43,9 +43,9 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("metal", 0)
 	
 	-- TEST resources, comment these lines out on release
-     Spring.SetGameRulesParam("biomass", 500000)
-     Spring.SetGameRulesParam("research", 50000)
-     Spring.SetGameRulesParam("metal", 0)
+--      Spring.SetGameRulesParam("biomass", 500000)
+--      Spring.SetGameRulesParam("research", 50000)
+--      Spring.SetGameRulesParam("metal", 0)
 end
 
 function gadget:GameFrame()
@@ -89,6 +89,7 @@ function UpdateTech(name)
 		Spring.SetUnitMaxHealth(ufoID, newMaxHealth)
 		Spring.SetUnitHealth(ufoID, ratio * newMaxHealth) --scale current HP
 	elseif name == "antiMissilePointDefense" then
+		Spring.SetUnitRulesParam(ufoID, "PDisUnlocked", 1)
 		GG.SetPDReload(multiplier)
 	elseif name == "incendiaryBeamLaser" then
 		GG.SetFireMults(multiplier, multiplier)
