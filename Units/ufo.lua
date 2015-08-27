@@ -57,7 +57,7 @@ unitDef = {
 
 	-- Attributes
 	mass                   = 200,
-	maxDamage              = 2000,
+	maxDamage              = 1000,
     -- small auto heal; additionally we'll use shields?
 	autoHeal               = 5,
 	idleAutoHeal           = 0,
@@ -162,6 +162,7 @@ unitDef = {
 			coreThickness           = 0.2,
 			craterBoost             = 0,
 			craterMult              = 0,
+			impulseFactor			= 0,
 
 			customParams            = {
 				area_damage = 1,
@@ -203,6 +204,7 @@ unitDef = {
 			avoidFriendly           = false,
 			avoidNeutral            = false,
 			avoidGround             = false,
+			impulseFactor			= 0,
 
 			collideFriendly         = false,
 
@@ -338,6 +340,7 @@ unitDef = {
 			coreThickness           = 0,
 			craterBoost             = 0,
 			craterMult              = 0,
+			impulseFactor			= 0,
 
 			collisionsize = 5,
 			interceptor = 1,
@@ -382,6 +385,7 @@ unitDef = {
 			coreThickness           = 0,
 			craterBoost             = 0,
 			craterMult              = 0,
+			impulseFactor			= 0,
 
 			collisionsize = 5,
 			interceptor = 1,
@@ -422,9 +426,10 @@ unitDef = {
 			coreThickness           = 0,
 			craterBoost             = 0,
 			craterMult              = 0,
+			impulseFactor			= 0,
 
 			damage                  = {
-				default = 200,
+				default = 80,
 			},
 
 			explosionGenerator      = [[custom:genericshellexplosion-small-green]],
@@ -451,9 +456,10 @@ unitDef = {
 			coreThickness           = 0,
 			craterBoost             = 0,
 			craterMult              = 0,
+			impulseFactor			= 0,
 
 			damage                  = {
-				default = 200,
+				default = 80,
 			},
 
 			explosionGenerator      = [[custom:genericshellexplosion-small-green]],

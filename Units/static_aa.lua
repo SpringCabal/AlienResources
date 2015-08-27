@@ -32,7 +32,7 @@ local Static_AA = Unit:New {
 	footprintZ			    = 6,
 	-- Hitbox
 	collisionVolumeOffsets = "0 0 0",
-	collisionVolumeScales  = "50 60 50",
+	collisionVolumeScales  = "70 76 70",
 	collisionVolumeType    = "cylY",
 
 	sfxtypes               = {
@@ -61,7 +61,7 @@ local Static_AA = Unit:New {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 4,
+				default = 5,
 			},
 
 			explosionGenerator      = [[custom:genericshellexplosion-small-red]],
@@ -83,19 +83,33 @@ local Static_AA = Unit:New {
 
 local Strong_AA = Static_AA:New {
 	name                = "Strong AA",
+	maxDamage           = 7500,
+	
+	footprintX			    = 12,
+	footprintZ			    = 12,
+	collisionVolumeOffsets  = '0 50 0',
+	collisionVolumeScales   = '150 154 150',
+	collisionVolumeType     = 'cylY',
+	customParams        = {
+		modelradius        = [[150]],
+		midposoffset       = [[0 50 0]],
+
+		terrainblock_x     = 150,
+		terrainblock_z     = 150,
+    },
 	weaponDefs             = {
 		beamLaser = {
 			explosionGenerator      = [[custom:genericshellexplosion-large-purple]],
 			name                    = "Beam Laser",
-			coreThickness           = 0.3,
+			coreThickness           = 0.2,
 			craterBoost             = 0,
 			craterMult              = 0,
 
 			damage                  = {
-				default = 10,
+				default = 12,
 			},
 			rgbColor                = "0.5 0.1 0.9",
-			thickness               = 25,
+			thickness               = 15,
 		},
 	},
 }

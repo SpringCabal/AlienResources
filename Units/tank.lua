@@ -60,7 +60,7 @@ local Tank = Unit:New {
 	category               = "land armed",
 
 	mass                   = 100,
-	maxDamage              = 1500,
+	maxDamage              = 5000,
 	autoHeal               = 5,
 	idleAutoHeal           = 5,
 	idleTime               = 60,
@@ -97,12 +97,12 @@ local Tank = Unit:New {
 			targetable              = 1,
 
 			damage                  = {
-				default = 100,
+				default = 200,
 			},
 
 			explosionGenerator      = [[custom:genericshellexplosion-medium]],
 			fireStarter             = 70,
-			flightTime              = 3,
+			flightTime              = 5,
 			guidance                = true,
 			impactOnly              = true,
 			impulseBoost            = 0,
@@ -112,7 +112,7 @@ local Tank = Unit:New {
 			lineOfSight             = true,
 			model                   = [[missile.dae]],
 			noSelfDamage            = true,
-			range                   = 720,
+			range                   = 1720,
 			reloadtime              = 15,
 			renderType              = 1,
 			selfprop                = true,
@@ -125,7 +125,7 @@ local Tank = Unit:New {
 			tracks                  = true,
 			turnRate                = 70000,
 			turret                  = true,
-			weaponAcceleration      = 400,
+			weaponAcceleration      = 800,
 			weaponTimer             = 5,
 			weaponType              = "MissileLauncher",
 			weaponVelocity          = 4000,
@@ -137,7 +137,7 @@ local Small_Tank = Tank:New {
 	name                = "small_tank",
 	objectName          = "tank_2.dae",
 	mass                = 60,
-	maxDamage           = 550,
+	maxDamage           = 1000,
 	maxVelocity         = 180,
 	acceleration        = 1,
 	brakeRate           = 1,
@@ -145,14 +145,15 @@ local Small_Tank = Tank:New {
 		missile = {
 			reloadtime              = 3,
 			damage = {
-				default = 5,
+				default = 15,
 			},
+			range                   = 720,
 		}
 	},
 	customParams           = {
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
-        biomass            = 2000,
+        biomass            = 1000,
 		abduct_mult        = 0.6,
 	},
 }
