@@ -24,13 +24,13 @@ local lightData = {
 	[0] = {
 		radiusOscillation = 0.05,
 		period = 15,
-		color = {1, 0.9, 0, 0.4},
+		color = {1, 0.9, 0, 0.6},
 		alphaOscillation = 0
 	},
 	[1] = {
 		radiusOscillation = 0.15,
 		period = 3,
-		color = {1, 0.9, 0, 0.7},
+		color = {1, 0.9, 0, 1},
 		alphaOscillation = -0.2
 	}
 }
@@ -54,7 +54,7 @@ function widget:DrawWorld()
 	end
 
 	local ux, uy, uz = Spring.GetUnitViewPosition(ufoID)
-	local ground = Spring.GetGroundHeight(ux, uz)
+	local ground = math.max(0, Spring.GetGroundHeight(ux, uz))
 	local height = uy - ground
 	local data = lightData[Spring.GetUnitRulesParam(ufoID, "beam_enabled") or 0]
 	if not data then
@@ -65,11 +65,10 @@ function widget:DrawWorld()
 	local ro, p, color, ao = data.radiusOscillation, data.period, {unpack(data.color)}, data.alphaOscillation
 	radius = math.sin(Spring.GetGameFrame() / p) * ro * radius + radius
 	color[4] = math.sin(Spring.GetGameFrame() / p) * ao + color[4]
-	gl.Color(color)
 	gl.DepthTest(true)
 	gl.Culling(true)
 	gl.AlphaTest(GL.GREATER, 0)
-	gl.Utilities.DrawMyCone(ux,ground,uz, height, radius, 10)
+	gl.Utilities.DrawMyCone(ux,ground,uz, height, radius, 10, color)
 	gl.Culling(false)
 	gl.AlphaTest(false)
 	gl.DepthTest(false)
