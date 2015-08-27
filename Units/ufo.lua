@@ -74,15 +74,15 @@ unitDef = {
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "incendiaryBeamLaser-silent",
+			def                = "incendiaryBeamLasersilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "incendiaryBeamLaser-silent",
+			def                = "incendiaryBeamLasersilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "incendiaryBeamLaser-silent",
+			def                = "incendiaryBeamLasersilent",
 			onlyTargetCategory = "land",
 		},
 		{
@@ -90,15 +90,15 @@ unitDef = {
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "gravityBeam-silent",
+			def                = "gravityBeamsilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "gravityBeam-silent",
+			def                = "gravityBeamsilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "gravityBeam-silent",
+			def                = "gravityBeamsilent",
 			onlyTargetCategory = "land",
 		},
 		{
@@ -106,28 +106,28 @@ unitDef = {
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "independenceDayGun-silent",
+			def                = "independenceDayGunsilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "independenceDayGun-silent",
+			def                = "independenceDayGunsilent",
 			onlyTargetCategory = "land",
 		},
 		{
-			def                = "independenceDayGun-silent",
+			def                = "independenceDayGunsilent",
 			onlyTargetCategory = "land",
 		},
 		{
 			def                = "pointDefense",
 		},
 		{
-			def                = "pointDefense-silent",
+			def                = "pointDefense",
 		},
 		{
-			def                = "pointDefense-silent",
+			def                = "pointDefense",
 		},
 		{
-			def                = "pointDefense-silent",
+			def                = "pointDefense",
 		},
 		{
 			def                = "blackHoleGun",
@@ -175,7 +175,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-			explosionGenerator      = [[custom:fireflash]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-firey]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -196,8 +196,8 @@ unitDef = {
 			pulseSpeed				= 0.1,
  			soundstart  			= "firemono.wav",
 		},
-		incendiaryBeamLaser-silent = {
-			name                    = "Incendiary Beam Laser",
+		incendiaryBeamLasersilent = {
+			name                    = "Incendiary Beam Laser Silent",
 			areaOfEffect            = 128,
 			avoidFeature            = false,
 			avoidFriendly           = false,
@@ -224,7 +224,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-			explosionGenerator      = [[custom:fireflash]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-firey]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -265,7 +265,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-
+			explosionGenerator      = [[custom:genericshellexplosion-small-white]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0,
@@ -285,8 +285,8 @@ unitDef = {
 			weaponVelocity          = 500,
 			soundstart  			= "firemono.wav",
 		},
-		gravityBeam-silent = {
-			name                    = "Gravity Beam",
+		gravityBeamsilent = {
+			name                    = "Gravity Beam Silent",
 			areaOfEffect            = 400,
 			avoidFeature            = false,
 			avoidFriendly           = false,
@@ -306,7 +306,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-
+			explosionGenerator      = [[custom:genericshellexplosion-small-white]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0,
@@ -369,8 +369,8 @@ unitDef = {
 			weaponVelocity          = 500,
 			soundstart  			= "pointDefense.wav",
 		},
-		pointDefense-silent = {
-			name                    = "Point Defense Laser",
+		pointDefensesilent = {
+			name                    = "Point Defense Laser Silent",
 
 			avoidFeature            = false,
 			avoidFriendly           = false,
@@ -427,7 +427,7 @@ unitDef = {
 				default = 200,
 			},
 
-			explosionGenerator      = [[custom:pulseflash]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-green]],
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
@@ -441,8 +441,8 @@ unitDef = {
 			weaponVelocity          = 2500,
 			soundstart  			= "pulse.wav",
 		},
-		pulseLaser-silent = {
-			name                    = "Pulse laser",
+		pulseLasersilent = {
+			name                    = "Pulse laser Silent",
 			areaOfEffect            = 128,
 			avoidFeature            = false,
 			avoidFriendly           = false,
@@ -456,7 +456,7 @@ unitDef = {
 				default = 200,
 			},
 
-			explosionGenerator      = [[custom:pulseflash]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-green]],
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 10000,
@@ -553,14 +553,14 @@ unitDef = {
 			beamTime                = 0.01,
 			beamTtl                 = 1,
 			coreThickness           = 0.3,
-			craterBoost             = 20,
-			craterMult              = 15,
+			craterBoost             = 2.5,
+			craterMult              = 5,
 
 			damage                  = {
 				default = 10000,
 			},
 			-- This makes it much less epic, but using the default makes FPS drop because of the smoke
- 			explosionGenerator      = [[custom:independenceflash]],
+ 			explosionGenerator      = [[custom:genericshellexplosion-large-blue]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -579,10 +579,10 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
-			soundstart  			= "firemono.wav",
+			soundstart  			= "godgun-short.wav",
 		},
-		independenceDayGun-silent = {
-			name                    = "Independence Day Gun",
+		independenceDayGunsilent = {
+			name                    = "Independence Day Gun Silent",
 			cameraShake				= 400,
 			areaOfEffect            = 128,
 			avoidFeature            = false,
@@ -592,14 +592,14 @@ unitDef = {
 			beamTime                = 0.01,
 			beamTtl                 = 1,
 			coreThickness           = 0.3,
-			craterBoost             = 20,
-			craterMult              = 15,
+			craterBoost             = 2.5,
+			craterMult              = 5,
 
 			damage                  = {
 				default = 10000,
 			},
 			-- This makes it much less epic, but using the default makes FPS drop because of the smoke
- 			explosionGenerator      = [[custom:independenceflash]],
+ 			explosionGenerator      = [[custom:genericshellexplosion-large-blue]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
@@ -618,6 +618,7 @@ unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 100,
 			pulseSpeed				= 0.1,
+			soundstart  			= "godgun-short.wav",
 		},
 		shield = {
 			name                    = "Shield",

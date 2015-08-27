@@ -64,7 +64,7 @@ local Static_AA = Unit:New {
 				default = 4,
 			},
 
-			explosionGenerator      = [[custom:genericshellexplosion-large-sparks-burn]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-red]],
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			range                   = 2000,
@@ -85,7 +85,7 @@ local Strong_AA = Static_AA:New {
 	name                = "Strong AA",
 	weaponDefs             = {
 		beamLaser = {
-			explosionGenerator      = [[custom:genericshellexplosion-large-sparks-burn]],
+			explosionGenerator      = [[custom:genericshellexplosion-large-purple]],
 			name                    = "Beam Laser",
 			coreThickness           = 0.3,
 			craterBoost             = 0,

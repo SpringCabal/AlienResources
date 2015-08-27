@@ -59,10 +59,10 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 		local timeout = weaponInfo[weaponID].duration * (durationMult[weaponID] or 1)
 		
 		if weaponID == fireDefID then
-			Spring.SpawnCEG("sickfires", px, py, pz, 0, 1, 0, timeout, timeout)
+			Spring.SpawnCEG("genericshellexplosion-small", px, py, pz, 0, 1, 0, timeout, timeout)
 		elseif weaponID == holeDefID then
 			bhList[Spring.GetGameFrame() + timeout] = {px, py, pz, timeout, timeout}
-			Spring.SpawnCEG("genericshellexplosion-large-blue", px, py, pz, 0, 1, 0, timeout, timeout)
+			Spring.SpawnCEG("genericshellexplosion-large-purple", px, py, pz, 0, 1, 0, timeout, timeout)
 		end
 		
 		if emptyRow.count > 0 then
@@ -119,7 +119,7 @@ function gadget:GameFrame(f)
 			if v < f then
 				bhList[v] = nil
 			else
-				Spring.SpawnCEG("genericshellexplosion-large-blue", bh[1], bh[2], bh[3], 0, 1, 0, bh[4], bh[4])
+				Spring.SpawnCEG("genericshellexplosion-large-purple", bh[1], bh[2], bh[3], 0, 1, 0, bh[4], bh[4])
 			end
 		end
 	end
