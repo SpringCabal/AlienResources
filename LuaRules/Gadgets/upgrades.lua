@@ -43,9 +43,9 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("metal", 0)
 	
 	-- TEST resources, comment these lines out on release
---      Spring.SetGameRulesParam("biomass", 500000)
---      Spring.SetGameRulesParam("research", 50000)
---      Spring.SetGameRulesParam("metal", 0)
+     Spring.SetGameRulesParam("biomass", 500000)
+     Spring.SetGameRulesParam("research", 50000)
+     Spring.SetGameRulesParam("metal", 0)
 end
 
 function gadget:GameFrame()
@@ -103,7 +103,7 @@ function UpdateTech(name)
 	elseif name == "carrierDrones" then
 		GG.UpdateDroneParameters(tech.level + 1, 5 - tech.level)
 	elseif name == "coneUpgrade" then
-		GG.UpdateAbductionParameters(45 * multiplier, 6 * multiplier, multiplier)
+		GG.UpdateAbductionParameters(70 * multiplier, 7 * multiplier, multiplier)
 	end
 end
 
