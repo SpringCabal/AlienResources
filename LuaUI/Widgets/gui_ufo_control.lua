@@ -20,6 +20,10 @@ local A = KEYSYMS.A
 local D = KEYSYMS.D
 local N_0 = KEYSYMS.N_0
 local N_9 = KEYSYMS.N_9
+local UP = KEYSYMS.UP
+local DOWN = KEYSYMS.DOWN
+local RIGHT = KEYSYMS.RIGHT
+local LEFT = KEYSYMS.LEFT
 
 local ufoID
 local ufoDefID = UnitDefNames["ufo"].id
@@ -120,16 +124,16 @@ end
 local function MovementControl()
 	local x, z = 0, 0
 	
-	if Spring.GetKeyState(A) then
+	if Spring.GetKeyState(A) or Spring.GetKeyState(LEFT) then
 		x = x - 1
 	end
-	if Spring.GetKeyState(D) then
+	if Spring.GetKeyState(D) or Spring.GetKeyState(RIGHT) then
 		x = x + 1
 	end
-	if Spring.GetKeyState(W) then
+	if Spring.GetKeyState(W) or Spring.GetKeyState(UP) then
 		z = z - 1
 	end
-	if Spring.GetKeyState(S) then
+	if Spring.GetKeyState(S) or Spring.GetKeyState(DOWN) then
 		z = z + 1
 	end
 	
@@ -238,7 +242,7 @@ end
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 function widget:Initialize()
-	if Game.gameName == "Scenario Editor Area 17" then
+	if Game.gameName == "Scenario Editor Alien resources" then
 		widgetHandler:RemoveWidget()
 		return
 	end
