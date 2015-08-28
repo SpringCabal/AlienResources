@@ -14,6 +14,10 @@ end
 -------------------------------------------------------------------
 
 include('keysym.h.lua')
+local UP = KEYSYMS.UP
+local DOWN = KEYSYMS.DOWN
+local LEFT = KEYSYMS.LEFT
+local RIGHT = KEYSYMS.RIGHT
 local W = KEYSYMS.W
 local S = KEYSYMS.S
 local A = KEYSYMS.A
@@ -120,16 +124,16 @@ end
 local function MovementControl()
 	local x, z = 0, 0
 	
-	if Spring.GetKeyState(A) then
+	if Spring.GetKeyState(A) or Spring.GetKeyState(LEFT) then
 		x = x - 1
 	end
-	if Spring.GetKeyState(D) then
+	if Spring.GetKeyState(D) or Spring.GetKeyState(RIGHT) then
 		x = x + 1
 	end
-	if Spring.GetKeyState(W) then
+	if Spring.GetKeyState(W) or Spring.GetKeyState(UP) then
 		z = z - 1
 	end
-	if Spring.GetKeyState(S) then
+	if Spring.GetKeyState(S) or Spring.GetKeyState(DOWN) then
 		z = z + 1
 	end
 	
@@ -189,6 +193,9 @@ function widget:KeyPress(key, mods, isRepeat)
 			currentWeapon = weaponName
 			Spring.PlaySoundFile("sounds/select.wav")
 			Spring.SendLuaRulesMsg('changeWeapon|' .. weaponName)
+		end
+		if key == LEFT or key == RIGHT or key == UP or key == DOWN then
+			return true
 		end
 	end
 end
