@@ -78,6 +78,12 @@ end
 function UpdateUpgradeUI()
 	if updateUI == nil then
 		local w = 350
+		local imgUpgrade = Chili.Image:New {
+			file = "UI/upgrade.png",
+			x = 0, width = "100%",
+			y = 0, height = "100%",
+			keepAspect = false,
+		}
 		updateUI = Chili.Button:New {
 			x = (vsx - w) / 2,
 			y = 0,
@@ -87,14 +93,7 @@ function UpdateUpgradeUI()
 			backgroundColor = { 1,1,1,0 },
 			focusColor = { 0,0,0,0 },
 			caption = "",
-			children = {
-				Chili.Image:New {
-					file = "UI/upgrade.png",
-					x = 0, width = "100%",
-					y = 0, height = "100%",
-					keepAspect = false,
-				}
-			},
+			children = { imgUpgrade },
 			OnClick = { function()
 				ToggleUpgradeUI()
 			end},
@@ -105,9 +104,6 @@ function UpdateUpgradeUI()
 			fontsize = 25,
 			caption = "[T] Technology",
 			parent = updateUI,
-			font = {
-				color = { 0, 0.8, 1, 0.7},
-			},
 		}
 		local lblUnlockAvailable = Chili.Label:New {
 			x = 85,
@@ -124,17 +120,24 @@ function UpdateUpgradeUI()
 		}
 		lblUnlockAvailable:Hide()
 		updateUI.lblUnlockAvailable = lblUnlockAvailable
+		updateUI.lblTitle = lblTitle
+		updateUI.imgUpgrade = imgUpgrade
 	end
 	local research = Spring.GetGameRulesParam("research") or 0
 	if upgradeAvailable and not updateUI.lblUnlockAvailable.visible then
 		updateUI.lblUnlockAvailable:Show()
 	elseif not upgradeAvailable and updateUI.lblUnlockAvailable.visible then
 		updateUI.lblUnlockAvailable:Hide()
+		updateUI.imgUpgrade.color = { 0.3, 0.3, 0.3, 1 }
+		updateUI.imgUpgrade.color[4] = 1
+		updateUI.lblTitle:SetCaption("\255\170\170\170" .. "[T] Technology" .. "\b")
 	end
 	if upgradeAvailable then
 		local v = 0.8 + math.sin(os.clock() * 10) / 3.14 * 0.6
 		local v256 = string.char(math.floor(v * 255))
 		updateUI.lblUnlockAvailable:SetCaption("\255" .. v256 .. v256 .. v256 .. "* unlock available *\b")
+		updateUI.imgUpgrade.color = { 1, 1, 1, 1 }
+		updateUI.lblTitle:SetCaption("\255\0\204\255" .. "[T] Technology" .. "\b")
 		--updateUI.lblUnlockAvailable.font.color = { v, v, v, 1 }
 	end
 end
