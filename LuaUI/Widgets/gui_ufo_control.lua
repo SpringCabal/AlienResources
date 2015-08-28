@@ -24,6 +24,10 @@ local A = KEYSYMS.A
 local D = KEYSYMS.D
 local N_0 = KEYSYMS.N_0
 local N_9 = KEYSYMS.N_9
+local UP = KEYSYMS.UP
+local DOWN = KEYSYMS.DOWN
+local RIGHT = KEYSYMS.RIGHT
+local LEFT = KEYSYMS.LEFT
 
 local ufoID
 local ufoDefID = UnitDefNames["ufo"].id
@@ -245,7 +249,7 @@ end
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 function widget:Initialize()
-	if Game.gameName == "Scenario Editor Area 17" then
+	if Game.gameName == "Scenario Editor Alien resources" then
 		widgetHandler:RemoveWidget()
 		return
 	end
