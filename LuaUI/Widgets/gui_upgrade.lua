@@ -118,7 +118,6 @@ function UpdateUpgradeUI()
 				shadow = false,
 			},
 		}
-		lblUnlockAvailable:Hide()
 		updateUI.lblUnlockAvailable = lblUnlockAvailable
 		updateUI.lblTitle = lblTitle
 		updateUI.imgUpgrade = imgUpgrade
