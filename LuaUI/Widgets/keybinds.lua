@@ -54,7 +54,7 @@ function widget:Initialize()
     if devMode then
         Spring.SendCommands("unbindkeyset w")
         Spring.SendCommands("unbindkeyset s")
-
+		Spring.SendCommands("unbindkeyset c")
 	else
         Spring.SendCommands("unbindall") --muahahahaha
         Spring.SendCommands("unbindkeyset enter chat") --because because.
