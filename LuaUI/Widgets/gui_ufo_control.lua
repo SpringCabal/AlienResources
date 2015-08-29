@@ -22,6 +22,8 @@ local W = KEYSYMS.W
 local S = KEYSYMS.S
 local A = KEYSYMS.A
 local D = KEYSYMS.D
+local PAGEUP = KEYSYMS.PAGEUP
+local PAGEDOWN = KEYSYMS.PAGEDOWN
 local N_0 = KEYSYMS.N_0
 local N_9 = KEYSYMS.N_9
 
@@ -66,6 +68,7 @@ local function UpdateSpeed(newVal, values, default)
 	return values.average
 end
 
+--[[
 -- follow camera
 local function UpdateCamera()
 	if ufoID and not Spring.GetUnitIsDead(ufoID) and (Spring.GetGameRulesParam("devMode") ~= 1) then
@@ -117,7 +120,7 @@ local function UpdateCamera()
 		Spring.SetCameraState(newState, 0.4)
 	end
 end
-
+--]]
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 
@@ -197,6 +200,10 @@ function widget:KeyPress(key, mods, isRepeat)
 		if key == LEFT or key == RIGHT or key == UP or key == DOWN then
 			return true
 		end
+		
+		if key == PAGEUP or key == PAGEDOWN then
+			return true
+		end
 	end
 end
 
@@ -215,11 +222,11 @@ function widget:GameFrame(n)
 		WeaponControl()
 	end
 	
-	UpdateCamera()
-
+	--UpdateCamera()
 end
 
 function widget:Update()
+	Spring.SendCommands("trackoff", "track")
 	--UpdateCamera()
 end
 
@@ -233,7 +240,7 @@ function widget:MousePress(mx, my, button)
 			mouseControl = true
 			return (Spring.GetGameRulesParam("devMode") ~= 1)
 		end
-	end	
+	end
 end
 
 function widget:MouseRelease(mx, my, button)
@@ -248,6 +255,11 @@ function widget:Initialize()
 	if Game.gameName == "Scenario Editor Area 17" then
 		widgetHandler:RemoveWidget()
 		return
+	end
+	-- setting it on runtime has no effect
+	--Spring.SetConfigInt("ScrollWheelSpeed", 0, true)
+	if Spring.GetConfigInt("ScrollWheelSpeed") ~= 0 then
+		Spring.Log("UFO Control", LOG.WARNING, "ScrollWheelSpeed must be set to 0 or the player can zoom out and rotate.")
 	end
 	for _, unitID in pairs(Spring.GetAllUnits()) do
 		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
@@ -275,6 +287,8 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 			WG.UI.SetAbilityEnabled(currentWeapon, true)
 			Spring.SendLuaRulesMsg('changeWeapon|' .. currentWeapon)
 		end
+		Spring.SelectUnitArray({ufoID})
+		Spring.SendCommands("track")
 	end
 end
 
