@@ -72,7 +72,7 @@ function widget:Initialize()
 --         purple .. "Left click: " .. white .. "Shoot",
 -- 		purple .. "1-9: " .. white .. "Switch weapon",
         --purple .. "Scroll Wheel : " .. white .. "Zoom",
-		purple .. "WASD : " .. white .. "Move",
+		purple .. "WASD or Arrows: " .. white .. "Move",
 		purple .. "Left click : " .. white .. "Shoot",
 		purple .. "T : " .. white .. "Technology Panel",
 		purple .. "1 - 9 : " .. white .. "Switch weapon",

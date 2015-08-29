@@ -3,7 +3,7 @@ local modinfo = {
 	shortname = "ALIR",
 	game = "Area 17",
 	shortgame = "ALIR",
-    version = "Git",
+    version = "$VERSION",
 	description = "Alien resources",
 	
 	modtype = "1",
