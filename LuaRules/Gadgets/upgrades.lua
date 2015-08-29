@@ -123,9 +123,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		local biomass = Spring.GetGameRulesParam("biomass") or 0
 		local research = Spring.GetGameRulesParam("research") or 0
 		local metal = Spring.GetGameRulesParam("metal") or 0
-		Spring.SetGameRulesParam("biomass", biomass - (alienUdef.customParams.biomass or 0))
-		Spring.SetGameRulesParam("research", research - (alienUdef.customParams.research or 0))
-		Spring.SetGameRulesParam("metal", metal - (alienUdef.customParams.metal or 0))
+		Spring.SetGameRulesParam("biomass", math.max(0, biomass - (alienUdef.customParams.biomass or 0)))
+		Spring.SetGameRulesParam("research", math.max(0, research - (alienUdef.customParams.research or 0)))
+		Spring.SetGameRulesParam("metal", math.max(0, metal - (alienUdef.customParams.metal or 0)))
 	end
 end
 
