@@ -10,6 +10,12 @@ local legRight = piece('legRight');
 local thighLeft = piece('thighLeft');
 local thighRight = piece('thighRight');
 local torso = piece('torso');
+local parachute
+
+local alienDefID = UnitDefNames["alien"].id
+if Spring.GetUnitDefID(unitID) == alienDefID then
+	parachute = piece('parachute');
+end
 
 local Animations = {};
 
@@ -145,6 +151,34 @@ end
 function script.StopMoving()
 	Signal(SIG_WALK);
 	StartThread(Stop);
+end
+
+local function ParachuteFall()
+	Move(parachute, y_axis, 45, 15)
+ 	Move(parachute, z_axis, -60, 20)
+	WaitForMove(parachute, y_axis)
+	WaitForMove(parachute, z_axis)
+	Hide(parachute)
+	
+	floating = false
+end
+
+function Alien_land()
+	if Spring.GetUnitDefID(unitID) == alienDefID then
+		StartThread(ParachuteFall)
+	end
+end
+
+-- None of this works because it doesn't seem like it counts as a "falling unit"
+-- function script.setSFXoccupy(num)
+-- 	if floating and num == 4 and Spring.GetUnitDefID(unitID) == alienDefID then
+-- 		floating = false
+-- 		Hide(parachute)
+-- 	end
+-- end
+
+function script.Landed()
+	Alien_land()
 end
 
 function script.Killed(recentDamage, maxHealth)

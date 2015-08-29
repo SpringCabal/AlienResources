@@ -84,11 +84,26 @@ function gadget:UnitDestroyed(unitID, unitDefID)
 	end
 end
 
+local function callScript(unitID, funcName, args)
+	local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
+	if func then
+		Spring.UnitScript.CallAsUnit(unitID,func, args)
+	end
+end
+
 function gadget:GameFrame(frame)
-	if delayedCall and delayedCall[1] ==frame then
+	if delayedCall and delayedCall[1] == frame then
 		delayedCall = delayedCall[2]
-		Spring.CreateUnit(alienUnitDefID, delayedCall[1], delayedCall[2] + 100, delayedCall[3], 0, 1)
+		local alienID = Spring.CreateUnit(alienUnitDefID, delayedCall[1], delayedCall[2] + 100, delayedCall[3], 0, 1)
+		callScript(alienID, "Abduction_float")
+		
 		delayedCall = nil
+		delayedCall2 = { Spring.GetGameFrame() + 10, alienID }
+	end
+	if delayedCall2 and delayedCall2[1] == frame then
+		local alienID = delayedCall2[2]
+		callScript(alienID, "Alien_land")
+		delayedCall2 = nil
 	end
 	if ufoID then
 		local x, y, z = Spring.GetUnitPosition(ufoID)
