@@ -33,5 +33,5 @@ end
 
 function widget:MouseWheel(up,value)
     -- uncomment this to disable zoom/panning
-    --return true
+    return true
 end

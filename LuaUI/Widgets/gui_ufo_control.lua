@@ -256,11 +256,6 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget()
 		return
 	end
-	-- setting it on runtime has no effect
-	--Spring.SetConfigInt("ScrollWheelSpeed", 0, true)
-	if Spring.GetConfigInt("ScrollWheelSpeed") ~= 0 then
-		Spring.Log("UFO Control", LOG.WARNING, "ScrollWheelSpeed must be set to 0 or the player can zoom out and rotate.")
-	end
 	for _, unitID in pairs(Spring.GetAllUnits()) do
 		self:UnitCreated(unitID, Spring.GetUnitDefID(unitID), Spring.GetUnitTeam(unitID))
 	end
@@ -289,6 +284,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam)
 		end
 		Spring.SelectUnitArray({ufoID})
 		Spring.SendCommands("track")
+		Spring.SelectUnitArray({})
 	end
 end
 
