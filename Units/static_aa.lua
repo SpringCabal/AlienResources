@@ -21,7 +21,7 @@ local Static_AA = Unit:New {
     script              = "static_aa.lua",
 
 	 customParams        = {
-		modelradius        = [[40]],
+		modelradius        = [[30]],
 		midposoffset       = [[0 50 0]],
 
 		terrainblock_x     = 64,
@@ -88,10 +88,10 @@ local Strong_AA = Static_AA:New {
 	footprintX			    = 12,
 	footprintZ			    = 12,
 	collisionVolumeOffsets  = '0 50 0',
-	collisionVolumeScales   = '150 154 150',
+	collisionVolumeScales   = '100 84 100',
 	collisionVolumeType     = 'cylY',
 	customParams        = {
-		modelradius        = [[150]],
+		modelradius        = [[80]],
 		midposoffset       = [[0 50 0]],
 
 		terrainblock_x     = 150,
