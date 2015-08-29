@@ -61,7 +61,7 @@ local Static_AA = Unit:New {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 5,
+				default = 15,
 			},
 
 			explosionGenerator      = [[custom:genericshellexplosion-small-red]],
@@ -83,7 +83,7 @@ local Static_AA = Unit:New {
 
 local Strong_AA = Static_AA:New {
 	name                = "Strong AA",
-	maxDamage           = 7500,
+	maxDamage           = 4500,
 	
 	footprintX			    = 12,
 	footprintZ			    = 12,
@@ -106,7 +106,7 @@ local Strong_AA = Static_AA:New {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 12,
+				default = 50,
 			},
 			rgbColor                = "0.5 0.1 0.9",
 			thickness               = 15,

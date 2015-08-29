@@ -27,8 +27,8 @@ unitDef = {
 		midposoffset       = [[0 28 0]],
         -- Capture resources (all capturable units should have these fields defined)
         -- Use OOP maybe?
-        biomass            = 5000,
-        research           = 1000,
+        biomass            = 10000,
+        research           = 5000,
         metal              = 0, -- not to be confused with engine metal
 	},
 	

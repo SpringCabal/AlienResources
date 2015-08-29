@@ -17,7 +17,8 @@ function gadget:GetInfo()
 end
 
 local ufoID
-local ufoDefID = UnitDefNames["ufo"].id
+local ufoDefID   = UnitDefNames["ufo"].id
+local alienDefID = UnitDefNames["alien"].id
 
 local baseShieldRegen = 1.5
 local maxShieldPower = 1000
@@ -43,9 +44,9 @@ function gadget:Initialize()
     Spring.SetGameRulesParam("metal", 0)
 	
 	-- TEST resources, comment these lines out on release
-     Spring.SetGameRulesParam("biomass", 500000)
-     Spring.SetGameRulesParam("research", 50000)
-     Spring.SetGameRulesParam("metal", 0)
+--      Spring.SetGameRulesParam("biomass", 500000)
+--      Spring.SetGameRulesParam("research", 50000)
+--      Spring.SetGameRulesParam("metal", 0)
 end
 
 function gadget:GameFrame()
@@ -118,6 +119,13 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if ufoID == unitID then
 		ufoID = nil
+		local alienUdef = UnitDefs[alienDefID]
+		local biomass = Spring.GetGameRulesParam("biomass") or 0
+		local research = Spring.GetGameRulesParam("research") or 0
+		local metal = Spring.GetGameRulesParam("metal") or 0
+		Spring.SetGameRulesParam("biomass", biomass - (alienUdef.customParams.biomass or 0))
+		Spring.SetGameRulesParam("research", research - (alienUdef.customParams.research or 0))
+		Spring.SetGameRulesParam("metal", metal - (alienUdef.customParams.metal or 0))
 	end
 end
 

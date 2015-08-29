@@ -104,7 +104,7 @@ local Tank = Unit:New {
 			rgbColor                = "0 0.6 1",
 			explosionGenerator      = [[custom:genericshellexplosion-medium]],
 			fireStarter             = 70,
-			flightTime              = 5,
+			flightTime              = 1.6,
 			guidance                = true,
 			impactOnly              = true,
 			impulseBoost            = 0,
@@ -115,7 +115,7 @@ local Tank = Unit:New {
 			model                   = [[missile.dae]],
 			noSelfDamage            = true,
 			range                   = 1720,
-			reloadtime              = 15,
+			reloadtime              = 10,
 			renderType              = 1,
 			selfprop                = true,
 			smokedelay              = [[0.1]],
@@ -130,7 +130,7 @@ local Tank = Unit:New {
 			weaponAcceleration      = 800,
 			weaponTimer             = 5,
 			weaponType              = "MissileLauncher",
-			weaponVelocity          = 4000,
+			weaponVelocity          = 1800,
 		},
 	},
 }
@@ -148,10 +148,11 @@ local Small_Tank = Tank:New {
 			size					= 3,
 			reloadtime              = 3,
 			damage = {
-				default = 15,
+				default = 35,
 			},
 			range                   = 720,
 			rgbColor                = "1 1 0",
+			weaponVelocity          = 4000,
 		}
 	},
 	customParams           = {

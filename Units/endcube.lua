@@ -31,6 +31,7 @@ unitDef = {
         biomass            = 0,
         research           = 0,
         metal              = 0, -- not to be confused with engine metal
+		abduct_mult        = 0.03,
 	},
 	
 	-- Abiltiies
