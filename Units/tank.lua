@@ -94,12 +94,14 @@ local Tank = Unit:New {
 			cylinderTargeting       = 3,
 
 			collisionsize = 20,
+			size					= 500,
 			targetable              = 1,
 
 			damage                  = {
 				default = 200,
 			},
 
+			rgbColor                = "0 0.6 1",
 			explosionGenerator      = [[custom:genericshellexplosion-medium]],
 			fireStarter             = 70,
 			flightTime              = 5,
@@ -143,11 +145,13 @@ local Small_Tank = Tank:New {
 	brakeRate           = 1,
 	weaponDefs             = {
 		missile = {
+			size					= 3,
 			reloadtime              = 3,
 			damage = {
 				default = 15,
 			},
 			range                   = 720,
+			rgbColor                = "1 1 0",
 		}
 	},
 	customParams           = {
