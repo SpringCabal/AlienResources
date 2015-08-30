@@ -176,7 +176,7 @@ unitDef = {
 			damage                  = {
 				default = 2,
 			},
-			explosionGenerator      = [[custom:genericshellexplosion-small-firey]],
+			explosionGenerator      = [[custom:genericshellexplosion-small-firey-modified]],
 			interceptedByShieldType = 1,
 			largeBeamLaser          = true,
 			laserFlareSize          = 0.1,
