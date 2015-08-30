@@ -39,6 +39,9 @@ local Static_AA = Unit:New {
 		explosiongenerators = {
 		  [[custom:explosion]],
 		},
+		pieceExplosionGenerators = { 
+			"missiletrailsmall", 
+		}, 
 	},
 
 	weapons                = {
@@ -97,6 +100,14 @@ local Strong_AA = Static_AA:New {
 		terrainblock_x     = 150,
 		terrainblock_z     = 150,
     },
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:explosion]],
+		},
+		pieceExplosionGenerators = { 
+			"missiletrailsmall", 
+		}, 
+	},
 	weaponDefs             = {
 		beamLaser = {
 			explosionGenerator      = [[custom:genericshellexplosion-large-purple]],

@@ -75,6 +75,7 @@ unitDef = {
 	weaponDefs             = {
 		beamLaser = {
 			name                    = "Beam Laser",
+			explosionGenerator      = [[custom:genericshellexplosion-small-green-drone]],
 			areaOfEffect            = 32,
 			avoidFeature            = false,
 			avoidFriendly           = false,

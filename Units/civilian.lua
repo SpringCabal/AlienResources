@@ -20,6 +20,12 @@ local Civilian = Unit:New {
 	
 	upright                = true,
 	
+	sfxtypes                     = {	
+		pieceExplosionGenerators = { 
+			"bloodytrail", 
+		}, 
+	},
+	
 	customParams           = {
 		modelradius        = [[12]],
 		midposoffset       = [[0 28 0]],

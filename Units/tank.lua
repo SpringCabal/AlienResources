@@ -10,6 +10,9 @@ local Tank = Unit:New {
 		explosiongenerators = {
 		  [[custom:explosion]],
 		},
+		pieceExplosionGenerators = { 
+			"missiletrailsmall", 
+		}, 
 	},
 
 	-- Movement
@@ -154,6 +157,14 @@ local Small_Tank = Tank:New {
 			rgbColor                = "1 1 0",
 			weaponVelocity          = 4000,
 		}
+	},
+	sfxtypes               = {
+		explosiongenerators = {
+		  [[custom:explosion]],
+		},
+		pieceExplosionGenerators = { 
+			"missiletrailsmall", 
+		}, 
 	},
 	customParams           = {
         -- Capture resources (all capturable units should have these fields defined)

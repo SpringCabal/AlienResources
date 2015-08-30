@@ -22,6 +22,12 @@ unitDef = {
 	
 	upright                = true,
 	
+	sfxtypes                     = {	
+		pieceExplosionGenerators = { 
+			"bloodytrailgreen", 
+		}, 
+	},
+	
 	customParams           = {
 		modelradius        = [[12]],
 		midposoffset       = [[0 28 0]],

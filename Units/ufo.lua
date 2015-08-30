@@ -8,8 +8,11 @@ unitDef = {
     script                 = unitName .. ".lua",
 	sfxtypes               = {
 		explosiongenerators = {
-		  [[custom:ufoblast]],
+		  [[custom:explosion]],
 		},
+		pieceExplosionGenerators = { 
+			"missiletrailsmall", 
+		}, 
 	},
 
 	-- Movement
