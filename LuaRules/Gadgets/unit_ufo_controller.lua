@@ -332,6 +332,8 @@ function HandleLuaMessage(msg)
 			Spring.PlaySoundFile("sounds/teleport.wav", 40, x, y, z, 'sfx')
 			Teleport(distance)
 		elseif abilityName == "independenceDayGun" then
+			local durationMod = multiplier/100 + 1 -- Tech modifier
+			Spring.SetGameRulesParam(abilityName .. "Duration", duration * durationMod)
 			local env = Spring.UnitScript.GetScriptEnv(ufoID)
 			if env then
 				Spring.UnitScript.CallAsUnit(ufoID, env.script.StartIndependence)

@@ -94,6 +94,7 @@ local techTree = {
 		x = 0,
 		y = 270 - 60,
 		iconPath = "LuaUI/Images/shield.png",
+		maxLevel = 10,
 		iconDisabledPath = "LuaUI/Images/shield_off.png",
 	},
 	antiMissilePointDefense = {

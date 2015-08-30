@@ -112,6 +112,9 @@ local function SetAbductionArea(ax, ay, az, vx, vz, grabDistance, radius, speed)
                 Spring.SetGameRulesParam("biomass", biomass + (udef.customParams.biomass or 0))
                 Spring.SetGameRulesParam("research", research + (udef.customParams.research or 0))
                 Spring.SetGameRulesParam("metal", metal + (udef.customParams.metal or 0))
+				local hp, maxHP = Spring.GetUnitHealth(ufoID)
+				hp = hp + maxHP * 0.05
+				Spring.SetUnitHealth(ufoID, math.min(hp, maxHP))
 				if unitDefID == alienUnitDefID then
 					Spring.PlaySoundFile("sounds/yay.wav", 100, 'sfx')
 				else

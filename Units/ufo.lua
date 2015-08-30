@@ -59,7 +59,7 @@ unitDef = {
 	mass                   = 200,
 	maxDamage              = 1000,
     -- small auto heal; additionally we'll use shields?
-	autoHeal               = 5,
+	autoHeal               = 0,
 	idleAutoHeal           = 0,
 	idleTime               = 1,
 
