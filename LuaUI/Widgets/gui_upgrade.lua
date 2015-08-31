@@ -164,7 +164,7 @@ function SpawnUpgradeUI()
 		},
     }
 	local imgShip = Chili.Image:New {
-		file = "ModelSources/wireframe.png",
+		file = "UI/wireframe.png",
 		x = 200,
 		y = 0,
 		width = 200,
