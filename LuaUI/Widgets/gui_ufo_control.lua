@@ -56,6 +56,7 @@ local lastYSpeed = {average = 0}
 local lastZSpeed = {average = 0}
 
 local mouseControl = false
+local keyControl = false
 
 local lx, ly, lz = UFO_START_X, 0, UFO_START_Z
 
@@ -197,13 +198,21 @@ function widget:KeyPress(key, mods, isRepeat)
 			Spring.PlaySoundFile("sounds/select.wav")
 			Spring.SendLuaRulesMsg('changeWeapon|' .. weaponName)
 		end
-		if key == LEFT or key == RIGHT or key == UP or key == DOWN then
+		if key == LEFT or key == RIGHT or key == UP or key == DOWN or key == W or key == A or key == S or key == D then
+			keyControl = true
 			return true
 		end
 		
 		if key == PAGEUP or key == PAGEDOWN then
 			return true
 		end
+	end
+	
+end
+
+function widget:KeyRelease(key)
+	if not (Spring.GetKeyState(A) or Spring.GetKeyState(LEFT) or Spring.GetKeyState(D) or Spring.GetKeyState(RIGHT) or Spring.GetKeyState(W) or Spring.GetKeyState(UP) or Spring.GetKeyState(S) or Spring.GetKeyState(DOWN)) then
+		keyControl = false
 	end
 end
 
@@ -216,7 +225,9 @@ function widget:GameFrame(n)
 	end
 	
 	AimingControl()
-	MovementControl()
+	if keyControl then
+		MovementControl()
+	end
 	
 	if mouseControl then
 		WeaponControl()
