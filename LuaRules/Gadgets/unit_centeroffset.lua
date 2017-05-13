@@ -69,9 +69,9 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 	if offsets[unitDefID] and ud then
 		local mid = offsets[unitDefID].mid
 		local aim = offsets[unitDefID].aim
-		spSetUnitMidAndAimPos(unitID, 
-			mid[1] + ud.midx, mid[2] + ud.midy, mid[3] + ud.midz, 
-			aim[1] + ud.midx, aim[2] + ud.midy, aim[3] + ud.midz, true)
+		spSetUnitMidAndAimPos(unitID,
+			mid[1] + ud.model.midx, mid[2] + ud.model.midy, mid[3] + ud.model.midz,
+			aim[1] + ud.model.midx, aim[2] + ud.model.midy, aim[3] + ud.model.midz, true)
 	end
 	if modelRadii[unitDefID] then
 		spSetUnitRadiusAndHeight(unitID, modelRadii[unitDefID].radius, modelRadii[unitDefID].height)

@@ -26,7 +26,7 @@ function gadget:GetInfo()
     date      = "Apr, 2008",
     license   = "GNU GPL, v2 or later",
     layer     = 10,
-    enabled   = not (Game.version:find('91.0') == 1),
+    enabled   = true,
   }
 end
 
@@ -239,7 +239,7 @@ local function ReinitializeUnitFX()
   for _,unitFxIDs in pairs(particleIDs) do
     for i=1,#unitFxIDs do
       Lups.RemoveParticles(unitFxIDs[i])
-    end    
+    end
   end
   particleIDs = {}
 
@@ -261,7 +261,7 @@ end
 --------------------------------------------------------------------------------
 
 function gadget:Update()
-  if (Spring.GetGameFrame()<1) then 
+  if (Spring.GetGameFrame()<1) then
     return
   end
 
@@ -286,7 +286,7 @@ function gadget:Shutdown()
     for _,unitFxIDs in pairs(particleIDs) do
       for i=1,#unitFxIDs do
 		Lups.RemoveParticles(unitFxIDs[i])
-      end    
+      end
     end
     particleIDs = {}
   end
@@ -294,4 +294,3 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
